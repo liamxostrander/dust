@@ -44,3 +44,6 @@ Thumbs.db
 
 *.log
 *.vsconfig
+
+dust/ProjectSettings/ProjectVersion.txt
+dust/Packages/packages-lock.json
