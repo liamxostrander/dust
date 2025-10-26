@@ -15,11 +15,13 @@ public class SceneSwitcher : MonoBehaviour
     [Header("MusicSettings")]
     public AudioSource musicSource;
 
+    [SerializeField]
+    private RenderTexture renderTexture;
+
     void Start()
     {
         musicSource.volume = 1f;
     }
-
     private IEnumerator FadeOutAndLoad(string sceneName)
     {
         transitionEffectImage.gameObject.SetActive(true);

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - StartButton
   - QuitButton
+  - ResumeButton
+  - MainMenuButton
   layers:
   - Default
   - TransparentFX
