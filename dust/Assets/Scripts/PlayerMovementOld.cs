@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementOld : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] float moveSpeed = 10f;
@@ -30,21 +31,23 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float fastFallMultiplier = 3.0f;
     [SerializeField] float maxFallSpeed = -25f;
 
+    [Header("Animation")]
+    [SerializeField] Animator animator;
+
     Rigidbody2D rb;
-
     readonly ContactPoint2D[] tmpContacts = new ContactPoint2D[16];
-
     float moveX;
     float lastJumpPressTimer = 0f;
-
     bool isGrounded = false;
     int jumpsRemaining;
     bool isDashing = false;
     bool canDash = true;
     float lastLeftTap = -999f, lastRightTap = -999f;
+    private SpriteRenderer spriteRenderer;
 
     void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         rb.freezeRotation = true;
         jumpsRemaining = maxJumps;
@@ -52,14 +55,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(animator.GetCurrentAnimatorStateInfo(0).fullPathHash);
         moveX = Input.GetAxisRaw("Horizontal");
-
+        animator.SetBool("isWalking", false);
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             lastJumpPressTimer = jumpBufferTime;
 
         // double-tap left
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            animator.SetBool("isWalking", true);
+            spriteRenderer.flipX = true;
             float now = Time.time;
             if (now - lastLeftTap <= doubleTapWindow) TryDash(-1);
             lastLeftTap = now;
@@ -67,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
         // double-tap right
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
+            animator.SetBool("isWalking", true);
+            spriteRenderer.flipX = false;
             float now = Time.time;
             if (now - lastRightTap <= doubleTapWindow) TryDash(+1);
             lastRightTap = now;
@@ -95,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(Vector2.up * jumpImpulse, ForceMode2D.Impulse);
 
                 if (isGrounded) jumpsRemaining = maxJumps - 1;
-                else            jumpsRemaining--;
+                else jumpsRemaining--;
 
                 lastJumpPressTimer = 0f;
             }
