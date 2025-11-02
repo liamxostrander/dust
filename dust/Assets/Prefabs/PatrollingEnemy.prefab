@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8289271524198811393}
   - component: {fileID: 3359251841336483002}
   - component: {fileID: 5838200193076852874}
+  - component: {fileID: 1365196176899990829}
   m_Layer: 0
   m_Name: PatrollingEnemy
   m_TagString: Untagged
@@ -189,3 +190,15 @@ MonoBehaviour:
   lungeForce: 100
   lungeUpwardForce: 10
   groundCheckRadius: 2
+--- !u!114 &1365196176899990829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524772566819933713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58c761850f95ea4eb188ca03de58280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMarker
