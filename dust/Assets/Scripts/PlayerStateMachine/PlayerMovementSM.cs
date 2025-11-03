@@ -12,6 +12,7 @@ public class PlayerMovementSM : MonoBehaviour
     public RunState runState;
     public GroundState groundState;
     public SlashState slashState;
+    public DashSliceState dashSliceState;
     State state;
 
     [Header("Animator")]
@@ -42,7 +43,6 @@ public class PlayerMovementSM : MonoBehaviour
     [SerializeField] BoxCollider2D groundCheck;
     
 
-
     [Header("Gravity")]
     [SerializeField] float fallMultiplier = 2.0f;
     [SerializeField] float lowJumpMultiplier = 2.5f;
@@ -56,6 +56,7 @@ public class PlayerMovementSM : MonoBehaviour
     bool isDashing = false;
     public bool hasLanded = false;
     bool canDash = true;
+    public bool isSlashing = false;
     float lastLeftTap = -999f, lastRightTap = -999f;
 
     void Awake()
@@ -68,6 +69,7 @@ public class PlayerMovementSM : MonoBehaviour
         airState.Setup(rb, animator, this);
         groundState.Setup(rb, animator, this);
         slashState.Setup(rb, animator, this);
+        dashSliceState.Setup(rb, animator, this);
         state = idleState;
     }
 
@@ -110,6 +112,7 @@ public class PlayerMovementSM : MonoBehaviour
     }
     void Update()
     {
+        // Debug.Log(state);
         CheckInput();
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -131,8 +134,19 @@ public class PlayerMovementSM : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.J) && !isDashing)
         {
-            state.Exit();           
-            state = slashState;     
+            if (!isSlashing)
+            {
+                isSlashing = true;
+                state.Exit();
+                state = slashState;
+                state.Enter();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.J) && isDashing)
+        {
+            Debug.Log("dash slice");
+            state.Exit();
+            state = dashSliceState;
             state.Enter();
         }
 
