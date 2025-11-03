@@ -112,7 +112,6 @@ public class PlayerMovementSM : MonoBehaviour
     }
     void Update()
     {
-        // Debug.Log(state);
         CheckInput();
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -144,7 +143,6 @@ public class PlayerMovementSM : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.J) && isDashing)
         {
-            Debug.Log("dash slice");
             state.Exit();
             state = dashSliceState;
             state.Enter();
