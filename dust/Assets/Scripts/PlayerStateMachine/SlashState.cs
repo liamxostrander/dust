@@ -5,7 +5,6 @@ public class SlashState : State
     [Header("Attack Animations")]
     public AnimationClip attack_1_anim;
     public AnimationClip attack_2_anim;
-    private AnimationClip[] attack_anims;
     int currentAttack = 0;
 
     [Header("Attack Properties")]
@@ -13,8 +12,6 @@ public class SlashState : State
     public float attack2Impulse = 3f;
     public float reducedControlFactor = 0.2f;
     public float comboWindow = 0.25f;
-    float inputBufferTimer = 0f;
-    public float inputBufferTime = 0.2f;
 
     float timer;
     bool queuedNext;
@@ -22,12 +19,10 @@ public class SlashState : State
     public override void Enter()
     {
         isComplete = false;
-        attack_anims = new AnimationClip[] { attack_1_anim, attack_2_anim };
-        if (currentAttack >= attack_anims.Length)
-            currentAttack = 0;
+        currentAttack = 0;
 
-        animator.Play(attack_anims[currentAttack].name, 0, 0f);
-        timer = attack_anims[currentAttack].length;
+        animator.Play(attack_1_anim.name, 0, 0f);
+        timer = attack_1_anim.length;
         
         queuedNext = false;
         canQueueNext = false;
@@ -35,35 +30,31 @@ public class SlashState : State
         input.control *= reducedControlFactor;
         Vector2 dir = input.spriteRenderer.flipX ? Vector2.left : Vector2.right;
         input.rb.AddForce(dir * attack1Impulse, ForceMode2D.Impulse);
-
     }
     public override void Do()
     {
         timer -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.J))
-            inputBufferTimer = inputBufferTime;
-        if (inputBufferTimer > 0f)
-            inputBufferTimer -= Time.deltaTime;
 
-        if (timer < comboWindow && !canQueueNext)
+        if (timer < comboWindow && !canQueueNext && currentAttack == 0)
         {
             canQueueNext = true;
         }
-        if (canQueueNext && inputBufferTimer > 0f)
+        if (canQueueNext && Input.GetKeyDown(KeyCode.J))
         {
             queuedNext = true;
-            inputBufferTimer = 0f;
         }
 
         if (timer <= 0f)
         {
-            if (queuedNext && currentAttack + 1 < attack_anims.Length)
+            if (queuedNext)
             {
+                queuedNext = false;
+                canQueueNext = false;
                 currentAttack++;
-                timer = attack_anims[currentAttack].length;
+                timer = attack_2_anim.length;
                 Vector2 dir = input.spriteRenderer.flipX ? Vector2.left : Vector2.right;
                 input.rb.AddForce(-dir * attack2Impulse, ForceMode2D.Impulse);
-                animator.Play(attack_anims[currentAttack].name, 0, 0f);
+                animator.Play(attack_2_anim.name, 0, 0f);
             }
             else
             {
@@ -73,6 +64,7 @@ public class SlashState : State
     }
     public override void Exit()
     {
+        input.isSlashing = false;
         input.control = input.groundControl;
         currentAttack = 0;
     }
