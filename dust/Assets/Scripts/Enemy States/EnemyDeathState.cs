@@ -1,0 +1,46 @@
+using UnityEngine;
+
+/// Death state where the enemy plays a death animation and then is destroyed.
+/// Makes the enemy non-interactive and removes it after the animation.
+public class EnemyDeathState : EnemyState
+{
+    [Header("Death Settings")]
+    public float deathAnimationTime = 2f;
+    public AnimationClip deathAnim;
+    
+    public override void Enter()
+    {
+        base.Enter();
+        
+        if (stateMachine.animator != null && deathAnim != null)
+        {
+            stateMachine.animator.Play(deathAnim.name);
+            deathAnimationTime = deathAnim.length;
+        }
+        
+        // Stop all movement
+        stateMachine.rb.linearVelocity = Vector2.zero;
+        stateMachine.rb.bodyType = RigidbodyType2D.Kinematic;
+        
+        // Disable collider to make enemy non-interactive
+        Collider2D collider = stateMachine.GetComponent<Collider2D>();
+        if (collider != null)
+        {
+            collider.enabled = false;
+        }
+    }
+    
+    public override void Do()
+    {
+        // Destroy enemy after animation completes
+        if (time >= deathAnimationTime)
+        {
+            GameObject.Destroy(stateMachine.gameObject);
+        }
+    }
+    
+    public override void Exit()
+    {
+        // Death state should never be exited
+    }
+}
