@@ -45,8 +45,14 @@ TagManager:
   - name: Background
     uniqueID: 3125518855
     locked: 0
+  - name: BackgroundTile
+    uniqueID: 2280550367
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: LightingTile
+    uniqueID: 4156855575
     locked: 0
   - name: MenuPixel
     uniqueID: 4285017181

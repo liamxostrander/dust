@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 6558281572599904565}
   - component: {fileID: 7789587845918559959}
   - component: {fileID: 3493257701298244468}
+  - component: {fileID: 6562223278310872442}
   m_Layer: 0
   m_Name: DeathBringer
   m_TagString: Untagged
@@ -207,6 +208,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1
   animator: {fileID: 6558281572599904565}
   spriteRenderer: {fileID: 7789587845918559959}
   patrolSpeed: 2
@@ -218,8 +222,6 @@ MonoBehaviour:
   edgeCheckDistance: 0.75
   shouldReverseDirection: 0
   lastMoveDirection: 1
-  lungeForce: 10
-  lungeUpwardForce: 5
   groundCheck: {fileID: 1193461509322502106}
   groundCheckRadius: 0.75
   isGrounded: 0
@@ -229,11 +231,7 @@ MonoBehaviour:
   attackHitboxRadius: 2
   attackCooldown: 2
   attackDamage: 1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 1
   justFinishedAttack: 0
-  skipNextLunge: 0
   idleState: {fileID: 3820166136568060834}
   patrolState: {fileID: 7519790500326860205}
   chaseState: {fileID: 4950454643338969564}
@@ -370,6 +368,69 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.03}
   m_Size: {x: 0.35, y: 0.6}
   m_Direction: 0
+--- !u!114 &6562223278310872442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601667383540302290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.ShadowCaster2D
+  m_ShadowGroup: 0
+  m_Priority: 0
+  m_ComponentVersion: 5
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_AlphaCutoff: 0.1
+  m_ApplyToSortingLayers: 07a24bbadf6fee87000000001795c4f75d2c68ff
+  m_ShapePath:
+  - {x: -0.08813097, y: -0.18932793, z: 0}
+  - {x: -0.10019505, y: -0.092912175, z: 0}
+  - {x: -0.066154316, y: -0.007679776, z: 0}
+  - {x: -0.10019505, y: 0.055480365, z: 0}
+  - {x: -0.09321187, y: 0.1340411, z: 0}
+  - {x: -0.0060785534, y: 0.22042537, z: 0}
+  - {x: 0.04381702, y: 0.15867089, z: 0}
+  - {x: 0.0688462, y: 0.11064614, z: 0}
+  - {x: 0.06041801, y: 0.039768197, z: 0}
+  - {x: 0.03069408, y: 0.0122205885, z: 0}
+  - {x: 0.037722852, y: -0.026571987, z: 0}
+  - {x: 0.06740119, y: -0.13131964, z: 0}
+  - {x: 0.083113365, y: -0.29193276, z: 0}
+  - {x: 0.0045526265, y: -0.29193276, z: 0}
+  - {x: -0.10836337, y: -0.28927937, z: 0}
+  m_ShapePathHash: 2139405460
+  m_InstanceId: 0
+  m_ShadowShape2DComponent: {fileID: 0}
+  m_ShadowShape2DProvider:
+    rid: -2
+  m_ShadowCastingSource: 1
+  m_ShadowMesh:
+    m_Mesh: {fileID: 0}
+    m_LocalBounds:
+      m_Center: {x: -0.012625001, y: -0.035753697, z: 0}
+      m_Extent: {x: 0.095738366, y: 0.25617906, z: 0}
+    m_EdgeProcessing: 1
+    m_TrimEdge: 0.2
+    m_FlipX: 0
+    m_FlipY: 0
+    m_InitialTrim: 0
+  m_CastingOption: 1
+  m_PreviousTrimEdge: 0.2
+  m_PreviousEdgeProcessing: 1
+  m_PreviousShadowCastingSource: 1
+  m_PreviousShadowShape2DSource: {fileID: 3493257701298244468}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &3964894073537649062
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyChaseState
   chaseAnim: {fileID: 7400000, guid: 6e2b2983f31f23641887c85fa749226f, type: 2}
   animationSpeedMultiplier: 1.5
+  jumpForce: 8
 --- !u!1 &7197438127214266816
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,4 +651,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyIdleState
   idleDuration: 1
+  attackIdleDuration: 1
   idleAnim: {fileID: 7400000, guid: 890c5833f64f429459ab4356e2b8f775, type: 2}
