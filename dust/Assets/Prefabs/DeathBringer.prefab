@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4264968568515330543}
   - component: {fileID: 1193461509322502106}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4355589946100406180}
   - component: {fileID: 4628271959057040266}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Death
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,8 +139,12 @@ GameObject:
   - component: {fileID: 6558281572599904565}
   - component: {fileID: 7789587845918559959}
   - component: {fileID: 3493257701298244468}
+<<<<<<< Updated upstream
   - component: {fileID: 6562223278310872442}
   m_Layer: 0
+=======
+  m_Layer: 8
+>>>>>>> Stashed changes
   m_Name: DeathBringer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5550422256291524957}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Behaviors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -477,7 +481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5113156911715899113}
   - component: {fileID: 7519790500326860205}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Patrol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -522,7 +526,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1711661962550112164}
   - component: {fileID: 4950454643338969564}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -569,7 +573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 719711751315257092}
   - component: {fileID: 4412883038623170640}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,7 +620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4291428039704665701}
   - component: {fileID: 3820166136568060834}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
