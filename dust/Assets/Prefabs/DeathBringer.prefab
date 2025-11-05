@@ -139,12 +139,8 @@ GameObject:
   - component: {fileID: 6558281572599904565}
   - component: {fileID: 7789587845918559959}
   - component: {fileID: 3493257701298244468}
-<<<<<<< Updated upstream
   - component: {fileID: 6562223278310872442}
-  m_Layer: 0
-=======
   m_Layer: 8
->>>>>>> Stashed changes
   m_Name: DeathBringer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
