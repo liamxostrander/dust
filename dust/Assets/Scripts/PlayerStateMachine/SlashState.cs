@@ -10,7 +10,8 @@ public class SlashState : State
     [Header("Attack Properties")]
     public float attack1Impulse = 4f;
     public float attack2Impulse = 3f;
-    public float reducedControlFactor = 0.2f;
+    public float slash_ctrl = 0.2f;
+    private float prev_ctrl;
     public float comboWindow = 0.25f;
 
     float timer;
@@ -26,8 +27,9 @@ public class SlashState : State
         
         queuedNext = false;
         canQueueNext = false;
-
-        input.control *= reducedControlFactor;
+        
+        prev_ctrl = input.control;
+        if (input.isGrounded) input.control = slash_ctrl;
         Vector2 dir = input.spriteRenderer.flipX ? Vector2.left : Vector2.right;
         input.rb.AddForce(dir * attack1Impulse, ForceMode2D.Impulse);
     }
@@ -65,7 +67,7 @@ public class SlashState : State
     public override void Exit()
     {
         input.isSlashing = false;
-        input.control = input.groundControl;
+        input.control = prev_ctrl;
         currentAttack = 0;
     }
     
