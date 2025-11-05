@@ -50,7 +50,6 @@ MonoBehaviour:
   attack2Impulse: 3
   reducedControlFactor: 0.2
   comboWindow: 0.2
-  inputBufferTime: 0.2
 --- !u!1 &2768024811508513931
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,6 +129,7 @@ Transform:
   - {fileID: 3268083871575338158}
   - {fileID: 2358107639461846857}
   - {fileID: 8175690391857644659}
+  - {fileID: 4410631094759262083}
   m_Father: {fileID: 5899023650178650985}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3695689845975595918
@@ -257,6 +257,51 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &6620683533793300487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4410631094759262083}
+  - component: {fileID: 4943419815015779424}
+  m_Layer: 0
+  m_Name: DashSlice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4410631094759262083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6620683533793300487}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8742143878811240289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4943419815015779424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6620683533793300487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8425bc6a19cc8482db903780674551a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DashSliceState
+  attack_anim: {fileID: 8439980009718112272, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
 --- !u!1 &7072244433888983010
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +428,7 @@ MonoBehaviour:
   runState: {fileID: 4364338966924449495}
   groundState: {fileID: 9090381736657812103}
   slashState: {fileID: 2786636219400562893}
+  dashSliceState: {fileID: 4943419815015779424}
   animator: {fileID: 3135114199434424583}
   spriteRenderer: {fileID: 2338619762614720802}
   moveSpeed: 15
@@ -408,6 +454,7 @@ MonoBehaviour:
   maxFallSpeed: -25
   rb: {fileID: 0}
   hasLanded: 0
+  isSlashing: 0
 --- !u!1 &8716640178211188474
 GameObject:
   m_ObjectHideFlags: 0

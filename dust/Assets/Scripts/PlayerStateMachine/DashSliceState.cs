@@ -8,7 +8,6 @@ public class DashSliceState : State
     public override void Enter()
     {
         isComplete = false;
-        Debug.Log(attack_anim.name + " " + animator);
         animator.Play(attack_anim.name, 0, 0f);
         timer = attack_anim.length;
     }
