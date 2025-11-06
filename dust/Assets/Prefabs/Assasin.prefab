@@ -50,7 +50,6 @@ MonoBehaviour:
   attack2Impulse: 3
   reducedControlFactor: 0.2
   comboWindow: 0.2
-  inputBufferTime: 0.2
 --- !u!1 &2768024811508513931
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +382,7 @@ MonoBehaviour:
   runState: {fileID: 4364338966924449495}
   groundState: {fileID: 9090381736657812103}
   slashState: {fileID: 2786636219400562893}
+  dashSliceState: {fileID: 0}
   animator: {fileID: 3135114199434424583}
   spriteRenderer: {fileID: 2338619762614720802}
   moveSpeed: 15
@@ -408,6 +408,9 @@ MonoBehaviour:
   maxFallSpeed: -25
   rb: {fileID: 0}
   hasLanded: 0
+  isSlashing: 0
+  speedMultiplier: 1
+  jumpMultiplier: 1
 --- !u!1 &8716640178211188474
 GameObject:
   m_ObjectHideFlags: 0

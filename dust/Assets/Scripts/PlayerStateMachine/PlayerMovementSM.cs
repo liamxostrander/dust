@@ -59,6 +59,10 @@ public class PlayerMovementSM : MonoBehaviour
     public bool isSlashing = false;
     float lastLeftTap = -999f, lastRightTap = -999f;
 
+    [Header("Upgrade Modifiers")]
+    public float speedMultiplier = 1f;
+    public float jumpMultiplier = 1f;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -169,7 +173,7 @@ public class PlayerMovementSM : MonoBehaviour
 
     void HandleXMovement()
     {
-        float targetVX = moveX * moveSpeed * control;
+        float targetVX = moveX * moveSpeed * control * speedMultiplier;
         rb.linearVelocity = new Vector2(Mathf.Lerp(rb.linearVelocity.x, targetVX, 0.35f), rb.linearVelocity.y);
     }
     void HandleJump()
@@ -179,7 +183,7 @@ public class PlayerMovementSM : MonoBehaviour
             if (isGrounded || jumpsRemaining > 0)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
-                rb.AddForce(Vector2.up * jumpImpulse, ForceMode2D.Impulse);
+                rb.AddForce(Vector2.up * (jumpImpulse * jumpMultiplier), ForceMode2D.Impulse);
 
                 if (isGrounded) jumpsRemaining = maxJumps - 1;
                 else jumpsRemaining--;

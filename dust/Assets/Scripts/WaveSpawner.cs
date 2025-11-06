@@ -17,6 +17,9 @@ public class WaveSpawner : MonoBehaviour
     [Tooltip("If a SpawnSet has no points, these are used instead.")]
     public Transform[] defaultSpawnPoints;
 
+    [Header("Rewards")]
+    public ChestSpawner chestSpawner;
+
     [Header("HUD")]
     public WaveHUD hud;
 
@@ -146,6 +149,7 @@ public class WaveSpawner : MonoBehaviour
                 t -= Time.deltaTime;
             }
             hud?.SetTimer("0:00");
+            if (chestSpawner) chestSpawner.SpawnRandomChest();
             AdvanceToNextWave();
         }
         else
@@ -155,6 +159,7 @@ public class WaveSpawner : MonoBehaviour
             {
                 yield return null;
             }
+            if (chestSpawner) chestSpawner.SpawnRandomChest();
             AdvanceToNextWave();
         }
     }
