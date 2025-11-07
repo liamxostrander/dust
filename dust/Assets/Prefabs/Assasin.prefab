@@ -50,7 +50,6 @@ MonoBehaviour:
   slash_ctrl: 0.2
   comboWindow: 0.2
   swordAnimator: {fileID: 1160870222413704833}
-  swordSprite: {fileID: 8769501916231411940}
   slash_anim_1: {fileID: 7400000, guid: 160f3dcc779174cfe9bd7bb734e0262c, type: 2}
   swordPivot: {fileID: 4124785412755128904}
 --- !u!1 &2768024811508513931
@@ -198,7 +197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9131598270360368242
 Transform:
   m_ObjectHideFlags: 0
@@ -692,6 +691,8 @@ MonoBehaviour:
   rb: {fileID: 0}
   hasLanded: 0
   isSlashing: 0
+  speedMultiplier: 1
+  jumpMultiplier: 1
 --- !u!1 &8716640178211188474
 GameObject:
   m_ObjectHideFlags: 0
