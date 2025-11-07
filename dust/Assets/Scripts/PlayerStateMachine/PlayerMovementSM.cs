@@ -41,7 +41,7 @@ public class PlayerMovementSM : MonoBehaviour
     [Header("Grounding")]
     [SerializeField] LayerMask groundMask;
     [SerializeField] BoxCollider2D groundCheck;
-    
+
 
     [Header("Gravity")]
     [SerializeField] float fallMultiplier = 2.0f;
@@ -58,6 +58,8 @@ public class PlayerMovementSM : MonoBehaviour
     bool canDash = true;
     public bool isSlashing = false;
     float lastLeftTap = -999f, lastRightTap = -999f;
+
+
 
     void Awake()
     {
@@ -105,10 +107,16 @@ public class PlayerMovementSM : MonoBehaviour
     void CheckInput()
     {
         moveX = Input.GetAxisRaw("Horizontal");
-        if (moveX > 0)
+
+        if (moveX > 0 && !isSlashing)
+        {
             spriteRenderer.flipX = false;
-        else if (moveX < 0)
+        }
+        else if (moveX< 0 && !isSlashing)
+        {
             spriteRenderer.flipX = true;
+        }
+
     }
     void Update()
     {
@@ -131,7 +139,7 @@ public class PlayerMovementSM : MonoBehaviour
             if (now - lastRightTap <= doubleTapWindow) TryDash(+1);
             lastRightTap = now;
         }
-        if (Input.GetKeyDown(KeyCode.J) && !isDashing)
+        if (Input.GetMouseButtonDown(0) && !isDashing)
         {
             if (!isSlashing)
             {
@@ -141,7 +149,7 @@ public class PlayerMovementSM : MonoBehaviour
                 state.Enter();
             }
         }
-        if (Input.GetKeyDown(KeyCode.J) && isDashing)
+        if (Input.GetMouseButtonDown(0) && isDashing)
         {
             state.Exit();
             state = dashSliceState;
@@ -242,14 +250,14 @@ public class PlayerMovementSM : MonoBehaviour
     }
     public IEnumerator SmoothControlTransition(float from, float to, float duration)
     {
-    float elapsed = 0f;
-    while (elapsed < duration)
-    {
-        elapsed += Time.deltaTime;
-        float t = Mathf.Clamp01(elapsed / duration);
-        control = Mathf.Lerp(from, to, t);
-        yield return null;
-    }
-    control = to;
+        float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                control = Mathf.Lerp(from, to, t);
+                yield return null;
+            }
+        control = to;
     }
 }

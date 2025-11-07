@@ -31,6 +31,11 @@ public class AirState : State
             animator.CrossFadeInFixedTime(fall_anim.name, 0.1f);
             isFalling = true;
         }
+        if (isFalling && input.rb.linearVelocity.y > -0.01f)
+        {
+            animator.CrossFadeInFixedTime(jump_anim.name, 0.1f);
+            isFalling = false;
+        }
         if (input.isGrounded)
         {
             isComplete = true;
