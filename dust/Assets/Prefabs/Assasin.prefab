@@ -44,13 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6fa4abf047a4634abe75b7ff2a7c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlashState
-  attack_1_anim: {fileID: -4437361757129366259, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
-  start_time: 0.05
+  slashAnim: {fileID: -4437361757129366259, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  animStartTime: 0.1
   attack1Impulse: 4
-  slash_ctrl: 0.2
   comboWindow: 0.2
   swordAnimator: {fileID: 1160870222413704833}
-  slash_anim_1: {fileID: 7400000, guid: 160f3dcc779174cfe9bd7bb734e0262c, type: 2}
+  swordSlashAnim: {fileID: 7400000, guid: 160f3dcc779174cfe9bd7bb734e0262c, type: 2}
   swordPivot: {fileID: 4124785412755128904}
 --- !u!1 &2768024811508513931
 GameObject:
@@ -96,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b53a2ef465054c499f78388a53538b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunState
-  anim: {fileID: 6200578666267062213, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  runAnim: {fileID: 6200578666267062213, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
 --- !u!1 &3111942490343523604
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e1a86acf83564e9aa75536d4857af83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundState
-  land_anim: {fileID: 4461826734956849724, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  landAnim: {fileID: 4461826734956849724, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
   controlLerpDuration: 0.1
   maxFallSpeedForScaling: 20
 --- !u!1 &4124785412755128904
@@ -190,14 +189,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9131598270360368242}
-  - component: {fileID: 8371329911964559689}
   m_Layer: 0
   m_Name: SwordPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9131598270360368242
 Transform:
   m_ObjectHideFlags: 0
@@ -214,21 +212,6 @@ Transform:
   - {fileID: 8665072017479180171}
   m_Father: {fileID: 5899023650178650985}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8371329911964559689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4124785412755128904}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 854b0a528cf44482ca088db51e572e8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SwordAiming
-  player: {fileID: 5899023650178650985}
-  swordAnimator: {fileID: 1160870222413704833}
-  slash_anim_1: {fileID: 7400000, guid: 160f3dcc779174cfe9bd7bb734e0262c, type: 2}
 --- !u!1 &4293158652090602798
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,8 +307,8 @@ Transform:
   m_GameObject: {fileID: 5307760465165331743}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 0.3, z: 1}
+  m_LocalPosition: {x: -0.08, y: 0.04, z: 0}
+  m_LocalScale: {x: 0.4625, y: 0.1575, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5899023650178650985}
@@ -420,9 +403,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8425bc6a19cc8482db903780674551a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashSliceState
-  attack_anim: {fileID: 8439980009718112272, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
-  start_time: 0.3
-  slice_ctrl: 0.1
+  sliceAnim: {fileID: 8439980009718112272, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  animStartTime: 0.1
+  swordAnimator: {fileID: 1160870222413704833}
+  swordDashSliceAnim: {fileID: 7400000, guid: aaa4d1a828f3e4c6a82efd97ee9b02e0, type: 2}
+  swordPivot: {fileID: 4124785412755128904}
 --- !u!1 &7072244433888983010
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875fa3afdac0e45b8a297533365ce034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IdleState
-  anim: {fileID: -5252816984213320552, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  idleAnim: {fileID: -5252816984213320552, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
 --- !u!1 &7401537479287797765
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,10 +656,13 @@ MonoBehaviour:
   airControl: 0.7
   groundControl: 1
   landControl: 0.4
+  slashControl: 0.05
+  sliceControl: 0.1
   control: 1
   jumpImpulse: 10
   maxJumps: 2
   jumpBufferTime: 0.12
+  lastFallSpeed: 0
   doubleTapWindow: 0.25
   dashSpeed: 22
   dashDuration: 0.15
@@ -806,8 +794,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c5051722b8034eaebd9ccb6f0d6d28b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AirState
-  fall_anim: {fileID: -1504929105726005784, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
-  jump_anim: {fileID: -2993534804863918692, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  fallAnim: {fileID: -1504929105726005784, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  jumpAnim: {fileID: -2993534804863918692, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
   jumpSpeed: 5
 --- !u!1 &9086029259023232851
 GameObject:

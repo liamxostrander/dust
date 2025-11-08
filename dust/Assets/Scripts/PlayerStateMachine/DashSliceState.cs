@@ -3,32 +3,60 @@ using UnityEngine;
 public class DashSliceState : State
 {
     [Header("Attack Animations")]
-    public AnimationClip attack_anim;
-    float timer;
-    public float start_time = 0.3f;
-    public float slice_ctrl = 0.1f;
-    private float prev_ctrl;
+    public AnimationClip sliceAnim;
+    public float animStartTime = 0.3f;
 
+    [Header("Sword Properties")]
+    public Animator swordAnimator;
+    public AnimationClip swordDashSliceAnim;
+    public GameObject swordPivot;
+    float timer;
+    
     public override void Enter()
     {
         isComplete = false;
-        animator.Play(attack_anim.name, 0, start_time);
-        timer = attack_anim.length - start_time;
-        prev_ctrl = input.control;
+        Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 attackDir = (mousePos - (Vector2)swordPivot.transform.position).normalized;
+        input.spriteRenderer.flipX = attackDir.x < 0 ? true : false;
+        animator.Play(sliceAnim.name, 0, animStartTime);
+        timer = sliceAnim.length - animStartTime;
+        SwordAnim(attackDir);
         
     }
     public override void Do()
     {
-        if (input.isGrounded) input.control = slice_ctrl;
+        if (input.isGrounded) input.control = input.sliceControl;
         timer -= Time.deltaTime;
         if (timer <= 0f)
         {
             isComplete = true;
         }
     }
+    private void SwordAnim(Vector2 attackDir)
+    {
+        swordPivot.SetActive(true);
+
+        bool facingLeft = attackDir.x < 0f;
+
+        if (facingLeft)
+        {
+            swordPivot.transform.localScale = new Vector3(1, -1, 1);
+        }
+        else
+        {
+            swordPivot.transform.localScale = Vector3.one;
+        }
+
+
+        float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
+        swordPivot.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        swordAnimator.Play(swordDashSliceAnim.name, 0, 0f);
+
+    }
     public override void Exit()
     {
-        input.control = prev_ctrl;
+        swordPivot.SetActive(false);
     }
 
 }

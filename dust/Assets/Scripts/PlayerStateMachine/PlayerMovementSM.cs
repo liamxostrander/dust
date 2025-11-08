@@ -23,13 +23,16 @@ public class PlayerMovementSM : MonoBehaviour
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] public float airControl = 0.7f;
     [SerializeField] public float groundControl = 1.0f;
-    [SerializeField] public float landControl = 0.6f;
+    [SerializeField] public float landControl = 0.3f;
+    [SerializeField] public float slashControl = 0.05f;
+    [SerializeField] public float sliceControl = 0.1f;
     [SerializeField] public float control = 1.0f;
 
     [Header("Jumping")]
     [SerializeField] float jumpImpulse = 14f;
     [SerializeField] int maxJumps = 2;
     [SerializeField] float jumpBufferTime = 0.12f;
+    public float lastFallSpeed;
 
     [Header("Dash")]
     [SerializeField] float doubleTapWindow = 0.25f;

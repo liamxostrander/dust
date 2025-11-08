@@ -4,11 +4,12 @@ using UnityEngine.Rendering;
 
 public class RunState : State
 {
-    public AnimationClip anim;
+    public AnimationClip runAnim;
     public override void Enter()
     {
+        input.control = input.groundControl;
         isComplete = false;
-        animator.Play(anim.name);
+        animator.Play(runAnim.name);
     }
     public override void Do()
     {

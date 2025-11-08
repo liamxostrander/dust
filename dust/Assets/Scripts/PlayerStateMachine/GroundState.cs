@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 public class GroundState : State
 {
-    public AnimationClip land_anim;
+    public AnimationClip landAnim;
     float timer;
     [SerializeField] float controlLerpDuration = 0.25f;
     [SerializeField] float maxFallSpeedForScaling = 15f;
@@ -10,11 +11,12 @@ public class GroundState : State
     {
         isComplete = false;
         float fallSpeed = Mathf.Abs(input.rb.linearVelocity.y);
-        float t = Mathf.Clamp01(fallSpeed / maxFallSpeedForScaling);
+        float t = Mathf.Clamp01(input.lastFallSpeed / maxFallSpeedForScaling);
         float landingControl = Mathf.Lerp(input.groundControl, input.landControl, t);
+        Debug.Log(input.groundControl + " " + input.landControl + " " + input.lastFallSpeed + " " + t);
         input.control = landingControl;
-        timer = land_anim.length / 2;
-        animator.Play(land_anim.name, 0, 0f);
+        timer = landAnim.length / 2;
+        animator.Play(landAnim.name, 0, 0f);
     }
     public override void Do()
     {
@@ -27,6 +29,7 @@ public class GroundState : State
     public override void Exit()
     {
         input.hasLanded = true;
+        // input.control = input.groundControl;
         input.StartCoroutine(input.SmoothControlTransition(input.landControl, input.groundControl, controlLerpDuration));
     }
 }

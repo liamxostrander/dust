@@ -4,7 +4,7 @@ public class SwordAiming : MonoBehaviour
 {
     public Transform player;
     public Animator swordAnimator;
-    public AnimationClip slash_anim_1;
+    public AnimationClip swordSlashAnim;
 
     void Update()
     {
@@ -17,7 +17,7 @@ public class SwordAiming : MonoBehaviour
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            swordAnimator.Play(slash_anim_1.name, 0, 0f);
+            swordAnimator.Play(swordSlashAnim.name, 0, 0f);
 
         }
     }

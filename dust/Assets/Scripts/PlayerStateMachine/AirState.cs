@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class AirState : State
 {
-    public AnimationClip fall_anim;
-    public AnimationClip jump_anim;
+    public AnimationClip fallAnim;
+    public AnimationClip jumpAnim;
     private bool isFalling = false;
 
     public float jumpSpeed;
@@ -14,12 +14,12 @@ public class AirState : State
         input.hasLanded = false;
         if (input.rb.linearVelocity.y <= 0)
         {
-            animator.Play(fall_anim.name);
+            animator.Play(fallAnim.name);
             isFalling = true;
         }
         else
         {
-            animator.Play(jump_anim.name);
+            animator.Play(jumpAnim.name);
             isFalling = false;
         }
         
@@ -28,17 +28,18 @@ public class AirState : State
     {
         if (!isFalling && input.rb.linearVelocity.y < -0.01f)
         {
-            animator.CrossFadeInFixedTime(fall_anim.name, 0.1f);
+            animator.CrossFadeInFixedTime(fallAnim.name, 0.1f);
             isFalling = true;
         }
         if (isFalling && input.rb.linearVelocity.y > -0.01f)
         {
-            animator.CrossFadeInFixedTime(jump_anim.name, 0.1f);
+            animator.CrossFadeInFixedTime(jumpAnim.name, 0.1f);
             isFalling = false;
         }
-        if (input.isGrounded)
+        if (input.rb.linearVelocity.y < 0f)
         {
-            isComplete = true;
+            if (Mathf.Abs(input.rb.linearVelocity.y) > 1f)
+                input.lastFallSpeed = Mathf.Abs(input.rb.linearVelocity.y);
         }
         if (input.isGrounded)
         {
