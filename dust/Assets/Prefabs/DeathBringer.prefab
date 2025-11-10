@@ -301,7 +301,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   isInvulnerable: 0
-  invulnerabilityDuration: 0.5
+  invulnerabilityDuration: 0.3
   OnDamagedWithKnockback:
     m_PersistentCalls:
       m_Calls: []

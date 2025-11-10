@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: f84d6db9869a01242a06f4faa1ad2b5d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2200744479026027279
+    second: Sticklooter_carrot_dead_64x64_0
+  - first:
+      213: 4279036333596501507
+    second: Sticklooter_carrot_dead_64x64_1
+  - first:
+      213: 2388775337186880240
+    second: Sticklooter_carrot_dead_64x64_2
+  - first:
+      213: -2010881598216259142
+    second: Sticklooter_carrot_dead_64x64_3
+  - first:
+      213: -6864692374494310506
+    second: Sticklooter_carrot_dead_64x64_4
+  - first:
+      213: -444919685192388180
+    second: Sticklooter_carrot_dead_64x64_5
+  - first:
+      213: -4054573563107620124
+    second: Sticklooter_carrot_dead_64x64_6
+  - first:
+      213: -5250937778111898097
+    second: Sticklooter_carrot_dead_64x64_7
+  - first:
+      213: -1863650416026401871
+    second: Sticklooter_carrot_dead_64x64_8
+  - first:
+      213: -8804265792827957376
+    second: Sticklooter_carrot_dead_64x64_9
+  - first:
+      213: 5894389358497716897
+    second: Sticklooter_carrot_dead_64x64_10
+  - first:
+      213: -6094299785232741304
+    second: Sticklooter_carrot_dead_64x64_11
+  - first:
+      213: 4121398765751497416
+    second: Sticklooter_carrot_dead_64x64_12
+  - first:
+      213: -7698792713312239532
+    second: Sticklooter_carrot_dead_64x64_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 6
+        width: 44
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0b9fb1917d9a8e10800000000000000
+      internalID: 2200744479026027279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 7
+        width: 34
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3066205cfd0326b30800000000000000
+      internalID: 4279036333596501507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_2
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 6
+        width: 48
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0faec3d4382a62120800000000000000
+      internalID: 2388775337186880240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_3
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 7
+        width: 46
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab933fc27d9e714e0800000000000000
+      internalID: -2010881598216259142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_4
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 27
+        width: 22
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69f0fe5f7a6bbb0a0800000000000000
+      internalID: -6864692374494310506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_5
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 7
+        width: 49
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca1778257e353d9f0800000000000000
+      internalID: -444919685192388180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_6
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 27
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4eac74f83d24bb7c0800000000000000
+      internalID: -4054573563107620124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_7
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 27
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0e16f559ebe027b0800000000000000
+      internalID: -5250937778111898097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_8
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 18
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b3cc3712dbf226e0800000000000000
+      internalID: -1863650416026401871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_9
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 5
+        width: 61
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08fdd5e88e6f0d580800000000000000
+      internalID: -8804265792827957376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_10
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 13
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1aa591944e31dc150800000000000000
+      internalID: 5894389358497716897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_11
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 7
+        width: 56
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84c867262a2bc6ba0800000000000000
+      internalID: -6094299785232741304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_12
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 19
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c2f9526756223930800000000000000
+      internalID: 4121398765751497416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sticklooter_carrot_dead_64x64_13
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 7
+        width: 59
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45088a331d4682590800000000000000
+      internalID: -7698792713312239532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Sticklooter_carrot_dead_64x64_0: 2200744479026027279
+      Sticklooter_carrot_dead_64x64_1: 4279036333596501507
+      Sticklooter_carrot_dead_64x64_10: 5894389358497716897
+      Sticklooter_carrot_dead_64x64_11: -6094299785232741304
+      Sticklooter_carrot_dead_64x64_12: 4121398765751497416
+      Sticklooter_carrot_dead_64x64_13: -7698792713312239532
+      Sticklooter_carrot_dead_64x64_2: 2388775337186880240
+      Sticklooter_carrot_dead_64x64_3: -2010881598216259142
+      Sticklooter_carrot_dead_64x64_4: -6864692374494310506
+      Sticklooter_carrot_dead_64x64_5: -444919685192388180
+      Sticklooter_carrot_dead_64x64_6: -4054573563107620124
+      Sticklooter_carrot_dead_64x64_7: -5250937778111898097
+      Sticklooter_carrot_dead_64x64_8: -1863650416026401871
+      Sticklooter_carrot_dead_64x64_9: -8804265792827957376
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
