@@ -8,11 +8,10 @@ public class SwordDamage : MonoBehaviour
     
     [Header("Knockback Settings")]
     [SerializeField] private float knockbackForce = 5f;
-    [SerializeField] private Vector2 knockbackDirection = new Vector2(1f, 0.3f);
+    [SerializeField] private float knockbackUpwardForce = 0.3f; // Upward component
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if it's an enemy
         if (((1 << other.gameObject.layer) & enemyLayer) == 0)
             return;
         
@@ -20,16 +19,17 @@ public class SwordDamage : MonoBehaviour
         IsDamageable damageable = other.GetComponent<IsDamageable>();
         if (damageable != null && damageable.IsAlive)
         {
-            // Calculate knockback
+            // Calculate direction from player to enemy
             Transform playerTransform = transform.root;
-            float facingDirection = Mathf.Sign(playerTransform.localScale.x);
+            Vector2 directionToEnemy = (other.transform.position - playerTransform.position).normalized;
             
+            // Apply knockback in that direction with upward force
             Vector2 knockback = new Vector2(
-                knockbackDirection.x * facingDirection * knockbackForce,
-                knockbackDirection.y * knockbackForce
+                directionToEnemy.x * knockbackForce,
+                knockbackUpwardForce * knockbackForce
             );
             
-            Debug.Log($"Applying knockback: {knockback}, facing: {facingDirection}, force: {knockbackForce}");
+            Debug.Log($"Applying knockback: {knockback}, direction to enemy: {directionToEnemy}");
             
             damageable.TakeDamage(damageAmount, knockback);
         }
