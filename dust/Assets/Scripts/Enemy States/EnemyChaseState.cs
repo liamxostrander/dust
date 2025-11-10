@@ -11,7 +11,6 @@ public class EnemyChaseState : EnemyState
     [Header("Jump Settings")]
     public float jumpForce = 8f;
     
-    private bool hasJumped = false;
     private EnemyState previousState;
 
     public override void Enter()
@@ -30,7 +29,6 @@ public class EnemyChaseState : EnemyState
         if (stateMachine.isGrounded && !stateMachine.justFinishedAttack)
         {
             stateMachine.rb.linearVelocity = new Vector2(0, jumpForce);
-            hasJumped = true;
         }
     }
     
@@ -57,9 +55,7 @@ public class EnemyChaseState : EnemyState
     }
     
     public override void Exit()
-    {
-        hasJumped = false;
-        
+    {        
         // Reset animation speed
         if (stateMachine.animator != null)
         {

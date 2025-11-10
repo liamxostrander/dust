@@ -78,6 +78,52 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1949671990581749653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8891572313048306656}
+  - component: {fileID: 5045286152032035772}
+  m_Layer: 8
+  m_Name: Hurt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8891572313048306656
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949671990581749653}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5550422256291524957}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5045286152032035772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949671990581749653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db329bff2f8efb844ad05b4385ba8c51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHurtState
+  hurtDuration: 0.3
+  hurtAnim: {fileID: 7400000, guid: 1192ecea3d3a5994ead9ced2fbd0726b, type: 2}
 --- !u!1 &3357814537011257735
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,6 +181,7 @@ GameObject:
   - component: {fileID: 3063756905220129506}
   - component: {fileID: 4863061856287332001}
   - component: {fileID: 3759689748221425362}
+  - component: {fileID: -7770279662529797646}
   - component: {fileID: 6497927980629246668}
   - component: {fileID: 6558281572599904565}
   - component: {fileID: 7789587845918559959}
@@ -177,10 +224,10 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.1
   m_AngularDamping: 0.05
   m_GravityScale: 3
-  m_Material: {fileID: 6200000, guid: 54c2d97630c373a4cb53c146c876ddd9, type: 2}
+  m_Material: {fileID: 6200000, guid: a6e40bab759768e4a9815d49be4eaa31, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -237,7 +284,36 @@ MonoBehaviour:
   chaseState: {fileID: 4950454643338969564}
   attackState: {fileID: 4412883038623170640}
   deathState: {fileID: 4628271959057040266}
+  hurtState: {fileID: 5045286152032035772}
   showGizmos: 0
+--- !u!114 &-7770279662529797646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3601667383540302290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049a8dbca5be67642abf424b5f8c5d6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IsDamageable
+  maxHealth: 100
+  currentHealth: 0
+  isInvulnerable: 0
+  invulnerabilityDuration: 0.5
+  OnDamagedWithKnockback:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6497927980629246668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,6 +541,7 @@ Transform:
   - {fileID: 1711661962550112164}
   - {fileID: 719711751315257092}
   - {fileID: 4355589946100406180}
+  - {fileID: 8891572313048306656}
   m_Father: {fileID: 3063756905220129506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4314752075414780233

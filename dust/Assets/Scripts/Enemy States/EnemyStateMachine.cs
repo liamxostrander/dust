@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR;
 
 /// Main enemy state machine that controls enemy AI behavior.
 /// Manages state transitions and provides helper functions for states.
@@ -48,10 +49,13 @@ public class EnemyStateMachine : MonoBehaviour
     public EnemyChaseState chaseState;
     public EnemyMeleeState attackState;
     public EnemyDeathState deathState;
+    public EnemyHurtState hurtState;
     
     [Header("Debug")]
     public bool showGizmos = true;
-    
+
+    private Vector2 pendingKnockback;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -65,12 +69,22 @@ public class EnemyStateMachine : MonoBehaviour
         if (chaseState == null) chaseState = GetComponent<EnemyChaseState>();
         if (attackState == null) attackState = GetComponent<EnemyMeleeState>();
         if (deathState == null) deathState = GetComponent<EnemyDeathState>();
+        if (hurtState == null) hurtState = GetComponent<EnemyHurtState>();
 
         if (idleState != null) idleState.Initialize(this);
         if (patrolState != null) patrolState.Initialize(this);
         if (chaseState != null) chaseState.Initialize(this);
         if (attackState != null) attackState.Initialize(this);
         if (deathState != null) deathState.Initialize(this);
+        if (hurtState != null) hurtState.Initialize(this);
+
+        // Connect IsDamageable events
+        IsDamageable damageable = GetComponent<IsDamageable>();
+        if (damageable != null)
+        {
+            damageable.OnDamagedWithKnockback.AddListener(HandleDamaged);
+            damageable.OnDeath.AddListener(HandleDeath);
+        }
 
         // Set initial state
         currentState = patrolState;
@@ -93,7 +107,8 @@ public class EnemyStateMachine : MonoBehaviour
         {
             currentState.Do();
             
-            if (currentState.isComplete)
+            // Don't allow state transitions during hurt or death states
+            if (currentState.isComplete && currentState != hurtState && currentState != deathState)
             {
                 currentState.Exit();
                 SelectState();
@@ -107,6 +122,47 @@ public class EnemyStateMachine : MonoBehaviour
         {
             currentState.FixedDo();
         }
+    }
+
+    void OnDestroy()
+    {
+        IsDamageable damageable = GetComponent<IsDamageable>();
+        if (damageable != null)
+        {
+            damageable.OnDamagedWithKnockback.RemoveListener(HandleDamaged);
+            damageable.OnDeath.RemoveListener(HandleDeath);
+        }
+    }
+
+    private void HandleKnockback(Vector2 knockback)
+    {
+        pendingKnockback = knockback;
+        Debug.Log($"Knockback received: {knockback}");
+    }
+
+    private void HandleDamaged(float damage, Vector2 knockback)
+    {
+        // Don't interrupt death state
+        if (currentState == deathState)
+            return;
+
+        // Check if hurt state exists
+        if (hurtState == null)
+        {
+            Debug.LogWarning("EnemyHurtState not assigned!");
+            return;
+        }
+
+        // Set the knockback immediately
+        hurtState.SetKnockbackDirection(knockback);
+        
+        // Switch to hurt state
+        SwitchState(hurtState);
+    }
+    private void HandleDeath()
+    {
+        // Transition to death state
+        SwitchState(deathState);
     }
 
     private void UpdateSpriteDirection()
