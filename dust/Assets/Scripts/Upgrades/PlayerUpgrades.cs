@@ -18,6 +18,11 @@ public class PlayerUpgrades : MonoBehaviour
 
     public System.Action<string> OnUpgradeApplied;
 
+    [Header("Audio")]
+    public AudioSource sfxSource;
+    public AudioClip defaultPickupSfx;
+    [Range(0f, 1f)] public float pickupVolume = 1f;
+
     void Awake()
     {
         if (!movement) movement = GetComponent<PlayerMovementSM>();
@@ -30,6 +35,18 @@ public class PlayerUpgrades : MonoBehaviour
         acquired.Add(u);
         Recalculate();
         OnUpgradeApplied?.Invoke(u.GetDisplayText());
+        AudioClip clip = u.pickupSfx ? u.pickupSfx : defaultPickupSfx;
+        if (clip)
+        {
+            if (sfxSource)
+            {
+                sfxSource.PlayOneShot(clip, pickupVolume);
+            }
+            else
+            {
+                AudioSource.PlayClipAtPoint(clip, transform.position, pickupVolume);
+            }
+        }
     }
 
     public void RemoveUpgrade(UpgradeSO u)

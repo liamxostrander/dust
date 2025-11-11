@@ -20,7 +20,7 @@ public class SceneSwitcher : MonoBehaviour
 
     void Start()
     {
-        musicSource.volume = 1f;
+        musicSource.volume = 0.3f;
     }
     private IEnumerator FadeOutAndLoad(string sceneName)
     {

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Jump Upgrade 30%
   m_EditorClassIdentifier: Assembly-CSharp::JumpUpgradeSO
   description: 
+  pickupSfx: {fileID: 8300000, guid: d9be064a9cb35f04989f2c945f1f9ded, type: 3}
   bonusPercent: 0.3

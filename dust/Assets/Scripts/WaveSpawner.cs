@@ -34,6 +34,15 @@ public class WaveSpawner : MonoBehaviour
     private int _aliveTotal = 0;
     private readonly Dictionary<int, int> _alivePerWave = new();
 
+    [Header("Audio")]
+    [Tooltip("Where SFX will play from. Can be this same GameObject.")]
+    public AudioSource sfxSource;
+    public AudioClip countdownBeep;
+    public AudioClip waveStartSfx;
+
+    [Header("Timer Visuals")]
+    [Tooltip("Turn the timer value red on last 3 seconds.")]
+    public bool colorLastThreeSeconds = true;
 
     [Serializable]
     public class Wave
@@ -101,6 +110,10 @@ public class WaveSpawner : MonoBehaviour
     {
         hud?.SetWaveText(waveIndex + 1, TotalWaves);
 
+        if (sfxSource && waveStartSfx)
+            sfxSource.PlayOneShot(waveStartSfx);
+        hud?.SetTimerUrgent(false);
+
         if (!_alivePerWave.ContainsKey(waveIndex))
             _alivePerWave[waveIndex] = 0;
 
@@ -138,23 +151,37 @@ public class WaveSpawner : MonoBehaviour
                     yield return new WaitForSeconds(set.perSpawnDelay);
             }
         }
-
         if (wave.useTimer)
         {
             float t = Mathf.Max(0f, wave.waveDuration);
+            int lastWhole = Mathf.CeilToInt(t);
             while (t > 0f)
             {
                 hud?.SetTimer(FormatTime(t));
-                yield return null;
+                bool urgent = colorLastThreeSeconds && (Mathf.CeilToInt(t) <= 3) && (t > 0f);
+                hud?.SetTimerUrgent(urgent);
                 t -= Time.deltaTime;
+                int currWhole = Mathf.CeilToInt(Mathf.Max(0f, t));
+                if (currWhole < lastWhole)
+                {
+                    if (currWhole > 0 && currWhole <= 3)
+                    {
+                        if (sfxSource && countdownBeep)
+                            sfxSource.PlayOneShot(countdownBeep);
+                    }
+                    lastWhole = currWhole;
+                }
+                yield return null;
             }
             hud?.SetTimer("0:00");
+
             if (chestSpawner) chestSpawner.SpawnRandomChest();
             AdvanceToNextWave();
         }
         else
         {
             hud?.SetTimer("∞");
+            hud?.SetTimerUrgent(false);
             while (GetAliveForWave(waveIndex) > 0)
             {
                 yield return null;
@@ -162,6 +189,7 @@ public class WaveSpawner : MonoBehaviour
             if (chestSpawner) chestSpawner.SpawnRandomChest();
             AdvanceToNextWave();
         }
+
     }
 
     private int GetAliveForWave(int waveId)
