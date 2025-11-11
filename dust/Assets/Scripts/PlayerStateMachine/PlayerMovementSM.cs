@@ -19,6 +19,9 @@ public class PlayerMovementSM : MonoBehaviour
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
+    [Header("Audio")]
+    [SerializeField] public AudioSource audioSource;
+
     [Header("Movement")]
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] public float airControl = 0.7f;
@@ -27,11 +30,13 @@ public class PlayerMovementSM : MonoBehaviour
     [SerializeField] public float slashControl = 0.05f;
     [SerializeField] public float sliceControl = 0.1f;
     [SerializeField] public float control = 1.0f;
+    private bool canMove = true;
 
     [Header("Jumping")]
     [SerializeField] float jumpImpulse = 14f;
     [SerializeField] int maxJumps = 2;
     [SerializeField] float jumpBufferTime = 0.12f;
+    [SerializeField] public AudioClip jumpSound; 
     public float lastFallSpeed;
 
     [Header("Dash")]
@@ -40,6 +45,7 @@ public class PlayerMovementSM : MonoBehaviour
     [SerializeField] float dashDuration = 0.15f;
     [SerializeField] float dashCooldown = 0.35f;
     [SerializeField] bool allowAirDash = true;
+    [SerializeField] public AudioClip dashSound; 
 
     [Header("Grounding")]
     [SerializeField] LayerMask groundMask;
@@ -183,7 +189,8 @@ public class PlayerMovementSM : MonoBehaviour
     void HandleXMovement()
     {
         float targetVX = moveX * moveSpeed * control * speedMultiplier;
-        rb.linearVelocity = new Vector2(Mathf.Lerp(rb.linearVelocity.x, targetVX, 0.35f), rb.linearVelocity.y);
+        if (canMove)
+            rb.linearVelocity = new Vector2(Mathf.Lerp(rb.linearVelocity.x, targetVX, 0.35f), rb.linearVelocity.y);
     }
     void HandleJump()
     {
@@ -191,6 +198,15 @@ public class PlayerMovementSM : MonoBehaviour
         {
             if (isGrounded || jumpsRemaining > 0)
             {
+                audioSource.clip = jumpSound;
+                audioSource.loop = false;
+                audioSource.volume = 0.4f;
+                audioSource.pitch = 1.3f;
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+                audioSource.Play();
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
                 rb.AddForce(Vector2.up * (jumpImpulse * jumpMultiplier), ForceMode2D.Impulse);
 
@@ -228,6 +244,15 @@ public class PlayerMovementSM : MonoBehaviour
         if (!canDash) return;
         if (!allowAirDash && !isGrounded) return;
         StartCoroutine(DashRoutine(dir));
+        audioSource.clip = dashSound;
+        audioSource.loop = false;
+        audioSource.volume = 0.4f;
+        audioSource.pitch = 1.3f;
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+        audioSource.Play();
     }
 
     IEnumerator DashRoutine(int dir)
@@ -256,13 +281,26 @@ public class PlayerMovementSM : MonoBehaviour
     public IEnumerator SmoothControlTransition(float from, float to, float duration)
     {
         float elapsed = 0f;
-            while (elapsed < duration)
-            {
-                elapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsed / duration);
-                control = Mathf.Lerp(from, to, t);
-                yield return null;
-            }
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            control = Mathf.Lerp(from, to, t);
+            yield return null;
+        }
         control = to;
+    }
+    
+
+    public void DisableMovement(float duration)
+    {
+        StartCoroutine(ReenableMovement(duration));
+    }
+
+    private IEnumerator ReenableMovement(float duration)
+    {
+        canMove = false;
+        yield return new WaitForSeconds(duration);
+        canMove = true;
     }
 }

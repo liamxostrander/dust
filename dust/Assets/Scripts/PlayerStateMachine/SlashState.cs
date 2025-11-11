@@ -15,6 +15,10 @@ public class SlashState : State
     public AnimationClip swordSlashAnim;
     public GameObject swordPivot;
     float timer;
+
+    [Header("Attack SFX")]
+    public AudioClip slashSound; 
+    private AudioSource audioSource;
     public override void Enter()
     {
         isComplete = false;
@@ -29,6 +33,21 @@ public class SlashState : State
         SwordAnim(attackDir);
         attackDir.y = 0;
         input.rb.AddForce(attackDir * attack1Impulse, ForceMode2D.Impulse);
+
+        if (audioSource == null)
+        {
+            audioSource = input.GetComponent<AudioSource>();
+            if (audioSource == null)
+                audioSource = input.gameObject.AddComponent<AudioSource>();
+        }
+
+        audioSource.clip = slashSound;
+        audioSource.loop = false;
+        audioSource.volume = 0.6f;
+        audioSource.time = 0f;
+        audioSource.pitch = 1f;
+        if (!audioSource.isPlaying)
+            audioSource.Play();
     }
     public override void Do()
     {
@@ -72,6 +91,10 @@ public class SlashState : State
     {
         swordPivot.SetActive(false);
         input.isSlashing = false;
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
     
 }
