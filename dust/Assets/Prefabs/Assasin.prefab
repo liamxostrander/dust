@@ -51,6 +51,7 @@ MonoBehaviour:
   swordAnimator: {fileID: 1160870222413704833}
   swordSlashAnim: {fileID: 7400000, guid: 160f3dcc779174cfe9bd7bb734e0262c, type: 2}
   swordPivot: {fileID: 4124785412755128904}
+  slashSound: {fileID: 8300000, guid: c458b6714dab015479d507b21fd2cead, type: 3}
 --- !u!1 &2768024811508513931
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,6 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunState
   runAnim: {fileID: 6200578666267062213, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  runLoopSound: {fileID: 8300000, guid: ddbfbb595c78d4ce38d82dc0c28ed1f8, type: 3}
 --- !u!1 &3111942490343523604
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundState
   landAnim: {fileID: 4461826734956849724, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  landSound: {fileID: 0}
   controlLerpDuration: 0.1
   maxFallSpeedForScaling: 20
 --- !u!1 &4124785412755128904
@@ -298,6 +301,12 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  knockbackForce: 5
+  knockbackUpwardForce: 0.3
+  playerRecoilForce: 10
+  screenShakeMagnitude: 0.15
+  screenShakeDuration: 0.1
+  hitSound: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
 --- !u!1 &5307760465165331743
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,6 +385,135 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &6073559203737303543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3498120352487129553}
+  - component: {fileID: 2824087949657028439}
+  m_Layer: 0
+  m_Name: SFXSource
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3498120352487129553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6073559203737303543}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5899023650178650985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2824087949657028439
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6073559203737303543}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6620683533793300487
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +563,7 @@ MonoBehaviour:
   swordAnimator: {fileID: 1160870222413704833}
   swordDashSliceAnim: {fileID: 7400000, guid: aaa4d1a828f3e4c6a82efd97ee9b02e0, type: 2}
   swordPivot: {fileID: 4124785412755128904}
+  dashSliceSound: {fileID: 8300000, guid: ec821bac988334e28baa87268bafdf09, type: 3}
 --- !u!1 &7072244433888983010
 GameObject:
   m_ObjectHideFlags: 0
@@ -595,6 +734,7 @@ GameObject:
   - component: {fileID: 5899023650178650985}
   - component: {fileID: 9073575486175412577}
   - component: {fileID: 944522438771087734}
+  - component: {fileID: 5938048470447363326}
   m_Layer: 0
   m_Name: Assasin
   m_TagString: Player
@@ -620,6 +760,7 @@ Transform:
   - {fileID: 8742143878811240289}
   - {fileID: 3537548922069253423}
   - {fileID: 9131598270360368242}
+  - {fileID: 3498120352487129553}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &9073575486175412577
@@ -669,6 +810,7 @@ MonoBehaviour:
   dashSliceState: {fileID: 4943419815015779424}
   animator: {fileID: 3135114199434424583}
   spriteRenderer: {fileID: 2338619762614720802}
+  audioSource: {fileID: 2824087949657028439}
   moveSpeed: 15
   airControl: 0.7
   groundControl: 1
@@ -679,12 +821,14 @@ MonoBehaviour:
   jumpImpulse: 10
   maxJumps: 2
   jumpBufferTime: 0.12
+  jumpSound: {fileID: 8300000, guid: 4e349dc959014a845b9aa317d1c2b7f0, type: 3}
   lastFallSpeed: 0
   doubleTapWindow: 0.25
   dashSpeed: 22
   dashDuration: 0.15
   dashCooldown: 0.35
   allowAirDash: 1
+  dashSound: {fileID: 8300000, guid: f11db4559b3ffff45b62e9327fc5535d, type: 3}
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -698,6 +842,18 @@ MonoBehaviour:
   isSlashing: 0
   speedMultiplier: 1
   jumpMultiplier: 1
+--- !u!114 &5938048470447363326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7907996678867762525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38aa7f7d208b4af4a8f0c3237fe4660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStop
 --- !u!1 &8716640178211188474
 GameObject:
   m_ObjectHideFlags: 0

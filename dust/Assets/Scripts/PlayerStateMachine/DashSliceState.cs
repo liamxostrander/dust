@@ -11,6 +11,10 @@ public class DashSliceState : State
     public AnimationClip swordDashSliceAnim;
     public GameObject swordPivot;
     float timer;
+
+    [Header("Attack SFX")]
+    public AudioClip dashSliceSound; 
+    private AudioSource audioSource;
     
     public override void Enter()
     {
@@ -21,7 +25,20 @@ public class DashSliceState : State
         animator.Play(sliceAnim.name, 0, animStartTime);
         timer = sliceAnim.length - animStartTime;
         SwordAnim(attackDir);
-        
+        if (audioSource == null)
+        {
+            audioSource = input.GetComponent<AudioSource>();
+            if (audioSource == null)
+                audioSource = input.gameObject.AddComponent<AudioSource>();
+        }
+
+        audioSource.clip = dashSliceSound;
+        audioSource.loop = false;
+        audioSource.volume = 0.3f;
+        audioSource.time = 0f;
+        audioSource.pitch = 1f;
+        if (!audioSource.isPlaying)
+            audioSource.Play();
     }
     public override void Do()
     {
@@ -57,6 +74,10 @@ public class DashSliceState : State
     public override void Exit()
     {
         swordPivot.SetActive(false);
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 
 }
