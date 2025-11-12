@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunState
   runAnim: {fileID: 6200578666267062213, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
-  runLoopSound: {fileID: 8300000, guid: ddbfbb595c78d4ce38d82dc0c28ed1f8, type: 3}
+  runLoopSound: {fileID: 8300000, guid: 906f65d18011e4e16bc21c16e8cab499, type: 3}
 --- !u!1 &3111942490343523604
 GameObject:
   m_ObjectHideFlags: 0

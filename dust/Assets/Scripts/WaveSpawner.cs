@@ -111,7 +111,7 @@ public class WaveSpawner : MonoBehaviour
         hud?.SetWaveText(waveIndex + 1, TotalWaves);
 
         if (sfxSource && waveStartSfx)
-            sfxSource.PlayOneShot(waveStartSfx);
+            sfxSource.PlayOneShot(waveStartSfx, 0.3f);
         hud?.SetTimerUrgent(false);
 
         if (!_alivePerWave.ContainsKey(waveIndex))
@@ -167,7 +167,7 @@ public class WaveSpawner : MonoBehaviour
                     if (currWhole > 0 && currWhole <= 3)
                     {
                         if (sfxSource && countdownBeep)
-                            sfxSource.PlayOneShot(countdownBeep);
+                            sfxSource.PlayOneShot(countdownBeep, 0.3f);
                     }
                     lastWhole = currWhole;
                 }

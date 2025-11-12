@@ -133,24 +133,31 @@ public class PlayerMovementSM : MonoBehaviour
     {
         CheckInput();
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
             lastJumpPressTimer = jumpBufferTime;
 
         // double-tap left
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             float now = Time.time;
             if (now - lastLeftTap <= doubleTapWindow) TryDash(-1);
             lastLeftTap = now;
         }
         // double-tap right
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.D))
         {
             float now = Time.time;
             if (now - lastRightTap <= doubleTapWindow) TryDash(+1);
             lastRightTap = now;
         }
-        if (Input.GetMouseButtonDown(0) && !isDashing)
+
+        bool arrowPressed =
+            Input.GetKeyDown(KeyCode.LeftArrow) ||
+            Input.GetKeyDown(KeyCode.RightArrow) ||
+            Input.GetKeyDown(KeyCode.UpArrow) ||
+            Input.GetKeyDown(KeyCode.DownArrow);
+
+        if (arrowPressed && !isDashing)
         {
             if (!isSlashing)
             {
@@ -160,7 +167,7 @@ public class PlayerMovementSM : MonoBehaviour
                 state.Enter();
             }
         }
-        if (Input.GetMouseButtonDown(0) && isDashing)
+        if (arrowPressed && isDashing)
         {
             state.Exit();
             state = dashSliceState;

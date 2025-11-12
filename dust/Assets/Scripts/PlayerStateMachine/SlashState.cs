@@ -23,9 +23,25 @@ public class SlashState : State
     {
         isComplete = false;
         if (input.isGrounded) input.control = input.slashControl;
-        Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 attackDir = (mousePos - (Vector2)swordPivot.transform.position).normalized;
-        input.spriteRenderer.flipX = attackDir.x < 0 ? true : false;
+        // Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Vector2 attackDir = (mousePos - (Vector2)swordPivot.transform.position).normalized;
+        // input.spriteRenderer.flipX = attackDir.x < 0 ? true : false;
+        Vector2 attackDir = Vector2.zero;
+
+        if (Input.GetKey(KeyCode.UpArrow))
+            attackDir.y += 1;
+        if (Input.GetKey(KeyCode.DownArrow))
+            attackDir.y -= 1;
+        if (Input.GetKey(KeyCode.RightArrow))
+            attackDir.x += 1;
+        if (Input.GetKey(KeyCode.LeftArrow))
+            attackDir.x -= 1;
+        if (attackDir == Vector2.zero)
+            attackDir = input.spriteRenderer.flipX ? Vector2.left : Vector2.right;
+        // input.spriteRenderer.flipX = attackDir.x < 0 ? true : false;
+        attackDir.Normalize();
+        input.spriteRenderer.flipX = attackDir.x < 0;
+
         timer = slashAnim.length - animStartTime;
         animator.Play(slashAnim.name, 0, animStartTime);
         
@@ -43,7 +59,7 @@ public class SlashState : State
 
         audioSource.clip = slashSound;
         audioSource.loop = false;
-        audioSource.volume = 0.6f;
+        audioSource.volume = 0.8f;
         audioSource.time = 0f;
         audioSource.pitch = 1f;
         if (!audioSource.isPlaying)
@@ -55,7 +71,11 @@ public class SlashState : State
 
         if (input.isGrounded) input.control = input.slashControl;
 
-        if (timer < comboWindow && Input.GetMouseButtonDown(0))
+        if (timer < comboWindow && (
+            Input.GetKeyDown(KeyCode.UpArrow) ||
+            Input.GetKeyDown(KeyCode.DownArrow) ||
+            Input.GetKeyDown(KeyCode.LeftArrow) ||
+            Input.GetKeyDown(KeyCode.RightArrow)))
         {
             Enter();
         }
@@ -71,20 +91,29 @@ public class SlashState : State
         swordPivot.SetActive(true);
 
         bool facingLeft = attackDir.x < 0f;
-
-        if (facingLeft)
-        {
-            swordPivot.transform.localScale = new Vector3(1, -1, 1);
-        }
-        else
-        {
-            swordPivot.transform.localScale = Vector3.one;
-        }
+        swordPivot.transform.localScale = facingLeft ? new Vector3(1, -1, 1) : Vector3.one;
 
         float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
         swordPivot.transform.rotation = Quaternion.Euler(0, 0, angle);
 
         swordAnimator.Play(swordSlashAnim.name, 0, 0f);
+        // swordPivot.SetActive(true);
+
+        // bool facingLeft = attackDir.x < 0f;
+
+        // if (facingLeft)
+        // {
+        //     swordPivot.transform.localScale = new Vector3(1, -1, 1);
+        // }
+        // else
+        // {
+        //     swordPivot.transform.localScale = Vector3.one;
+        // }
+
+        // float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
+        // swordPivot.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // swordAnimator.Play(swordSlashAnim.name, 0, 0f);
 
     }
     public override void Exit()

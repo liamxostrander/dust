@@ -22,7 +22,7 @@ public class RunState : State
 
         audioSource.clip = runLoopSound;
         audioSource.loop = true;
-        audioSource.volume = 0.6f;
+        audioSource.volume = 0.8f;
         audioSource.time = 0.1f;
         audioSource.pitch = 1.5f;
 
