@@ -469,7 +469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneSwitcher
   transitionEffectImage: {fileID: 315826997}
   fadeDuration: 1
-  gameSceneName: BasicArena
+  gameSceneName: CaveArena
   musicSource: {fileID: 1735950764}
   renderTexture: {fileID: 8400000, guid: fbb332921e8854ea0b826a7a26ec6bd6, type: 2}
 --- !u!1 &230563398
