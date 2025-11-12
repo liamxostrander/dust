@@ -12,6 +12,17 @@ public class IsDamageable : MonoBehaviour
     [SerializeField] private float invulnerabilityDuration = 0.5f;
     private float invulnerabilityTimer = 0f;
     
+    [Header("Audio")]
+    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private AudioSource audioSource;
+    
+    [Header("Coin Drop")]
+    [SerializeField] private GameObject coinPrefab;
+    [SerializeField] private int minCoins = 1;
+    [SerializeField] private int maxCoins = 5;
+    [SerializeField] private float coinDropForce = 3f;
+    [SerializeField] private float coinDropRadius = 0.5f;
+    
     [Header("Events")]
     public UnityEvent<float, Vector2> OnDamagedWithKnockback; // Combined event
     public UnityEvent<float> OnHealed;
@@ -26,6 +37,16 @@ public class IsDamageable : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        
+        // Get or add AudioSource if not assigned
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
     }
     
     void Update()
@@ -42,6 +63,12 @@ public class IsDamageable : MonoBehaviour
             return;
         
         currentHealth = Mathf.Max(0, currentHealth - damage);
+        
+        // Play hit sound
+        if (hitSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(hitSound);
+        }
         
         // Invoke combined event with both damage and knockback
         OnDamagedWithKnockback?.Invoke(damage, knockback);
@@ -76,7 +103,37 @@ public class IsDamageable : MonoBehaviour
     
     private void Die()
     {
+        DropCoins();
         OnDeath?.Invoke();
+    }
+    
+    private void DropCoins()
+    {
+        if (coinPrefab == null)
+            return;
+        
+        int coinCount = Random.Range(minCoins, maxCoins + 1);
+        
+        for (int i = 0; i < coinCount; i++)
+        {
+            // Random position around the enemy
+            Vector2 randomOffset = Random.insideUnitCircle * coinDropRadius;
+            Vector3 spawnPosition = transform.position + new Vector3(randomOffset.x, randomOffset.y, 0);
+            
+            GameObject coin = Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
+            
+            // Apply random force if coin has Rigidbody2D
+            Rigidbody2D rb = coin.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                // Create upward and outward direction
+                Vector2 randomDirection = Random.insideUnitCircle.normalized;
+                float upwardBias = Random.Range(0.5f, 1.5f); // Adds upward force
+                Vector2 throwDirection = new Vector2(randomDirection.x, Mathf.Abs(randomDirection.y) + upwardBias).normalized;
+                
+                rb.AddForce(throwDirection * coinDropForce, ForceMode2D.Impulse);
+            }
+        }
     }
     
     public void ResetHealth()

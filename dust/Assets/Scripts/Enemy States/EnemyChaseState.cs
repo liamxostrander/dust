@@ -11,8 +11,6 @@ public class EnemyChaseState : EnemyState
     [Header("Jump Settings")]
     public float jumpForce = 8f;
     
-    private EnemyState previousState;
-
     public override void Enter()
     {
         base.Enter();

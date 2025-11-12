@@ -239,6 +239,7 @@ GameObject:
   - component: {fileID: 2238925917224538087}
   - component: {fileID: 7878034096879709526}
   - component: {fileID: 966979085077789351}
+  - component: {fileID: -508712274853135325}
   m_Layer: 8
   m_Name: Slime
   m_TagString: Untagged
@@ -288,7 +289,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &2915891791706063143
 MonoBehaviour:
@@ -316,7 +317,7 @@ MonoBehaviour:
   chaseSpeed: 4
   detectionRange: 5
   visionConeAngle: 90
-  useVisionCone: 1
+  useVisionCone: 0
   groundCheckPoint: {fileID: 0}
   edgeCheckDistance: 0.7
   shouldReverseDirection: 0
@@ -324,10 +325,10 @@ MonoBehaviour:
   groundCheck: {fileID: 9089704159448870595}
   groundCheckRadius: 0.75
   isGrounded: 0
-  attackRange: 2
+  attackRange: 1.8
   attackConeAngle: 90
-  useAttackCone: 1
-  attackHitboxRadius: 1
+  useAttackCone: 0
+  attackHitboxRadius: 0.75
   attackCooldown: 2
   attackDamage: 1
   justFinishedAttack: 0
@@ -354,6 +355,13 @@ MonoBehaviour:
   currentHealth: 0
   isInvulnerable: 0
   invulnerabilityDuration: 0.3
+  hitSound: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
+  audioSource: {fileID: -508712274853135325}
+  coinPrefab: {fileID: 100000, guid: 49e6ee33250214a9facc214f3a2fecb7, type: 3}
+  minCoins: 1
+  maxCoins: 5
+  coinDropForce: 3
+  coinDropRadius: 0.5
   OnDamagedWithKnockback:
     m_PersistentCalls:
       m_Calls: []
@@ -563,8 +571,105 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.25, y: 0.2}
+  m_Size: {x: 0.25, y: 0.14}
   m_EdgeRadius: 0
+--- !u!82 &-508712274853135325
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4496602079716094128}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5983875973966307388
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +742,7 @@ Transform:
   m_GameObject: {fileID: 6110970416259805552}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.0389, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
