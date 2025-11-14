@@ -5,7 +5,6 @@ public class AirState : State
     public AnimationClip fallAnim;
     public AnimationClip jumpAnim;
     private bool isFalling = false;
-
     public float jumpSpeed;
     public override void Enter()
     {

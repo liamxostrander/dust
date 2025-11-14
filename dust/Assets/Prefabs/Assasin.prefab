@@ -307,6 +307,7 @@ MonoBehaviour:
   screenShakeMagnitude: 0.15
   screenShakeDuration: 0.1
   hitSound: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
+  audioSource: {fileID: 2824087949657028439}
 --- !u!1 &5307760465165331743
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,10 +427,10 @@ AudioSource:
   m_GameObject: {fileID: 6073559203737303543}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -657744565452929919, guid: 7a83ef42120264e0aac13b9d69b2934a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

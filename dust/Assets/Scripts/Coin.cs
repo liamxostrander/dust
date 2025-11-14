@@ -8,7 +8,6 @@ public class Coin : MonoBehaviour
     
     [Header("Audio")]
     [SerializeField] private AudioClip collectSound;
-    [SerializeField] private float volume = 1f;
     
     private bool isCollected = false;
     
@@ -34,14 +33,13 @@ public class Coin : MonoBehaviour
     {
         Debug.Log("Coin collected!");
         isCollected = true;
-        
         if (collectSound != null)
         {
-            AudioSource.PlayClipAtPoint(collectSound, transform.position, volume);
+            GlobalAudio.SFX.PlayOneShot(collectSound);
         }
         
         // TODO: Add coin value to player's currency system
-        
+        // Delay for audio
         Destroy(gameObject);
     }
     

@@ -15,7 +15,6 @@ public class DashSliceState : State
     [Header("Attack SFX")]
     public AudioClip dashSliceSound; 
     private AudioSource audioSource;
-    
     public override void Enter()
     {
         isComplete = false;
@@ -30,28 +29,21 @@ public class DashSliceState : State
         if (Input.GetKey(KeyCode.LeftArrow))
             attackDir.x -= 1;
 
-        // Default to facing direction if no arrow pressed
         if (attackDir == Vector2.zero)
             attackDir = input.spriteRenderer.flipX ? Vector2.left : Vector2.right;
 
         attackDir.Normalize();
         input.spriteRenderer.flipX = attackDir.x < 0f;
-        // Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // Vector2 attackDir = (mousePos - (Vector2)swordPivot.transform.position).normalized;
-        // input.spriteRenderer.flipX = attackDir.x < 0 ? true : false;
         animator.Play(sliceAnim.name, 0, animStartTime);
         timer = sliceAnim.length - animStartTime;
         SwordAnim(attackDir);
         if (audioSource == null)
         {
-            audioSource = input.GetComponent<AudioSource>();
-            if (audioSource == null)
-                audioSource = input.gameObject.AddComponent<AudioSource>();
+            audioSource = input.audioSource;
         }
 
         audioSource.clip = dashSliceSound;
         audioSource.loop = false;
-        audioSource.volume = 0.7f;
         audioSource.time = 0f;
         audioSource.pitch = 1f;
         if (!audioSource.isPlaying)
@@ -77,25 +69,6 @@ public class DashSliceState : State
         swordPivot.transform.rotation = Quaternion.Euler(0, 0, angle);
 
         swordAnimator.Play(swordDashSliceAnim.name, 0, 0f);
-        // swordPivot.SetActive(true);
-
-        // bool facingLeft = attackDir.x < 0f;
-
-        // if (facingLeft)
-        // {
-        //     swordPivot.transform.localScale = new Vector3(1, -1, 1);
-        // }
-        // else
-        // {
-        //     swordPivot.transform.localScale = Vector3.one;
-        // }
-
-
-        // float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
-        // swordPivot.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        // swordAnimator.Play(swordDashSliceAnim.name, 0, 0f);
-
     }
     public override void Exit()
     {

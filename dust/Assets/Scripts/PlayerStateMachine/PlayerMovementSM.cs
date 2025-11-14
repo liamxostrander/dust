@@ -21,6 +21,7 @@ public class PlayerMovementSM : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] public AudioSource audioSource;
+    public static AudioSource GlobalSFXSource;
 
     [Header("Movement")]
     [SerializeField] float moveSpeed = 10f;
@@ -84,6 +85,7 @@ public class PlayerMovementSM : MonoBehaviour
         slashState.Setup(rb, animator, this);
         dashSliceState.Setup(rb, animator, this);
         state = idleState;
+        GlobalSFXSource = audioSource;
     }
 
     void SelectState()
@@ -207,7 +209,6 @@ public class PlayerMovementSM : MonoBehaviour
             {
                 audioSource.clip = jumpSound;
                 audioSource.loop = false;
-                audioSource.volume = 0.4f;
                 audioSource.pitch = 1.3f;
                 if (audioSource.isPlaying)
                 {
@@ -253,7 +254,6 @@ public class PlayerMovementSM : MonoBehaviour
         StartCoroutine(DashRoutine(dir));
         audioSource.clip = dashSound;
         audioSource.loop = false;
-        audioSource.volume = 0.4f;
         audioSource.pitch = 1.3f;
         if (audioSource.isPlaying)
         {

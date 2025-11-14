@@ -12,10 +12,6 @@ public class IsDamageable : MonoBehaviour
     [SerializeField] private float invulnerabilityDuration = 0.5f;
     private float invulnerabilityTimer = 0f;
     
-    [Header("Audio")]
-    [SerializeField] private AudioClip hitSound;
-    [SerializeField] private AudioSource audioSource;
-    
     [Header("Coin Drop")]
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private int minCoins = 1;
@@ -38,15 +34,6 @@ public class IsDamageable : MonoBehaviour
     {
         currentHealth = maxHealth;
         
-        // Get or add AudioSource if not assigned
-        if (audioSource == null)
-        {
-            audioSource = GetComponent<AudioSource>();
-            if (audioSource == null)
-            {
-                audioSource = gameObject.AddComponent<AudioSource>();
-            }
-        }
     }
     
     void Update()
@@ -63,12 +50,6 @@ public class IsDamageable : MonoBehaviour
             return;
         
         currentHealth = Mathf.Max(0, currentHealth - damage);
-        
-        // Play hit sound
-        if (hitSound != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(hitSound);
-        }
         
         // Invoke combined event with both damage and knockback
         OnDamagedWithKnockback?.Invoke(damage, knockback);

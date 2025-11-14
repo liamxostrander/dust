@@ -15,18 +15,19 @@ public class SwordDamage : MonoBehaviour
 
     [Header("Hit SFX")]
     public AudioClip hitSound; 
-    private AudioSource audioSource;
+    // public AudioSource audioSource;
     private HitStop hitStop;
     private Rigidbody2D playerRb;
     void Start() {
         hitStop = FindFirstObjectByType<HitStop>();
         playerRb = transform.root.GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-            audioSource.playOnAwake = false;
-        }
+        // audioSource = GetComponent<AudioSource>();
+        // audioSource = FindFirstObjectByType<PlayerMovementSM>().audioSource;
+        // if (audioSource == null)
+        // {
+        //     audioSource = gameObject.AddComponent<AudioSource>();
+        //     audioSource.playOnAwake = false;
+        // }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -61,7 +62,7 @@ public class SwordDamage : MonoBehaviour
                 playerRb.linearVelocity = new Vector2(0f, playerRb.linearVelocity.y); // cancel horizontal momentum
                 playerRb.AddForce(recoil, ForceMode2D.Impulse);
                 playerRb.GetComponent<PlayerMovementSM>()?.DisableMovement(0.1f);
-                audioSource.PlayOneShot(hitSound, 0.6f);
+                PlayerMovementSM.GlobalSFXSource.PlayOneShot(hitSound);
             }
         }
     }

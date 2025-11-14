@@ -15,14 +15,11 @@ public class RunState : State
 
         if (audioSource == null)
         {
-            audioSource = input.GetComponent<AudioSource>();
-            if (audioSource == null)
-                audioSource = input.gameObject.AddComponent<AudioSource>();
+            audioSource = input.audioSource;
         }
 
         audioSource.clip = runLoopSound;
         audioSource.loop = true;
-        audioSource.volume = 0.8f;
         audioSource.time = 0.1f;
         audioSource.pitch = 1.5f;
 
