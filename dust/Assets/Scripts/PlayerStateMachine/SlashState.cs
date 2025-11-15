@@ -11,8 +11,11 @@ public class SlashState : State
     public float comboWindow = 0.25f;
 
     [Header("Sword Properties")]
-    public Animator swordAnimator;
-    public AnimationClip swordSlashAnim;
+    // var weapon = input.currentSword;  
+    // var swordAnimator = weapon.GetComponent<Animator>();
+    private WeaponStats stats;
+    private Animator swordAnimator;
+    private AnimationClip swordSlashAnim;
     public GameObject swordPivot;
     float timer;
 
@@ -22,6 +25,12 @@ public class SlashState : State
     public override void Enter()
     {
         isComplete = false;
+
+        GameObject swordObject = input.playerWeaponController.currentSword;
+        swordAnimator = swordObject.GetComponent<Animator>();
+        stats = swordObject.GetComponent<WeaponStats>();
+        swordSlashAnim = stats.slashAnimation;
+
         if (input.isGrounded) input.control = input.slashControl;
         Vector2 attackDir = Vector2.zero;
 
@@ -38,7 +47,7 @@ public class SlashState : State
         attackDir.Normalize();
         input.spriteRenderer.flipX = attackDir.x < 0;
 
-        timer = slashAnim.length - animStartTime;
+        timer = (swordSlashAnim.length > slashAnim.length) ? swordSlashAnim.length - animStartTime : slashAnim.length - animStartTime;
         animator.Play(slashAnim.name, 0, animStartTime);
         
 

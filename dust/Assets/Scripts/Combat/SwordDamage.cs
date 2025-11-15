@@ -12,6 +12,7 @@ public class SwordDamage : MonoBehaviour
     [SerializeField] private float playerRecoilForce = 2000f;      // Recoil applied to player
     [SerializeField] private float screenShakeMagnitude = 0.15f;
     [SerializeField] private float screenShakeDuration = 0.1f;
+    private bool appliedRecoil;
 
     [Header("Hit SFX")]
     public AudioClip hitSound; 
@@ -23,6 +24,7 @@ public class SwordDamage : MonoBehaviour
     [SerializeField] private GameObject hitEffectPrefab;
 
     void Start() {
+        appliedRecoil = false;
         hitStop = FindFirstObjectByType<HitStop>();
         playerRb = transform.root.GetComponent<Rigidbody2D>();
         // audioSource = GetComponent<AudioSource>();
@@ -62,12 +64,14 @@ public class SwordDamage : MonoBehaviour
             damageable.TakeDamage(damageAmount, knockback);
             
             if (playerRb != null)
-            {
-
-                Vector2 recoil = -directionToEnemy * playerRecoilForce;
-                playerRb.linearVelocity = new Vector2(0f, playerRb.linearVelocity.y); // cancel horizontal momentum
-                playerRb.AddForce(recoil, ForceMode2D.Impulse);
-                playerRb.GetComponent<PlayerMovementSM>()?.DisableMovement(0.1f);
+            {  
+                if (!appliedRecoil){                
+                    Vector2 recoil = -directionToEnemy * playerRecoilForce;
+                    playerRb.linearVelocity = new Vector2(0f, playerRb.linearVelocity.y);
+                    playerRb.AddForce(recoil, ForceMode2D.Impulse);
+                    playerRb.GetComponent<PlayerMovementSM>()?.DisableMovement(0.1f);
+                    // appliedRecoil = true;
+                }
                 PlayerMovementSM.GlobalSFXSource.PlayOneShot(hitSound);
             }
         }

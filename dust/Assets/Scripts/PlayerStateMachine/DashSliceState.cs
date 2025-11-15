@@ -7,17 +7,24 @@ public class DashSliceState : State
     public float animStartTime = 0.3f;
 
     [Header("Sword Properties")]
-    public Animator swordAnimator;
-    public AnimationClip swordDashSliceAnim;
     public GameObject swordPivot;
+    private WeaponStats stats;
+    private Animator swordAnimator;
+    private AnimationClip swordDashSliceAnim;
     float timer;
 
     [Header("Attack SFX")]
     public AudioClip dashSliceSound; 
     private AudioSource audioSource;
     public override void Enter()
-    {
+    {  
         isComplete = false;
+        
+        GameObject swordObject = input.playerWeaponController.currentSword;
+        swordAnimator = swordObject.GetComponent<Animator>();
+        stats = swordObject.GetComponent<WeaponStats>();
+        swordDashSliceAnim = stats.dashSliceAnimation;
+
         Vector2 attackDir = Vector2.zero;
 
         if (Input.GetKey(KeyCode.UpArrow))

@@ -1,0 +1,1261 @@
+fileFormatVersion: 2
+guid: 72c3a712a71df4d4398765e1005efd60
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3245455898121424021
+    second: 0px (sloppy)_0
+  - first:
+      213: 8099256694638852828
+    second: 0px (sloppy)_1
+  - first:
+      213: 2686185408705299197
+    second: 0px (sloppy)_2
+  - first:
+      213: 6449550556821834005
+    second: 0px (sloppy)_3
+  - first:
+      213: 2894012988461540868
+    second: 0px (sloppy)_4
+  - first:
+      213: -2773905453193842512
+    second: 0px (sloppy)_5
+  - first:
+      213: 2517086572103216893
+    second: 0px (sloppy)_6
+  - first:
+      213: -325206378278739089
+    second: 0px (sloppy)_7
+  - first:
+      213: -527849812888175749
+    second: 0px (sloppy)_8
+  - first:
+      213: -8131294952227418352
+    second: 0px (sloppy)_9
+  - first:
+      213: -5674560420664334731
+    second: 0px (sloppy)_10
+  - first:
+      213: 4760910068776542756
+    second: 0px (sloppy)_11
+  - first:
+      213: -3116442266576068856
+    second: 0px (sloppy)_12
+  - first:
+      213: 4243460787675952635
+    second: 0px (sloppy)_13
+  - first:
+      213: -4516119325115622413
+    second: 0px (sloppy)_14
+  - first:
+      213: -995191995995892422
+    second: 0px (sloppy)_15
+  - first:
+      213: -8816526760973386086
+    second: 0px (sloppy)_16
+  - first:
+      213: 4578027523384102872
+    second: 0px (sloppy)_17
+  - first:
+      213: 7172221430774031632
+    second: 0px (sloppy)_18
+  - first:
+      213: 807190052576541078
+    second: 0px (sloppy)_19
+  - first:
+      213: -6417083208891294184
+    second: 0px (sloppy)_20
+  - first:
+      213: -4534129253874612567
+    second: 0px (sloppy)_21
+  - first:
+      213: -5363675563026914668
+    second: 0px (sloppy)_22
+  - first:
+      213: -1198981175061020632
+    second: 0px (sloppy)_23
+  - first:
+      213: 9018460968401475690
+    second: 0px (sloppy)_24
+  - first:
+      213: 4301806292586550007
+    second: 0px (sloppy)_25
+  - first:
+      213: 4846981027125206598
+    second: 0px (sloppy)_26
+  - first:
+      213: -4780203002082171762
+    second: 0px (sloppy)_27
+  - first:
+      213: 8848559957099272286
+    second: 0px (sloppy)_28
+  - first:
+      213: 5769512806344822955
+    second: 0px (sloppy)_29
+  - first:
+      213: 4234078822502717281
+    second: 0px (sloppy)_30
+  - first:
+      213: -8170095344757809677
+    second: 0px (sloppy)_31
+  - first:
+      213: 7960028468418871003
+    second: 0px (sloppy)_32
+  - first:
+      213: 9113563396669587867
+    second: 0px (sloppy)_33
+  - first:
+      213: -8949521078216078160
+    second: 0px (sloppy)_34
+  - first:
+      213: -1741165732321359710
+    second: 0px (sloppy)_35
+  - first:
+      213: -4971943574565117308
+    second: 0px (sloppy)_36
+  - first:
+      213: -4593501428481804394
+    second: 0px (sloppy)_37
+  - first:
+      213: -3548606537356812234
+    second: 0px (sloppy)_38
+  - first:
+      213: -5676004337332271305
+    second: 0px (sloppy)_39
+  - first:
+      213: 6235315321621636025
+    second: 0px (sloppy)_40
+  - first:
+      213: 129636158269148822
+    second: 0px (sloppy)_41
+  - first:
+      213: 3843473128531303395
+    second: 0px (sloppy)_42
+  - first:
+      213: 4980662053718821847
+    second: 0px (sloppy)_43
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 0px (sloppy)_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 193
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59c49b5b1fc2a0d20800000000000000
+      internalID: 3245455898121424021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_1
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 175
+        width: 14
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cda37a45d07566070800000000000000
+      internalID: 8099256694638852828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_2
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 179
+        width: 14
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df287bea56f374520800000000000000
+      internalID: 2686185408705299197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_3
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 175
+        width: 14
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 519c94c6f08618950800000000000000
+      internalID: 6449550556821834005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_4
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 176
+        width: 14
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 406ed98da79992820800000000000000
+      internalID: 2894012988461540868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_5
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 173
+        width: 12
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b0bcd5efab1189d0800000000000000
+      internalID: -2773905453193842512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_6
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 175
+        width: 20
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfe2e17b6ec7ee220800000000000000
+      internalID: 2517086572103216893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_7
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 178
+        width: 12
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f632100a582ac7bf0800000000000000
+      internalID: -325206378278739089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_8
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 178
+        width: 25
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7b3b005463bca8f0800000000000000
+      internalID: -527849812888175749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_9
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 195
+        width: 19
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01fce888256d72f80800000000000000
+      internalID: -8131294952227418352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_10
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 170
+        width: 18
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 576afcdcc59ef31b0800000000000000
+      internalID: -5674560420664334731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_11
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 185
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 422a101bb76221240800000000000000
+      internalID: 4760910068776542756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_12
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 151
+        width: 16
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80f58b9254c20c4d0800000000000000
+      internalID: -3116442266576068856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_13
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 159
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf579b38a1dc3ea30800000000000000
+      internalID: 4243460787675952635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_14
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 162
+        width: 8
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fbd437b6658351c0800000000000000
+      internalID: -4516119325115622413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_15
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 156
+        width: 12
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a355a53072e5032f0800000000000000
+      internalID: -995191995995892422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_16
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 136
+        width: 10
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9eb4737f9765a580800000000000000
+      internalID: -8816526760973386086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_17
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 148
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8df454fe6cb688f30800000000000000
+      internalID: 4578027523384102872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_18
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 98
+        width: 14
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 015eab72469d88360800000000000000
+      internalID: 7172221430774031632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_19
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 97
+        width: 14
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 699bd0e7317b33b00800000000000000
+      internalID: 807190052576541078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_20
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 86
+        width: 24
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81e19e712d0f1f6a0800000000000000
+      internalID: -6417083208891294184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_21
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 115
+        width: 14
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a6c81967798311c0800000000000000
+      internalID: -4534129253874612567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_22
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 146
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 492665f4e756095b0800000000000000
+      internalID: -5363675563026914668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_23
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 114
+        width: 16
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8208b1849fc5c5fe0800000000000000
+      internalID: -1198981175061020632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_24
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 102
+        width: 20
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a689b4a0872082d70800000000000000
+      internalID: 9018460968401475690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_25
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 109
+        width: 26
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f2592af70613bb30800000000000000
+      internalID: 4301806292586550007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_26
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 96
+        width: 12
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64e1bd2509fe34340800000000000000
+      internalID: 4846981027125206598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_27
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 92
+        width: 20
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e84e2aa32be49adb0800000000000000
+      internalID: -4780203002082171762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_28
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 124
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e58d5a836666cca70800000000000000
+      internalID: 8848559957099272286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_29
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 94
+        width: 18
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba01045445d611050800000000000000
+      internalID: 5769512806344822955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_30
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 63
+        width: 12
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1675746814872ca30800000000000000
+      internalID: 4234078822502717281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_31
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 60
+        width: 12
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fd53aa229dfd9e80800000000000000
+      internalID: -8170095344757809677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_32
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 65
+        width: 19
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bde7a1ec7b3b77e60800000000000000
+      internalID: 7960028468418871003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_33
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 89
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b914e70af91e97e70800000000000000
+      internalID: 9113563396669587867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_34
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 76
+        width: 25
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bc4f07fef9ecc380800000000000000
+      internalID: -8949521078216078160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_35
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 68
+        width: 15
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a807e5ddf226d7e0800000000000000
+      internalID: -1741165732321359710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_36
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 39
+        width: 19
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 482a2c259ab100bb0800000000000000
+      internalID: -4971943574565117308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_37
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 57
+        width: 24
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 697b718c9ca9040c0800000000000000
+      internalID: -4593501428481804394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_38
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 36
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 630e735d721d0cec0800000000000000
+      internalID: -3548606537356812234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_39
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 21
+        width: 10
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 737cbb1c028ca31b0800000000000000
+      internalID: -5676004337332271305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_40
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 44
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b3eec7bf3a488650800000000000000
+      internalID: 6235315321621636025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_41
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 21
+        width: 16
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69ecdab266f8cc100800000000000000
+      internalID: 129636158269148822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_42
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 40
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3eb1ed16272c65530800000000000000
+      internalID: 3843473128531303395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 0px (sloppy)_43
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 2
+        width: 26
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7db8d2acfbdde1540800000000000000
+      internalID: 4980662053718821847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      0px (sloppy)_0: 3245455898121424021
+      0px (sloppy)_1: 8099256694638852828
+      0px (sloppy)_10: -5674560420664334731
+      0px (sloppy)_11: 4760910068776542756
+      0px (sloppy)_12: -3116442266576068856
+      0px (sloppy)_13: 4243460787675952635
+      0px (sloppy)_14: -4516119325115622413
+      0px (sloppy)_15: -995191995995892422
+      0px (sloppy)_16: -8816526760973386086
+      0px (sloppy)_17: 4578027523384102872
+      0px (sloppy)_18: 7172221430774031632
+      0px (sloppy)_19: 807190052576541078
+      0px (sloppy)_2: 2686185408705299197
+      0px (sloppy)_20: -6417083208891294184
+      0px (sloppy)_21: -4534129253874612567
+      0px (sloppy)_22: -5363675563026914668
+      0px (sloppy)_23: -1198981175061020632
+      0px (sloppy)_24: 9018460968401475690
+      0px (sloppy)_25: 4301806292586550007
+      0px (sloppy)_26: 4846981027125206598
+      0px (sloppy)_27: -4780203002082171762
+      0px (sloppy)_28: 8848559957099272286
+      0px (sloppy)_29: 5769512806344822955
+      0px (sloppy)_3: 6449550556821834005
+      0px (sloppy)_30: 4234078822502717281
+      0px (sloppy)_31: -8170095344757809677
+      0px (sloppy)_32: 7960028468418871003
+      0px (sloppy)_33: 9113563396669587867
+      0px (sloppy)_34: -8949521078216078160
+      0px (sloppy)_35: -1741165732321359710
+      0px (sloppy)_36: -4971943574565117308
+      0px (sloppy)_37: -4593501428481804394
+      0px (sloppy)_38: -3548606537356812234
+      0px (sloppy)_39: -5676004337332271305
+      0px (sloppy)_4: 2894012988461540868
+      0px (sloppy)_40: 6235315321621636025
+      0px (sloppy)_41: 129636158269148822
+      0px (sloppy)_42: 3843473128531303395
+      0px (sloppy)_43: 4980662053718821847
+      0px (sloppy)_5: -2773905453193842512
+      0px (sloppy)_6: 2517086572103216893
+      0px (sloppy)_7: -325206378278739089
+      0px (sloppy)_8: -527849812888175749
+      0px (sloppy)_9: -8131294952227418352
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

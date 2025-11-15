@@ -73,9 +73,16 @@ public class PlayerMovementSM : MonoBehaviour
     public float speedMultiplier = 1f;
     public float jumpMultiplier = 1f;
 
+    [Header("Melee Weapons")]
+    public PlayerWeaponController playerWeaponController;
+    public GameObject currentSword;
+    public Transform swordPivot;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerWeaponController = GetComponent<PlayerWeaponController>();
+        playerWeaponController.EquipSword(0);
         rb.freezeRotation = true;
         jumpsRemaining = maxJumps;
         idleState.Setup(rb, animator, this);
@@ -131,9 +138,23 @@ public class PlayerMovementSM : MonoBehaviour
         }
 
     }
+
+    void CheckWeaponEquipped()
+    {
+        if (Input.GetKey(KeyCode.Alpha1)){
+            playerWeaponController.EquipSword(0);
+        }
+        else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            playerWeaponController.EquipSword(1);
+        }
+        
+        
+    }
     void Update()
     {
         CheckInput();
+        CheckWeaponEquipped();
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
             lastJumpPressTimer = jumpBufferTime;

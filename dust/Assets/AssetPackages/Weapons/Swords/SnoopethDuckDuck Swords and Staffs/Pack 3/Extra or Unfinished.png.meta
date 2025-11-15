@@ -1,0 +1,793 @@
+fileFormatVersion: 2
+guid: 6ffbf8beea6234ee29973fd82edb889b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6016105471408297793
+    second: Extra or Unfinished_0
+  - first:
+      213: -8221429672381740640
+    second: Extra or Unfinished_1
+  - first:
+      213: -743495794284879876
+    second: Extra or Unfinished_2
+  - first:
+      213: 1439476313762700758
+    second: Extra or Unfinished_3
+  - first:
+      213: 4065781294746530297
+    second: Extra or Unfinished_4
+  - first:
+      213: -665908702855091126
+    second: Extra or Unfinished_5
+  - first:
+      213: 7514194735968038017
+    second: Extra or Unfinished_6
+  - first:
+      213: -8702911996271648395
+    second: Extra or Unfinished_7
+  - first:
+      213: -1598745465742805832
+    second: Extra or Unfinished_8
+  - first:
+      213: 504531767228891832
+    second: Extra or Unfinished_9
+  - first:
+      213: 1685214608140754172
+    second: Extra or Unfinished_10
+  - first:
+      213: -8314691079934471029
+    second: Extra or Unfinished_11
+  - first:
+      213: -8363685472411440218
+    second: Extra or Unfinished_12
+  - first:
+      213: -8478783455737074834
+    second: Extra or Unfinished_13
+  - first:
+      213: -3444539052938133595
+    second: Extra or Unfinished_14
+  - first:
+      213: -4377324825516916928
+    second: Extra or Unfinished_15
+  - first:
+      213: -8258488335939851508
+    second: Extra or Unfinished_16
+  - first:
+      213: -4026205087902646434
+    second: Extra or Unfinished_17
+  - first:
+      213: 8407315946539796508
+    second: Extra or Unfinished_18
+  - first:
+      213: 2953190094269557522
+    second: Extra or Unfinished_19
+  - first:
+      213: -6337514390567881839
+    second: Extra or Unfinished_20
+  - first:
+      213: 8712185039129257374
+    second: Extra or Unfinished_21
+  - first:
+      213: 1648040981800966462
+    second: Extra or Unfinished_22
+  - first:
+      213: 2412213056013862084
+    second: Extra or Unfinished_23
+  - first:
+      213: -5467134077057329637
+    second: Extra or Unfinished_24
+  - first:
+      213: -978341027363948575
+    second: Extra or Unfinished_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Extra or Unfinished_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 93
+        width: 23
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14753923d008d7350800000000000000
+      internalID: 6016105471408297793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 87
+        width: 19
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a984df954d97ed80800000000000000
+      internalID: -8221429672381740640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_2
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 89
+        width: 23
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff17a9a3829ea5f0800000000000000
+      internalID: -743495794284879876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_3
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 90
+        width: 22
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dd1a68a41c0af310800000000000000
+      internalID: 1439476313762700758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_4
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 84
+        width: 16
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f17bcfcb8e8c6830800000000000000
+      internalID: 4065781294746530297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_5
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 87
+        width: 26
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4c2b79109732c6f0800000000000000
+      internalID: -665908702855091126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_6
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 83
+        width: 26
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18c2c7aec48c74860800000000000000
+      internalID: 7514194735968038017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_7
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 82
+        width: 18
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5712ebe36ab093780800000000000000
+      internalID: -8702911996271648395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_8
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 81
+        width: 18
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b4322c287d10d9e0800000000000000
+      internalID: -1598745465742805832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_9
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 43
+        width: 18
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b2049b18f4700700800000000000000
+      internalID: 504531767228891832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_10
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 78
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfc5788e1c5136710800000000000000
+      internalID: 1685214608140754172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_11
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 40
+        width: 19
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b84956314884c9c80800000000000000
+      internalID: -8314691079934471029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_12
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 40
+        width: 19
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ab22d320683eeb80800000000000000
+      internalID: -8363685472411440218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_13
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 68
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6b25599e5f455a80800000000000000
+      internalID: -8478783455737074834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_14
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 40
+        width: 22
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5af79a63bf98230d0800000000000000
+      internalID: -3444539052938133595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_15
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 38
+        width: 26
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04fb094634e9043c0800000000000000
+      internalID: -4377324825516916928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_16
+      rect:
+        serializedVersion: 2
+        x: 157
+        y: 39
+        width: 23
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0b29922d94f36d80800000000000000
+      internalID: -8258488335939851508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_17
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 46
+        width: 24
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5f31b6edcb0028c0800000000000000
+      internalID: -4026205087902646434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_18
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 59
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c184bfb3f49cca470800000000000000
+      internalID: 8407315946539796508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_19
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 1
+        width: 26
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21ba32b7eb6dbf820800000000000000
+      internalID: 2953190094269557522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_20
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 9
+        width: 28
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19376474d30ac08a0800000000000000
+      internalID: -6337514390567881839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_21
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 7
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e95a5ca4226e7e870800000000000000
+      internalID: 8712185039129257374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_22
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 7
+        width: 15
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e39588f8a840fd610800000000000000
+      internalID: 1648040981800966462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_23
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 7
+        width: 26
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c404467ef6e97120800000000000000
+      internalID: 2412213056013862084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_24
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 35
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b169095e586d024b0800000000000000
+      internalID: -5467134077057329637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Extra or Unfinished_25
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 13
+        width: 25
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e7f7c2e40c3c62f0800000000000000
+      internalID: -978341027363948575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Extra or Unfinished_0: 6016105471408297793
+      Extra or Unfinished_1: -8221429672381740640
+      Extra or Unfinished_10: 1685214608140754172
+      Extra or Unfinished_11: -8314691079934471029
+      Extra or Unfinished_12: -8363685472411440218
+      Extra or Unfinished_13: -8478783455737074834
+      Extra or Unfinished_14: -3444539052938133595
+      Extra or Unfinished_15: -4377324825516916928
+      Extra or Unfinished_16: -8258488335939851508
+      Extra or Unfinished_17: -4026205087902646434
+      Extra or Unfinished_18: 8407315946539796508
+      Extra or Unfinished_19: 2953190094269557522
+      Extra or Unfinished_2: -743495794284879876
+      Extra or Unfinished_20: -6337514390567881839
+      Extra or Unfinished_21: 8712185039129257374
+      Extra or Unfinished_22: 1648040981800966462
+      Extra or Unfinished_23: 2412213056013862084
+      Extra or Unfinished_24: -5467134077057329637
+      Extra or Unfinished_25: -978341027363948575
+      Extra or Unfinished_3: 1439476313762700758
+      Extra or Unfinished_4: 4065781294746530297
+      Extra or Unfinished_5: -665908702855091126
+      Extra or Unfinished_6: 7514194735968038017
+      Extra or Unfinished_7: -8702911996271648395
+      Extra or Unfinished_8: -1598745465742805832
+      Extra or Unfinished_9: 504531767228891832
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
