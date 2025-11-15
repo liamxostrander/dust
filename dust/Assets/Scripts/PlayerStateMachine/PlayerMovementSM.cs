@@ -224,8 +224,8 @@ public class PlayerMovementSM : MonoBehaviour
                 lastJumpPressTimer = 0f;
             }
         }
-        bool jumpHeld = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
-        bool fastFall = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+        bool jumpHeld = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W);
+        bool fastFall = Input.GetKey(KeyCode.S);
         Vector2 v = rb.linearVelocity;
 
         if (v.y < 0f)

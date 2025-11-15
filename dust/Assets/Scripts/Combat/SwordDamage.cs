@@ -18,6 +18,10 @@ public class SwordDamage : MonoBehaviour
     // public AudioSource audioSource;
     private HitStop hitStop;
     private Rigidbody2D playerRb;
+
+    [Header("Hit FX")]
+    [SerializeField] private GameObject hitEffectPrefab;
+
     void Start() {
         hitStop = FindFirstObjectByType<HitStop>();
         playerRb = transform.root.GetComponent<Rigidbody2D>();
@@ -38,6 +42,8 @@ public class SwordDamage : MonoBehaviour
         IsDamageable damageable = other.GetComponent<IsDamageable>();
         if (damageable != null && damageable.IsAlive)
         {
+            Vector2 hitPoint = other.ClosestPoint(transform.position);
+            Instantiate(hitEffectPrefab, hitPoint, Quaternion.identity);
             StartCoroutine(hitStop.DoHitStop(0.08f));
             if (CameraShake.Instance != null)
                 CameraShake.Instance.ShakeOnce(screenShakeDuration, screenShakeMagnitude);
