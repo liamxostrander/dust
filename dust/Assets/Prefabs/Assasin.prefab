@@ -420,6 +420,7 @@ MonoBehaviour:
   screenShakeMagnitude: 0.15
   screenShakeDuration: 0.1
   hitSound: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
+  hitEffectPrefab: {fileID: 4306488877223958017, guid: ecb38e0319a6ad44cbca52d7b5add7a6, type: 3}
 --- !u!1 &5307760465165331743
 GameObject:
   m_ObjectHideFlags: 0
