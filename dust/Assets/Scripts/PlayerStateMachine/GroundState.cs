@@ -20,7 +20,7 @@ public class GroundState : State
         animator.Play(landAnim.name, 0, 0f);
         if (audioSource == null)
         {
-            audioSource = input.GetComponentInChildren<AudioSource>();
+            audioSource = input.audioSource;
         }
 
         audioSource.clip = landSound;
