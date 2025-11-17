@@ -39,7 +39,17 @@ public class EnemyIdleState : EnemyState
 
     public override void FixedDo()
     {
-        stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
+        if (stateMachine.isFlying)
+        {
+            // Flying enemies maintain their height during idle
+            float targetY = stateMachine.flyingHeight;
+            float verticalVelocity = (targetY - stateMachine.transform.position.y) * 2f;
+            stateMachine.rb.linearVelocity = new Vector2(0, verticalVelocity);
+        }
+        else
+        {
+            stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
+        }
     }
     
     public override void Exit()

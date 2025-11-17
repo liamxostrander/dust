@@ -24,7 +24,8 @@ public class EnemyChaseState : EnemyState
         }
         
         // Jump when entering chase from patrol (not from attack recovery)
-        if (stateMachine.isGrounded && !stateMachine.justFinishedAttack)
+        // Flying enemies don't need to jump
+        if (!stateMachine.isFlying && stateMachine.isGrounded && !stateMachine.justFinishedAttack)
         {
             stateMachine.rb.linearVelocity = new Vector2(0, jumpForce);
         }
@@ -32,9 +33,8 @@ public class EnemyChaseState : EnemyState
     
     public override void Do()
     {
-        // Check if player is in attack range and cooldown is ready
-        float distanceToPlayer = Vector2.Distance(stateMachine.transform.position, stateMachine.player.position);
-        if (distanceToPlayer <= stateMachine.attackRange && stateMachine.CanAttack())
+        // Check if player is in attack range (includes height/angle checks) and cooldown is ready
+        if (stateMachine.IsPlayerInAttackRange() && stateMachine.CanAttack())
         {
             isComplete = true;
             return;

@@ -21,6 +21,27 @@ public class EnemyStateMachine : MonoBehaviour
     public float detectionRange = 5f;
     public float visionConeAngle = 90f;
     public bool useVisionCone = true;
+    
+    [Header("Flying Enemy Settings")]
+    public bool isFlying = false;
+    public float flyingHeight = 3f;
+    public float verticalPatrolAmplitude = 1f;
+    public float verticalPatrolSpeed = 1f;
+    public float flyingChaseVerticalSpeed = 3f;
+    public float flyingWallCheckDistance = 1f;
+    
+    [Header("Flying Attack (Swoop) Settings")]
+    public float swoopSpeed = 8f;
+    public float swoopReturnSpeed = 4f;
+    public float minHeightAbovePlayerForSwoop = 1f;
+    [HideInInspector] public Vector2 preSwoopPosition;
+    
+    [Header("Spell Casting Settings")]
+    public bool canCastSpells = false;
+    public float spellCastRange = 100f; // Can cast from anywhere
+    public float spellCooldown = 10f;
+    public int spellDamage = 2;
+    [HideInInspector] public float lastSpellCastTime = -999f;
 
     [Header("Edge Detection")]
     public Transform groundCheckPoint;
@@ -48,6 +69,7 @@ public class EnemyStateMachine : MonoBehaviour
     public EnemyPatrolState patrolState;
     public EnemyChaseState chaseState;
     public EnemyMeleeState attackState;
+    public EnemySpellCastState spellCastState;
     public EnemyDeathState deathState;
     public EnemyHurtState hurtState;
     
@@ -68,6 +90,7 @@ public class EnemyStateMachine : MonoBehaviour
         if (patrolState == null) patrolState = GetComponent<EnemyPatrolState>();
         if (chaseState == null) chaseState = GetComponent<EnemyChaseState>();
         if (attackState == null) attackState = GetComponent<EnemyMeleeState>();
+        if (spellCastState == null) spellCastState = GetComponent<EnemySpellCastState>();
         if (deathState == null) deathState = GetComponent<EnemyDeathState>();
         if (hurtState == null) hurtState = GetComponent<EnemyHurtState>();
 
@@ -75,6 +98,7 @@ public class EnemyStateMachine : MonoBehaviour
         if (patrolState != null) patrolState.Initialize(this);
         if (chaseState != null) chaseState.Initialize(this);
         if (attackState != null) attackState.Initialize(this);
+        if (spellCastState != null) spellCastState.Initialize(this);
         if (deathState != null) deathState.Initialize(this);
         if (hurtState != null) hurtState.Initialize(this);
 
@@ -106,6 +130,19 @@ public class EnemyStateMachine : MonoBehaviour
         if (currentState != null)
         {
             currentState.Do();
+            
+            // Check if we should interrupt current state for spell casting
+            // (Don't interrupt spell cast, hurt, death, or attack states)
+            if (currentState != spellCastState && currentState != hurtState && 
+                currentState != deathState && currentState != attackState)
+            {
+                if (canCastSpells && IsPlayerInSpellRange() && CanCastSpell() && spellCastState != null)
+                {
+                    currentState.Exit();
+                    SwitchState(spellCastState);
+                    return;
+                }
+            }
             
             // Don't allow state transitions during hurt or death states
             if (currentState.isComplete && currentState != hurtState && currentState != deathState)
@@ -167,27 +204,54 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void UpdateSpriteDirection()
     {
-        if (rb.linearVelocity.x > 0.1f)
+        // Flying enemies face the player during chase and attack
+        if (isFlying && player != null && (currentState == chaseState || currentState == attackState))
         {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            float directionToPlayer = player.position.x - transform.position.x;
+            if (Mathf.Abs(directionToPlayer) > 0.1f)
+            {
+                if (directionToPlayer > 0)
+                {
+                    transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                }
+                else
+                {
+                    transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                }
+            }
         }
-        else if (rb.linearVelocity.x < -0.1f)
+        else
         {
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            // Default behavior: face based on velocity
+            if (rb.linearVelocity.x > 0.1f)
+            {
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            }
+            else if (rb.linearVelocity.x < -0.1f)
+            {
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+            }
         }
     }
 
 
     /// Determine the next state based on current conditions.
-    /// Priority: attack recovery -> attack range -> chase -> edge detection -> patrol
+    /// Priority: spell cast -> attack recovery -> attack range -> chase -> edge detection -> patrol
     void SelectState()
     {
         EnemyState newState = currentState;
         
         bool playerInAttackRange = IsPlayerInAttackRange();
         bool playerDetected = IsPlayerDetected();
+        bool playerInSpellRange = IsPlayerInSpellRange();
+        bool canCastSpellNow = CanCastSpell();
         
-        if (justFinishedAttack)
+        // Spell casting has highest priority (can cast from anywhere if in spell range)
+        if (canCastSpellNow && canCastSpells && playerInSpellRange && spellCastState != null)
+        {
+            newState = spellCastState;
+        }
+        else if (justFinishedAttack)
         {
             newState = idleState;
         }
@@ -199,7 +263,7 @@ public class EnemyStateMachine : MonoBehaviour
         {
             newState = idleState;
         }
-        else if (playerDetected)
+        else if (playerDetected && !playerInAttackRange)
         {
             newState = chaseState;
         }
@@ -247,6 +311,14 @@ public class EnemyStateMachine : MonoBehaviour
         if (distanceToPlayer > attackRange)
             return false;
         
+        // Flying enemies need to be above the player to swoop
+        if (isFlying)
+        {
+            float heightDifference = transform.position.y - player.position.y;
+            if (heightDifference < minHeightAbovePlayerForSwoop)
+                return false;
+        }
+        
         if (!useAttackCone)
             return true;
         
@@ -272,7 +344,72 @@ public class EnemyStateMachine : MonoBehaviour
     public void ChasePlayer()
     {
         float directionToPlayer = Mathf.Sign(player.position.x - transform.position.x);
-        rb.linearVelocity = new Vector2(directionToPlayer * chaseSpeed, rb.linearVelocity.y);
+        
+        if (isFlying)
+        {
+            // Flying enemies position themselves above the player for swooping
+            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+            float horizontalDistance = Mathf.Abs(player.position.x - transform.position.x);
+            
+            // When close horizontally, prioritize getting above the player
+            if (horizontalDistance <= attackRange * 1.5f)
+            {
+                float targetY = player.position.y + flyingHeight;
+                float verticalDirection = Mathf.Sign(targetY - transform.position.y);
+                
+                rb.linearVelocity = new Vector2(
+                    directionToPlayer * chaseSpeed * 0.5f, // Slow down horizontal movement
+                    verticalDirection * flyingChaseVerticalSpeed
+                );
+            }
+            else
+            {
+                // Normal chase: move toward player
+                Vector2 directionVector = (player.position - transform.position).normalized;
+                rb.linearVelocity = new Vector2(
+                    directionVector.x * chaseSpeed,
+                    directionVector.y * flyingChaseVerticalSpeed
+                );
+            }
+        }
+        else
+        {
+            // Ground enemy edge detection
+            Vector2 rayStart;
+            if (groundCheck != null)
+            {
+                rayStart = new Vector2(
+                    groundCheck.bounds.center.x + directionToPlayer * edgeCheckDistance,
+                    groundCheck.bounds.center.y
+                );
+            }
+            else if (groundCheckPoint != null)
+            {
+                rayStart = new Vector2(
+                    transform.position.x + directionToPlayer * edgeCheckDistance,
+                    groundCheckPoint.position.y
+                );
+            }
+            else
+            {
+                rayStart = new Vector2(
+                    transform.position.x + directionToPlayer * edgeCheckDistance,
+                    transform.position.y - 0.5f
+                );
+            }
+            
+            RaycastHit2D edgeHit = Physics2D.Raycast(rayStart, Vector2.down, edgeCheckDistance * 2, groundLayer);
+            
+            // If there's an edge ahead, stop moving
+            if (!edgeHit.collider)
+            {
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+                return;
+            }
+            
+            // Ground enemies only chase horizontally
+            rb.linearVelocity = new Vector2(directionToPlayer * chaseSpeed, rb.linearVelocity.y);
+        }
     }
     
     /// Perform melee attack
@@ -299,6 +436,19 @@ public class EnemyStateMachine : MonoBehaviour
         return Time.time >= lastAttackTime + attackCooldown;
     }
     
+    public bool CanCastSpell()
+    {
+        return Time.time >= lastSpellCastTime + spellCooldown;
+    }
+    
+    public bool IsPlayerInSpellRange()
+    {
+        if (player == null) return false;
+        
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        return distanceToPlayer <= spellCastRange;
+    }
+    
     /// Patrol behavior
     public void Patrol()
     {
@@ -312,7 +462,26 @@ public class EnemyStateMachine : MonoBehaviour
         float moveDirection = Mathf.Sign(currentDirection);
         lastMoveDirection = moveDirection;
         
-        // Edge detection
+        if (isFlying)
+        {
+            // Check for walls ahead
+            if (IsWallAhead())
+            {
+                shouldReverseDirection = true;
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+                return;
+            }
+            
+            // Flying patrol with sine wave vertical movement
+            float verticalOffset = Mathf.Sin(Time.time * verticalPatrolSpeed) * verticalPatrolAmplitude;
+            float targetY = flyingHeight + verticalOffset;
+            float verticalVelocity = (targetY - transform.position.y) * 2f; // Simple proportional controller
+            
+            rb.linearVelocity = new Vector2(moveDirection * patrolSpeed, verticalVelocity);
+            return;
+        }
+        
+        // Ground enemy edge detection
         Vector2 rayStart;
         if (groundCheck != null)
         {
@@ -351,6 +520,13 @@ public class EnemyStateMachine : MonoBehaviour
     /// Check if enemy is grounded using box collider.
     void CheckGrounded()
     {
+        // Flying enemies are never considered grounded
+        if (isFlying)
+        {
+            isGrounded = false;
+            return;
+        }
+        
         if (groundCheck != null)
         {
             isGrounded = Physics2D.OverlapAreaAll(groundCheck.bounds.min, groundCheck.bounds.max, groundLayer).Length > 0;
@@ -497,4 +673,20 @@ public class EnemyStateMachine : MonoBehaviour
         UnityEditor.Handles.Label(transform.position + Vector3.up * 2f, state);
     }
     #endregion
+
+    public bool IsWallAhead()
+    {
+        if (!isFlying) return false;
+        
+        // Check for walls in the direction of movement
+        float direction = Mathf.Sign(rb.linearVelocity.x);
+        if (direction == 0) direction = lastMoveDirection;
+        
+        Vector2 rayOrigin = transform.position;
+        Vector2 rayDirection = Vector2.right * direction;
+        
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, flyingWallCheckDistance, groundLayer);
+        
+        return hit.collider != null;
+    }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 
 // Melee attack state where the enemy performs a close-range attack.
 // Triggers damage at a specific point in the animation.
+// For flying enemies, performs a swoop attack.
 public class EnemyMeleeState : EnemyState
 {
     [Header("Animation")]
@@ -14,14 +15,27 @@ public class EnemyMeleeState : EnemyState
     
     private bool hasAttacked = false;
     
+    // Swoop attack states for flying enemies
+    private enum SwoopPhase { Swooping, Returning }
+    private SwoopPhase swoopPhase = SwoopPhase.Swooping;
+    
     public override void Enter()
     {
         base.Enter();
         isComplete = false;
         hasAttacked = false;
+        swoopPhase = SwoopPhase.Swooping;
         
-        // Stop movement during attack
-        stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
+        // Flying enemies store their position before swooping
+        if (stateMachine.isFlying)
+        {
+            stateMachine.preSwoopPosition = stateMachine.transform.position;
+        }
+        else
+        {
+            // Stop movement during ground attack
+            stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
+        }
         
         if (stateMachine.animator != null && attackAnim != null)
         {
@@ -32,22 +46,69 @@ public class EnemyMeleeState : EnemyState
     
     public override void Do()
     {
-        // Trigger attack at the specified timing in the animation
-        if (!hasAttacked && time >= attackDuration * attackTiming)
+        if (stateMachine.isFlying)
         {
-            stateMachine.PerformAttack();
-            hasAttacked = true;
+            // Handle swoop attack for flying enemies
+            if (swoopPhase == SwoopPhase.Swooping)
+            {
+                // Check if close enough to player to trigger attack
+                float distanceToPlayer = Vector2.Distance(stateMachine.transform.position, stateMachine.player.position);
+                if (!hasAttacked && distanceToPlayer <= stateMachine.attackHitboxRadius * 2f)
+                {
+                    stateMachine.PerformAttack();
+                    hasAttacked = true;
+                    swoopPhase = SwoopPhase.Returning;
+                }
+            }
+            else if (swoopPhase == SwoopPhase.Returning)
+            {
+                // Check if returned to pre-swoop position
+                float distanceToReturn = Vector2.Distance(stateMachine.transform.position, stateMachine.preSwoopPosition);
+                if (distanceToReturn <= 0.5f)
+                {
+                    isComplete = true;
+                }
+            }
         }
-        
-        if (time >= attackDuration)
+        else
         {
-            isComplete = true;
+            // Ground enemy attack (original behavior)
+            // Trigger attack at the specified timing in the animation
+            if (!hasAttacked && time >= attackDuration * attackTiming)
+            {
+                stateMachine.PerformAttack();
+                hasAttacked = true;
+            }
+            
+            if (time >= attackDuration)
+            {
+                isComplete = true;
+            }
         }
     }
     
     public override void FixedDo()
     {
-        stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
+        if (stateMachine.isFlying)
+        {
+            if (swoopPhase == SwoopPhase.Swooping)
+            {
+                // Swoop towards player
+                Vector2 directionToPlayer = (stateMachine.player.position - stateMachine.transform.position).normalized;
+                stateMachine.rb.linearVelocity = directionToPlayer * stateMachine.swoopSpeed;
+            }
+            else if (swoopPhase == SwoopPhase.Returning)
+            {
+                // Return to pre-swoop position
+                Vector2 directionToReturn = (stateMachine.preSwoopPosition - (Vector2)stateMachine.transform.position).normalized;
+                stateMachine.rb.linearVelocity = directionToReturn * stateMachine.swoopReturnSpeed;
+            }
+        }
+        else
+        {
+            // Ground enemy stays still during attack
+            stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
+        }
     }
     
     public override void Exit()

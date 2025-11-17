@@ -196,7 +196,6 @@ MonoBehaviour:
   coinValue: 1
   playerTag: Player
   collectSound: {fileID: 8300000, guid: abdbbfd33a46f4549987385f85c536b5, type: 3}
-  audioSource: {fileID: 0}
 --- !u!61 &6520793245109377727
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -213,7 +212,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
