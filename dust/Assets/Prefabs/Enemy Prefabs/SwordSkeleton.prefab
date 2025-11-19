@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyChaseState
   chaseAnim: {fileID: 7400000, guid: 6430209188538d949b2e5c45a0f0c270, type: 2}
-  animationSpeedMultiplier: 1.5
+  animationSpeedMultiplier: 1
   jumpForce: 8
 --- !u!1 &2570057024502890157
 GameObject:
@@ -323,6 +323,11 @@ MonoBehaviour:
   swoopReturnSpeed: 4
   minHeightAbovePlayerForSwoop: 1
   preSwoopPosition: {x: 0, y: 0}
+  canCastSpells: 0
+  spellCastRange: 100
+  spellCooldown: 10
+  spellDamage: 2
+  lastSpellCastTime: -999
   groundCheckPoint: {fileID: 0}
   edgeCheckDistance: 0.5
   shouldReverseDirection: 0
@@ -341,6 +346,7 @@ MonoBehaviour:
   patrolState: {fileID: 5804708703501440797}
   chaseState: {fileID: 6486818926228502170}
   attackState: {fileID: 5875621868286004653}
+  spellCastState: {fileID: 0}
   deathState: {fileID: 3244627426049311178}
   hurtState: {fileID: 6609031268049893291}
   showGizmos: 1
