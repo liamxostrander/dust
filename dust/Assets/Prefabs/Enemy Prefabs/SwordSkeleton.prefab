@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyChaseState
   chaseAnim: {fileID: 7400000, guid: 6430209188538d949b2e5c45a0f0c270, type: 2}
-  animationSpeedMultiplier: 1.5
+  animationSpeedMultiplier: 1
   jumpForce: 8
 --- !u!1 &2570057024502890157
 GameObject:
