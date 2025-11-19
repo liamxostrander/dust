@@ -19,8 +19,8 @@ public class DashSliceState : State
     public override void Enter()
     {  
         isComplete = false;
-        
         GameObject swordObject = input.playerWeaponController.currentSword;
+        swordObject.GetComponentInChildren<SwordDamage>().ResetRecoil();
         swordAnimator = swordObject.GetComponent<Animator>();
         stats = swordObject.GetComponent<WeaponStats>();
         swordDashSliceAnim = stats.dashSliceAnimation;

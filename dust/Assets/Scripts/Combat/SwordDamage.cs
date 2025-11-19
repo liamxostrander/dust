@@ -24,7 +24,6 @@ public class SwordDamage : MonoBehaviour
     [SerializeField] private GameObject hitEffectPrefab;
 
     void Start() {
-        appliedRecoil = false;
         hitStop = FindFirstObjectByType<HitStop>();
         playerRb = transform.root.GetComponent<Rigidbody2D>();
         // audioSource = GetComponent<AudioSource>();
@@ -63,17 +62,20 @@ public class SwordDamage : MonoBehaviour
 
             damageable.TakeDamage(damageAmount, knockback);
             
-            if (playerRb != null)
-            {  
-                if (!appliedRecoil){                
-                    Vector2 recoil = -directionToEnemy * playerRecoilForce;
-                    playerRb.linearVelocity = new Vector2(0f, playerRb.linearVelocity.y);
-                    playerRb.AddForce(recoil, ForceMode2D.Impulse);
-                    playerRb.GetComponent<PlayerMovementSM>()?.DisableMovement(0.1f);
-                    // appliedRecoil = true;
-                }
-                PlayerMovementSM.GlobalSFXSource.PlayOneShot(hitSound);
+            if (!appliedRecoil)
+            {
+                Vector2 recoil = -directionToEnemy * playerRecoilForce;
+                playerRb.linearVelocity = new Vector2(0f, playerRb.linearVelocity.y);
+                playerRb.AddForce(recoil, ForceMode2D.Impulse);
+                playerRb.GetComponent<PlayerMovementSM>()?.DisableMovement(0.1f);
+                
+                appliedRecoil = true;
             }
+            PlayerMovementSM.GlobalSFXSource.PlayOneShot(hitSound);
         }
+    }
+    public void ResetRecoil()
+    {
+        appliedRecoil = false;
     }
 }
