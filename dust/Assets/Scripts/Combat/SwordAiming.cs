@@ -8,6 +8,9 @@ public class SwordAiming : MonoBehaviour
 
     void Update()
     {
+        if (ShopMenuUI.Instance != null && ShopMenuUI.Instance.IsOpen)
+            return;
+
         Vector2 dir = Vector2.zero;
 
         if (Input.GetKey(KeyCode.UpArrow))

@@ -153,6 +153,14 @@ public class PlayerMovementSM : MonoBehaviour
     }
     void Update()
     {
+
+        if (ShopMenuUI.Instance != null && ShopMenuUI.Instance.IsOpen)
+        {
+            moveX = 0f;
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            return;
+        }
+
         CheckInput();
         CheckWeaponEquipped();
 
