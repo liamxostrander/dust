@@ -44,7 +44,18 @@ public class SwordDamage : MonoBehaviour
         if (damageable != null && damageable.IsAlive)
         {
             Vector2 hitPoint = other.ClosestPoint(transform.position);
-            Instantiate(hitEffectPrefab, hitPoint, Quaternion.identity);
+            GameObject effect = Instantiate(hitEffectPrefab, hitPoint, Quaternion.identity);
+            ParticleSystem ps = effect.GetComponent<ParticleSystem>();
+
+            if (ps != null)
+            {
+                Destroy(effect, ps.main.duration + ps.main.startLifetime.constantMax);
+            }
+            else
+            {
+                // fallback if your effect is an animation instead of particles
+                Destroy(effect, 1f);
+            }
             StartCoroutine(hitStop.DoHitStop(0.08f));
             if (CameraShake.Instance != null)
                 CameraShake.Instance.ShakeOnce(screenShakeDuration, screenShakeMagnitude);
