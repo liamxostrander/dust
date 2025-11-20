@@ -16,7 +16,6 @@ public class Coin : MonoBehaviour
         if (isCollected)
             return;
         
-        // Check if the collider or its parent has the Player tag
         bool isPlayer = other.CompareTag(playerTag);
         if (!isPlayer && other.transform.parent != null)
         {
@@ -25,21 +24,32 @@ public class Coin : MonoBehaviour
         
         if (isPlayer)
         {
-            CollectCoin();
+            PlayerCurrency currency = 
+                other.GetComponentInParent<PlayerCurrency>() ??
+                other.GetComponent<PlayerCurrency>();
+
+            CollectCoin(currency);
         }
     }
     
-    private void CollectCoin()
+    private void CollectCoin(PlayerCurrency currency)
     {
-        Debug.Log("Coin collected!");
         isCollected = true;
-        if (collectSound != null)
+
+        if (collectSound != null && GlobalAudio.SFX != null)
         {
             GlobalAudio.SFX.PlayOneShot(collectSound);
         }
-        
-        // TODO: Add coin value to player's currency system
-        // Delay for audio
+
+        if (currency != null)
+        {
+            currency.AddCoins(coinValue);
+        }
+        else
+        {
+            Debug.LogWarning("Coin collected, but no PlayerCurrency found on player!");
+        }
+
         Destroy(gameObject);
     }
     

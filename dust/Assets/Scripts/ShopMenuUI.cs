@@ -15,6 +15,13 @@ public class ShopMenuUI : MonoBehaviour
     public Color normalColor = Color.white;
     public Color selectedColor = Color.yellow;
 
+    [Header("Item Labels")]
+    [Tooltip("Top-center name labels, same order as itemSlots.")]
+    public TMP_Text[] itemNameTexts;
+
+    [Tooltip("Bottom-center price labels, same order as itemSlots.")]
+    public TMP_Text[] itemPriceTexts;
+
     [Header("Currency Display")]
     public TMP_Text currencyText;
     public string currencyLabel = "Coins";
@@ -25,9 +32,14 @@ public class ShopMenuUI : MonoBehaviour
     [Tooltip("If true, game time is paused while the shop is open.")]
     public bool pauseGameOnOpen = false;
 
+    [Header("Currency Source")]
+    public PlayerCurrency playerCurrency;
+
     bool _isOpen = false;
     int _selectedIndex = 0;
     float _previousTimeScale = 1f;
+
+    private Shopkeeper.ShopItem[] _items;
 
     public bool IsOpen => _isOpen;
 
@@ -92,21 +104,68 @@ public class ShopMenuUI : MonoBehaviour
 
     void PurchaseSelected()
     {
-        Debug.Log($"[Shop] Bought item in slot #{_selectedIndex} (placeholder).");
+        if (_items == null || _items.Length == 0)
+        {
+            Debug.Log("[Shop] No items configured.");
+            return;
+        }
+
+        if (_selectedIndex < 0 || _selectedIndex >= _items.Length)
+        {
+            Debug.Log("[Shop] Selected index out of range.");
+            return;
+        }
+
+        var item = _items[_selectedIndex];
+        int price = Mathf.Max(0, item.price);
+
+        int available = (playerCurrency != null)
+            ? playerCurrency.Coins
+            : debugCurrencyAmount;
+
+        if (available < price)
+        {
+            Debug.Log($"[Shop] Cannot afford '{item.itemName}' (cost {price}, you have {available}).");
+            return;
+        }
+
+        // Spend coins
+        if (playerCurrency != null)
+        {
+            bool spent = playerCurrency.TrySpendCoins(price);
+            if (!spent)
+            {
+                Debug.LogWarning("[Shop] TrySpendCoins failed (probably race with another spend).");
+                return;
+            }
+        }
+        else
+        {
+            debugCurrencyAmount = Mathf.Max(0, debugCurrencyAmount - price);
+            if (currencyText != null)
+                currencyText.text = $"{currencyLabel}: {debugCurrencyAmount}";
+        }
+
+        Debug.Log($"[Shop] Bought '{item.itemName}' for {price} coins (debug only).");
     }
 
-    public void Open(int currentCurrency = -1)
+    public void Open(int currentCurrency = -1, Shopkeeper.ShopItem[] items = null)
     {
         if (_isOpen) return;
 
+        _items = items;
         SetOpen(true);
 
         _selectedIndex = 0;
         UpdateHighlight();
+        RefreshItemLabels();
 
         if (currencyText != null)
         {
-            int amount = (currentCurrency >= 0) ? currentCurrency : debugCurrencyAmount;
+            int amount = currentCurrency >= 0
+                ? currentCurrency
+                : (playerCurrency != null ? playerCurrency.Coins : debugCurrencyAmount);
+
             currencyText.text = $"{currencyLabel}: {amount}";
         }
     }
@@ -135,6 +194,52 @@ public class ShopMenuUI : MonoBehaviour
             {
                 Time.timeScale = _previousTimeScale;
             }
+        }
+    }
+
+    void RefreshItemLabels()
+    {
+        if (itemSlots == null) return;
+
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            string name = "";
+            string price = "";
+
+            if (_items != null && i < _items.Length && _items[i] != null)
+            {
+                name = _items[i].itemName;
+                price = _items[i].price.ToString();
+            }
+
+            if (itemNameTexts != null && i < itemNameTexts.Length && itemNameTexts[i] != null)
+                itemNameTexts[i].text = name;
+
+            if (itemPriceTexts != null && i < itemPriceTexts.Length && itemPriceTexts[i] != null)
+                itemPriceTexts[i].text = price;
+        }
+    }
+
+    void OnEnable()
+    {
+        if (playerCurrency == null)
+            playerCurrency = FindFirstObjectByType<PlayerCurrency>();
+
+        if (playerCurrency != null)
+            playerCurrency.OnCoinsChanged += HandleCoinsChanged;
+    }
+
+    void OnDisable()
+    {
+        if (playerCurrency != null)
+            playerCurrency.OnCoinsChanged -= HandleCoinsChanged;
+    }
+
+    private void HandleCoinsChanged(int amount)
+    {
+        if (_isOpen && currencyText != null)
+        {
+            currencyText.text = $"{currencyLabel}: {amount}";
         }
     }
 }

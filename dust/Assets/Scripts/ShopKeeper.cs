@@ -3,6 +3,13 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Shopkeeper : MonoBehaviour
 {
+    [System.Serializable]
+    public class ShopItem
+    {
+        public string itemName;
+        public int price;
+    }
+
     [Header("Interaction")]
     public string playerTag = "Player";
     public KeyCode interactKey = KeyCode.E;
@@ -10,6 +17,12 @@ public class Shopkeeper : MonoBehaviour
 
     [Header("Currency (placeholder)")]
     public int debugCurrencyAmount = 123;
+
+    [Header("Inventory")]
+    [Tooltip("One entry per slot in the shop UI (name + price).")]
+    public ShopItem[] items;
+
+    private PlayerCurrency playerCurrency;
 
     bool _playerInRange = false;
 
@@ -35,6 +48,8 @@ public class Shopkeeper : MonoBehaviour
         _playerInRange = true;
         if (interactPrompt != null)
             interactPrompt.SetActive(true);
+
+        playerCurrency = other.GetComponentInParent<PlayerCurrency>();
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -44,6 +59,8 @@ public class Shopkeeper : MonoBehaviour
         _playerInRange = false;
         if (interactPrompt != null)
             interactPrompt.SetActive(false);
+
+        playerCurrency = null;
     }
 
     bool IsPlayer(Collider2D other)
@@ -60,7 +77,9 @@ public class Shopkeeper : MonoBehaviour
 
         if (Input.GetKeyDown(interactKey) && !ShopMenuUI.Instance.IsOpen)
         {
-            ShopMenuUI.Instance.Open(debugCurrencyAmount);
+            int amount = (playerCurrency != null) ? playerCurrency.Coins : debugCurrencyAmount;
+
+            ShopMenuUI.Instance.Open(amount, items);
         }
     }
 }
