@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class ShopMenuUI : MonoBehaviour
 {
@@ -33,11 +34,18 @@ public class ShopMenuUI : MonoBehaviour
     [Header("Currency Source")]
     public PlayerCurrency playerCurrency;
 
+    [Header("Audio")]
+    public AudioClip moveCursorSfx;
+    public AudioClip purchaseSfx;
+    public AudioClip cannotAffordSfx;
+    [Range(0f, 1f)] public float sfxVolume = 1f;
+
     bool _isOpen = false;
-    int _selectedIndex = 0;
+    int _selectedIndex = 1;
     float _previousTimeScale = 1f;
 
     private Shopkeeper.ShopItem[] _items;
+    private bool[] _soldOut;
 
     public bool IsOpen => _isOpen;
 
@@ -86,7 +94,10 @@ public class ShopMenuUI : MonoBehaviour
         _selectedIndex = Mathf.Clamp(_selectedIndex + dir, 0, itemSlots.Length - 1);
 
         if (previous != _selectedIndex)
+        {
             UpdateHighlight();
+            PlaySfx(moveCursorSfx);
+        }
     }
 
     void UpdateHighlight()
@@ -114,6 +125,13 @@ public class ShopMenuUI : MonoBehaviour
             return;
         }
 
+        if (_soldOut != null && _selectedIndex < _soldOut.Length && _soldOut[_selectedIndex])
+        {
+            Debug.Log("[Shop] Item already purchased.");
+            PlaySfx(cannotAffordSfx);
+            return;
+        }
+
         var item = _items[_selectedIndex];
         int price = Mathf.Max(0, item.price);
 
@@ -124,16 +142,17 @@ public class ShopMenuUI : MonoBehaviour
         if (available < price)
         {
             Debug.Log($"[Shop] Cannot afford '{item.itemName}' (cost {price}, you have {available}).");
+            PlaySfx(cannotAffordSfx);
             return;
         }
 
-        // Spend coins
         if (playerCurrency != null)
         {
             bool spent = playerCurrency.TrySpendCoins(price);
             if (!spent)
             {
-                Debug.LogWarning("[Shop] TrySpendCoins failed (probably race with another spend).");
+                Debug.LogWarning("[Shop] TrySpendCoins failed.");
+                PlaySfx(cannotAffordSfx);
                 return;
             }
         }
@@ -145,6 +164,12 @@ public class ShopMenuUI : MonoBehaviour
         }
 
         Debug.Log($"[Shop] Bought '{item.itemName}' for {price} coins (debug only).");
+
+        if (_soldOut != null && _selectedIndex < _soldOut.Length)
+            _soldOut[_selectedIndex] = true;
+
+        PlaySfx(purchaseSfx);
+        StartCoroutine(FadeOutItemSlot(_selectedIndex));
     }
 
     public void Open(int currentCurrency = -1, Shopkeeper.ShopItem[] items = null)
@@ -152,6 +177,7 @@ public class ShopMenuUI : MonoBehaviour
         if (_isOpen) return;
 
         _items = items;
+        _soldOut = (_items != null) ? new bool[_items.Length] : null;
         SetOpen(true);
 
         _selectedIndex = 0;
@@ -241,6 +267,16 @@ public class ShopMenuUI : MonoBehaviour
             playerCurrency.OnCoinsChanged -= HandleCoinsChanged;
     }
 
+    void PlaySfx(AudioClip clip)
+    {
+        if (clip == null) return;
+        if (GlobalAudio.SFX != null)
+        {
+            GlobalAudio.SFX.PlayOneShot(clip, sfxVolume);
+        }
+    }
+
+
     private void HandleCoinsChanged(int amount)
     {
         if (_isOpen && currencyText != null)
@@ -248,4 +284,72 @@ public class ShopMenuUI : MonoBehaviour
             currencyText.text = $"{currencyLabel}: {amount}";
         }
     }
+
+    IEnumerator FadeOutItemSlot(int index)
+    {
+        if (itemSlots == null || index < 0 || index >= itemSlots.Length)
+            yield break;
+
+        float duration = 0.3f;
+        float t = 0f;
+
+        Image frame = itemSlots[index];
+        Image icon = (itemIconImages != null && index < itemIconImages.Length)
+            ? itemIconImages[index]
+            : null;
+
+        TMP_Text nameText = (itemNameTexts != null && index < itemNameTexts.Length)
+            ? itemNameTexts[index]
+            : null;
+
+        TMP_Text priceText = (itemPriceTexts != null && index < itemPriceTexts.Length)
+            ? itemPriceTexts[index]
+            : null;
+
+        Color frameStart  = frame     ? frame.color     : Color.white;
+        Color iconStart   = icon      ? icon.color      : Color.white;
+        Color nameStart   = nameText  ? nameText.color  : Color.white;
+        Color priceStart  = priceText ? priceText.color : Color.white;
+
+        while (t < duration)
+        {
+            t += Time.unscaledDeltaTime;
+            float a = Mathf.Lerp(1f, 0f, t / duration);
+
+            if (frame)
+            {
+                var c = frameStart;
+                c.a = a;
+                frame.color = c;
+            }
+
+            if (icon)
+            {
+                var c = iconStart;
+                c.a = a;
+                icon.color = c;
+            }
+
+            if (nameText)
+            {
+                var c = nameStart;
+                c.a = a;
+                nameText.color = c;
+            }
+
+            if (priceText)
+            {
+                var c = priceStart;
+                c.a = a;
+                priceText.color = c;
+            }
+
+            yield return null;
+        }
+        if (icon)      icon.enabled = false;
+        if (frame)     frame.enabled = false;
+        if (nameText)  nameText.text = "";
+        if (priceText) priceText.text = "";
+    }
+
 }
