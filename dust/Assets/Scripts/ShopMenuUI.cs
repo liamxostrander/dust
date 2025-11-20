@@ -7,7 +7,6 @@ public class ShopMenuUI : MonoBehaviour
     public static ShopMenuUI Instance { get; private set; }
 
     [Header("Root")]
-    [Tooltip("The root GameObject for the shop UI (often the panel or the canvas).")]
     public GameObject root;
 
     [Header("Item Slots (3 tall squares)")]
@@ -15,21 +14,20 @@ public class ShopMenuUI : MonoBehaviour
     public Color normalColor = Color.white;
     public Color selectedColor = Color.yellow;
 
+    [Header("Item Icons (centered inside frames)")]
+    public Image[] itemIconImages;
+
     [Header("Item Labels")]
-    [Tooltip("Top-center name labels, same order as itemSlots.")]
     public TMP_Text[] itemNameTexts;
 
-    [Tooltip("Bottom-center price labels, same order as itemSlots.")]
     public TMP_Text[] itemPriceTexts;
 
     [Header("Currency Display")]
     public TMP_Text currencyText;
     public string currencyLabel = "Coins";
-    [Tooltip("Just a placeholder value for now.")]
     public int debugCurrencyAmount = 123;
 
     [Header("Behavior")]
-    [Tooltip("If true, game time is paused while the shop is open.")]
     public bool pauseGameOnOpen = false;
 
     [Header("Currency Source")]
@@ -205,18 +203,26 @@ public class ShopMenuUI : MonoBehaviour
         {
             string name = "";
             string price = "";
+            Sprite icon = null;
 
             if (_items != null && i < _items.Length && _items[i] != null)
             {
-                name = _items[i].itemName;
+                name  = _items[i].itemName;
                 price = _items[i].price.ToString();
+                icon  = _items[i].icon;
             }
 
             if (itemNameTexts != null && i < itemNameTexts.Length && itemNameTexts[i] != null)
                 itemNameTexts[i].text = name;
 
             if (itemPriceTexts != null && i < itemPriceTexts.Length && itemPriceTexts[i] != null)
-                itemPriceTexts[i].text = price;
+                itemPriceTexts[i].text = "¢" + price;
+
+            if (itemIconImages != null && i < itemIconImages.Length && itemIconImages[i] != null)
+            {
+                itemIconImages[i].sprite  = icon;
+                itemIconImages[i].enabled = (icon != null);
+            }
         }
     }
 

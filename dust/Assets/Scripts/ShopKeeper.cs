@@ -8,6 +8,7 @@ public class Shopkeeper : MonoBehaviour
     {
         public string itemName;
         public int price;
+        public Sprite icon;
     }
 
     [Header("Interaction")]
