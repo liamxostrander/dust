@@ -158,7 +158,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e5d3ed42cfc7d1845b32d85c89a04967, type: 2}
   - {fileID: 11400000, guid: 85ba096fb674af5489ea4c1b5febd617, type: 2}
   sfx: {fileID: 0}
-  openSfx: {fileID: 0}
+  openSfx: {fileID: 8300000, guid: ad7cff28ca05e674aa3855e87e55114a, type: 3}
   interactKey: 101
   playerMask:
     serializedVersion: 2
