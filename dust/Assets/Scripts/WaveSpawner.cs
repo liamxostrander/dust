@@ -44,6 +44,22 @@ public class WaveSpawner : MonoBehaviour
     [Tooltip("Turn the timer value red on last 3 seconds.")]
     public bool colorLastThreeSeconds = true;
 
+    [Header("Intermission / Shop")]
+    [Tooltip("If true, a shop intermission runs between waves.")]
+    public bool useIntermission = true;
+
+    [Tooltip("Seconds between waves where the shopkeeper is available.")]
+    public float intermissionDuration = 30f;
+
+    [Tooltip("Shopkeeper that appears during intermission (usually starts disabled).")]
+    public Shopkeeper shopkeeper;
+
+    [Tooltip("Optional SFX when intermission starts.")]
+    public AudioClip intermissionStartSfx;
+
+    [Tooltip("Optional SFX when intermission ends / next wave begins.")]
+    public AudioClip intermissionEndSfx;
+
     [Serializable]
     public class Wave
     {
@@ -58,6 +74,9 @@ public class WaveSpawner : MonoBehaviour
 
         [Tooltip("What to spawn in this wave.")]
         public SpawnSet[] spawns;
+
+        [Tooltip("If true, an intermission will occur AFTER this wave (if global intermissions are enabled and there's a next wave).")]
+        public bool intermissionAfterThisWave = true;
     }
 
     [Serializable]
@@ -91,6 +110,8 @@ public class WaveSpawner : MonoBehaviour
 
     private void AdvanceToNextWave()
     {
+        hud?.HideIntermission();
+
         CurrentWaveIndex++;
 
         if (CurrentWaveIndex >= TotalWaves)
@@ -128,7 +149,7 @@ public class WaveSpawner : MonoBehaviour
             if (points == null || points.Length == 0)
             {
                 Debug.LogWarning($"WaveSpawner: No spawn points defined for {set.enemyPrefab?.name}. " +
-                                 "Add defaultSpawnPoints or per-set spawnPoints.");
+                                "Add defaultSpawnPoints or per-set spawnPoints.");
                 continue;
             }
 
@@ -151,16 +172,21 @@ public class WaveSpawner : MonoBehaviour
                     yield return new WaitForSeconds(set.perSpawnDelay);
             }
         }
+
+
         if (wave.useTimer)
         {
             float t = Mathf.Max(0f, wave.waveDuration);
             int lastWhole = Mathf.CeilToInt(t);
+
             while (t > 0f)
             {
                 hud?.SetTimer(FormatTime(t));
                 bool urgent = colorLastThreeSeconds && (Mathf.CeilToInt(t) <= 3) && (t > 0f);
                 hud?.SetTimerUrgent(urgent);
+
                 t -= Time.deltaTime;
+
                 int currWhole = Mathf.CeilToInt(Mathf.Max(0f, t));
                 if (currWhole < lastWhole)
                 {
@@ -171,25 +197,86 @@ public class WaveSpawner : MonoBehaviour
                     }
                     lastWhole = currWhole;
                 }
+
                 yield return null;
             }
-            hud?.SetTimer("0:00");
 
-            if (chestSpawner) chestSpawner.SpawnRandomChest();
-            AdvanceToNextWave();
+            hud?.SetTimer("0:00");
+            hud?.SetTimerUrgent(false);
         }
         else
         {
             hud?.SetTimer("∞");
             hud?.SetTimerUrgent(false);
+
             while (GetAliveForWave(waveIndex) > 0)
             {
                 yield return null;
             }
-            if (chestSpawner) chestSpawner.SpawnRandomChest();
-            AdvanceToNextWave();
         }
 
+        if (chestSpawner) chestSpawner.SpawnRandomChest();
+
+        bool hasNextWave = (waveIndex + 1) < TotalWaves;
+        bool shouldRunIntermission =
+            hasNextWave &&
+            useIntermission &&
+            intermissionDuration > 0f &&
+            wave.intermissionAfterThisWave;
+
+        if (shouldRunIntermission)
+        {
+            yield return StartCoroutine(RunIntermission());
+        }
+
+        AdvanceToNextWave();
+    }
+
+    private IEnumerator RunIntermission()
+    {
+        hud?.SetWaveText(CurrentWaveIndex + 1, TotalWaves);
+        hud?.ShowIntermission("Intermission");
+
+        if (shopkeeper != null)
+            shopkeeper.gameObject.SetActive(true);
+
+        if (sfxSource && intermissionStartSfx)
+            sfxSource.PlayOneShot(intermissionStartSfx, 0.3f);
+
+        float t = Mathf.Max(0f, intermissionDuration);
+        int lastWhole = Mathf.CeilToInt(t);
+
+        while (t > 0f)
+        {
+            hud?.SetTimer(FormatTime(t));
+            bool urgent = colorLastThreeSeconds && Mathf.CeilToInt(t) <= 3;
+            hud?.SetTimerUrgent(urgent);
+
+            t -= Time.deltaTime;
+
+            int currWhole = Mathf.CeilToInt(Mathf.Max(0f, t));
+            if (currWhole < lastWhole)
+            {
+                if (currWhole > 0 && currWhole <= 3)
+                {
+                    if (sfxSource && countdownBeep)
+                        sfxSource.PlayOneShot(countdownBeep, 0.3f);
+                }
+                lastWhole = currWhole;
+            }
+
+            yield return null;
+        }
+
+        hud?.SetTimer("0:00");
+        hud?.SetTimerUrgent(false);
+        hud?.HideIntermission();
+
+        if (sfxSource && intermissionEndSfx)
+            sfxSource.PlayOneShot(intermissionEndSfx, 0.3f);
+
+        if (shopkeeper != null)
+            shopkeeper.gameObject.SetActive(false);
     }
 
     private int GetAliveForWave(int waveId)
@@ -204,7 +291,6 @@ public class WaveSpawner : MonoBehaviour
         if (m != null && _alivePerWave.ContainsKey(m.waveId))
         {
             _alivePerWave[m.waveId] = Mathf.Max(0, _alivePerWave[m.waveId] - 1);
-            // if (_alivePerWave[m.waveId] == 0) _alivePerWave.Remove(m.waveId);
         }
 
         hud?.SetEnemies(_aliveTotal);

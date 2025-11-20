@@ -8,13 +8,15 @@ public class WaveHUD : MonoBehaviour
     public TMP_Text enemiesText;
 
     [Header("Timer (preferred: split label/value)")]
-    [Tooltip("Use these to color only the value (eg. 0:03) for when waves tick down to 3 seconds or less")]
     public TMP_Text timerLabelText;
     public TMP_Text timerValueText;
 
     [Header("Fallback (single line)")]
-    [Tooltip("If you prefer one line, leave the two above null and use this instead.")]
     public TMP_Text timerText;
+
+    [Header("Intermission")]
+    [Tooltip("Optional label shown only during intermission, place this wherever you want in the UI.")]
+    public TMP_Text intermissionText;
 
     [Header("Timer Colors")]
     public Color normalValueColor = Color.white;
@@ -22,30 +24,36 @@ public class WaveHUD : MonoBehaviour
 
     private bool urgentOn = false;
 
+    void Awake()
+    {
+        if (intermissionText != null)
+            intermissionText.gameObject.SetActive(false);
+    }
+
     public void SetWaveText(int current, int total)
     {
-        if (waveText != null)
-            waveText.text = $"Wave: {current}/{total}";
+        if (waveText == null) return;
+        waveText.text = $"{current}/{total}";
     }
 
     public void SetEnemies(int count)
     {
         if (enemiesText != null)
-            enemiesText.text = $"Enemies: {count}";
+            enemiesText.text = $"{count}";
     }
 
     public void SetTimer(string display)
     {
         if (timerLabelText && timerValueText)
         {
-            timerLabelText.text = "Timer:";
+            timerLabelText.text = "";
             timerValueText.text = display;
             timerValueText.color = urgentOn ? urgentValueColor : normalValueColor;
         }
         else if (timerText)
         {
             string colorHex = ColorUtility.ToHtmlStringRGBA(urgentOn ? urgentValueColor : normalValueColor);
-            timerText.text = $"Timer: <color=#{colorHex}>{display}</color>";
+            timerText.text = $"<color=#{colorHex}>{display}</color>";
         }
     }
 
@@ -56,5 +64,18 @@ public class WaveHUD : MonoBehaviour
         {
             timerValueText.color = urgentOn ? urgentValueColor : normalValueColor;
         }
+    }
+
+    public void ShowIntermission(string label = "Intermission")
+    {
+        if (intermissionText == null) return;
+        intermissionText.text = label;
+        intermissionText.gameObject.SetActive(true);
+    }
+
+    public void HideIntermission()
+    {
+        if (intermissionText == null) return;
+        intermissionText.gameObject.SetActive(false);
     }
 }
