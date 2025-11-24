@@ -131,6 +131,8 @@ Transform:
   - {fileID: 2358107639461846857}
   - {fileID: 8175690391857644659}
   - {fileID: 4410631094759262083}
+  - {fileID: 5768607921157207363}
+  - {fileID: 8902340239548063469}
   m_Father: {fileID: 5899023650178650985}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3695689845975595918
@@ -181,6 +183,51 @@ MonoBehaviour:
   landSound: {fileID: 8300000, guid: d215b8bb9c3564ef1b274953fbeac7e9, type: 3}
   controlLerpDuration: 0.1
   maxFallSpeedForScaling: 20
+--- !u!1 &3810070080626409191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5768607921157207363}
+  - component: {fileID: 4189499675413621922}
+  m_Layer: 0
+  m_Name: Death
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5768607921157207363
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3810070080626409191}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8742143878811240289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4189499675413621922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3810070080626409191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c54351044594ad08c11b06948525e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathState
+  deathAnim: {fileID: -6758483313513240000, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
 --- !u!1 &4124785412755128904
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,6 +572,7 @@ GameObject:
   - component: {fileID: 944522438771087734}
   - component: {fileID: 5938048470447363326}
   - component: {fileID: 7794089069923736091}
+  - component: {fileID: 7504121654987731176}
   m_Layer: 0
   m_Name: Assasin
   m_TagString: Player
@@ -598,6 +646,9 @@ MonoBehaviour:
   groundState: {fileID: 9090381736657812103}
   slashState: {fileID: 2786636219400562893}
   dashSliceState: {fileID: 4943419815015779424}
+  deathState: {fileID: 4189499675413621922}
+  hitState: {fileID: 5768296163236576146}
+  isDead: 0
   animator: {fileID: 3135114199434424583}
   spriteRenderer: {fileID: 2338619762614720802}
   audioSource: {fileID: 2824087949657028439}
@@ -664,6 +715,85 @@ MonoBehaviour:
   - {fileID: 8114339841191764525, guid: 815ff5b11ddab4b2ab77872c4f9771dc, type: 3}
   swordPivot: {fileID: 9131598270360368242}
   currentSword: {fileID: 0}
+--- !u!114 &7504121654987731176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7907996678867762525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049a8dbca5be67642abf424b5f8c5d6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IsDamageable
+  maxHealth: 100
+  currentHealth: 0
+  isPlayer: 1
+  isInvulnerable: 0
+  invulnerabilityDuration: 0.5
+  coinPrefab: {fileID: 0}
+  minCoins: 1
+  maxCoins: 5
+  coinDropForce: 3
+  coinDropRadius: 0.5
+  OnDamagedWithKnockback:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &8319590838048440084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8902340239548063469}
+  - component: {fileID: 5768296163236576146}
+  m_Layer: 0
+  m_Name: Hit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8902340239548063469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8319590838048440084}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8742143878811240289}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5768296163236576146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8319590838048440084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db2263a05dec477ba5487aaac1526f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitState
+  hitAnim: {fileID: 2459078804267041145, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
 --- !u!1 &8716640178211188474
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,7 +806,7 @@ GameObject:
   - component: {fileID: 2759218640024225718}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

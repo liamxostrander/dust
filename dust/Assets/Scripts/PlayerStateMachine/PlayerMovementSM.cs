@@ -13,6 +13,9 @@ public class PlayerMovementSM : MonoBehaviour
     public GroundState groundState;
     public SlashState slashState;
     public DashSliceState dashSliceState;
+    public DeathState deathState;
+    public HitState hitState;
+    public bool isDead = false;
     State state;
 
     [Header("Animator")]
@@ -59,6 +62,7 @@ public class PlayerMovementSM : MonoBehaviour
     [SerializeField] float fastFallMultiplier = 3.0f;
     [SerializeField] float maxFallSpeed = -25f;
     public Rigidbody2D rb;
+    private IsDamageable damageable;
     float lastJumpPressTimer = 0f;
     public bool isGrounded { get; private set; }
     public float moveX { get; private set; }
@@ -80,6 +84,9 @@ public class PlayerMovementSM : MonoBehaviour
 
     void Awake()
     {
+        damageable = GetComponent<IsDamageable>();
+        damageable.OnDamagedWithKnockback.AddListener(ApplyKnockback);
+        damageable.OnDeath.AddListener(HandlePlayerDeath);
         rb = GetComponent<Rigidbody2D>();
         playerWeaponController = GetComponent<PlayerWeaponController>();
         playerWeaponController.EquipSword(0);
@@ -91,6 +98,8 @@ public class PlayerMovementSM : MonoBehaviour
         groundState.Setup(rb, animator, this);
         slashState.Setup(rb, animator, this);
         dashSliceState.Setup(rb, animator, this);
+        deathState.Setup(rb, animator, this);
+        hitState.Setup(rb, animator, this);
         state = idleState;
         GlobalSFXSource = audioSource;
     }
@@ -153,7 +162,6 @@ public class PlayerMovementSM : MonoBehaviour
     }
     void Update()
     {
-
         if (ShopMenuUI.Instance != null && ShopMenuUI.Instance.IsOpen)
         {
             moveX = 0f;
@@ -338,5 +346,25 @@ public class PlayerMovementSM : MonoBehaviour
         canMove = false;
         yield return new WaitForSeconds(duration);
         canMove = true;
+    }
+
+    private void ApplyKnockback(float damage, Vector2 knockback)
+    {
+ 
+        if (rb == null) return;
+        state.Exit();
+        state = hitState;
+        state.Enter();
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+
+        rb.AddForce(knockback, ForceMode2D.Impulse);
+    }
+    private void HandlePlayerDeath()
+    {
+        state.Exit();
+        state = deathState;
+        state.Enter();
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
     }
 }
