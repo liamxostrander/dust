@@ -26,7 +26,6 @@ public class EnemySpellCastState : EnemyState
         // Stop movement during spell cast
         stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
         
-        // Play casting animation
         if (stateMachine.animator != null && castAnim != null)
         {
             stateMachine.animator.Play(castAnim.name);
@@ -36,17 +35,14 @@ public class EnemySpellCastState : EnemyState
     
     public override void Do()
     {
-        // Keep enemy stationary during cast
         stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
         
-        // Trigger spell at the specified timing in the animation
         if (!hascastSpell && time >= castDuration * spellCastTiming)
         {
             CastSpell();
             hascastSpell = true;
         }
         
-        // Complete state when animation finishes
         if (time >= castDuration)
         {
             isComplete = true;
@@ -73,7 +69,6 @@ public class EnemySpellCastState : EnemyState
         
         GameObject spell = Instantiate(lightningSpellPrefab, spellSpawnPosition, Quaternion.identity);
         
-        // Optional: Pass damage value to the spell
         LightningSpell lightningScript = spell.GetComponent<LightningSpell>();
         if (lightningScript != null)
         {
@@ -88,7 +83,6 @@ public class EnemySpellCastState : EnemyState
     {
         base.Exit();
         
-        // Reset the spell cooldown in the state machine
         stateMachine.lastSpellCastTime = Time.time;
     }
 }

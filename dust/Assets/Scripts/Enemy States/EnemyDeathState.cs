@@ -18,11 +18,9 @@ public class EnemyDeathState : EnemyState
             deathAnimationTime = deathAnim.length;
         }
         
-        // Stop all movement
         stateMachine.rb.linearVelocity = Vector2.zero;
         stateMachine.rb.bodyType = RigidbodyType2D.Kinematic;
         
-        // Disable collider to make enemy non-interactive
         Collider2D collider = stateMachine.GetComponent<Collider2D>();
         if (collider != null)
         {
@@ -32,7 +30,6 @@ public class EnemyDeathState : EnemyState
     
     public override void Do()
     {
-        // Destroy enemy after animation completes
         if (time >= deathAnimationTime)
         {
             GameObject.Destroy(stateMachine.gameObject);

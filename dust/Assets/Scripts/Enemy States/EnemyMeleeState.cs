@@ -26,14 +26,28 @@ public class EnemyMeleeState : EnemyState
         hasAttacked = false;
         swoopPhase = SwoopPhase.Swooping;
         
-        // Flying enemies store their position before swooping
-        if (stateMachine.isFlying)
+        if (stateMachine.player != null)
+        {
+            float directionToPlayer = stateMachine.player.position.x - stateMachine.transform.position.x;
+            if (Mathf.Abs(directionToPlayer) > 0.1f)
+            {
+                if (directionToPlayer > 0)
+                {
+                    stateMachine.transform.localScale = new Vector3(Mathf.Abs(stateMachine.transform.localScale.x), stateMachine.transform.localScale.y, stateMachine.transform.localScale.z);
+                }
+                else
+                {
+                    stateMachine.transform.localScale = new Vector3(-Mathf.Abs(stateMachine.transform.localScale.x), stateMachine.transform.localScale.y, stateMachine.transform.localScale.z);
+                }
+            }
+        }
+        
+        if (stateMachine.isFlying && stateMachine.useSwoopAttack)
         {
             stateMachine.preSwoopPosition = stateMachine.transform.position;
         }
         else
         {
-            // Stop movement during ground attack
             stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
         }
         
@@ -46,7 +60,7 @@ public class EnemyMeleeState : EnemyState
     
     public override void Do()
     {
-        if (stateMachine.isFlying)
+        if (stateMachine.isFlying && stateMachine.useSwoopAttack)
         {
             // Handle swoop attack for flying enemies
             if (swoopPhase == SwoopPhase.Swooping)
@@ -62,8 +76,11 @@ public class EnemyMeleeState : EnemyState
             }
             else if (swoopPhase == SwoopPhase.Returning)
             {
-                // Check if returned to pre-swoop position
-                float distanceToReturn = Vector2.Distance(stateMachine.transform.position, stateMachine.preSwoopPosition);
+                Vector2 targetReturnPosition = new Vector2(
+                    stateMachine.player.position.x,
+                    stateMachine.player.position.y + stateMachine.flyingHeight
+                );
+                float distanceToReturn = Vector2.Distance(stateMachine.transform.position, targetReturnPosition);
                 if (distanceToReturn <= 0.5f)
                 {
                     isComplete = true;
@@ -72,7 +89,7 @@ public class EnemyMeleeState : EnemyState
         }
         else
         {
-            // Ground enemy attack (original behavior)
+            // Standard attack behavior (ground enemies or flying without swoop)
             // Trigger attack at the specified timing in the animation
             if (!hasAttacked && time >= attackDuration * attackTiming)
             {
@@ -89,7 +106,7 @@ public class EnemyMeleeState : EnemyState
     
     public override void FixedDo()
     {
-        if (stateMachine.isFlying)
+        if (stateMachine.isFlying && stateMachine.useSwoopAttack)
         {
             if (swoopPhase == SwoopPhase.Swooping)
             {
@@ -99,14 +116,16 @@ public class EnemyMeleeState : EnemyState
             }
             else if (swoopPhase == SwoopPhase.Returning)
             {
-                // Return to pre-swoop position
-                Vector2 directionToReturn = (stateMachine.preSwoopPosition - (Vector2)stateMachine.transform.position).normalized;
+                Vector2 targetReturnPosition = new Vector2(
+                    stateMachine.player.position.x,
+                    stateMachine.player.position.y + stateMachine.flyingHeight
+                );
+                Vector2 directionToReturn = (targetReturnPosition - (Vector2)stateMachine.transform.position).normalized;
                 stateMachine.rb.linearVelocity = directionToReturn * stateMachine.swoopReturnSpeed;
             }
         }
         else
         {
-            // Ground enemy stays still during attack
             stateMachine.rb.linearVelocity = new Vector2(0, stateMachine.rb.linearVelocity.y);
         }
     }

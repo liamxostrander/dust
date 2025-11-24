@@ -20,7 +20,7 @@ public class IsDamageable : MonoBehaviour
     [SerializeField] private float coinDropRadius = 0.5f;
     
     [Header("Events")]
-    public UnityEvent<float, Vector2> OnDamagedWithKnockback; // Combined event
+    public UnityEvent<float, Vector2> OnDamagedWithKnockback; 
     public UnityEvent<float> OnHealed;
     public UnityEvent OnDeath;
     public UnityEvent<float> OnHealthChanged;
@@ -51,7 +51,6 @@ public class IsDamageable : MonoBehaviour
         
         currentHealth = Mathf.Max(0, currentHealth - damage);
         
-        // Invoke combined event with both damage and knockback
         OnDamagedWithKnockback?.Invoke(damage, knockback);
         OnHealthChanged?.Invoke(currentHealth);
         
@@ -97,19 +96,16 @@ public class IsDamageable : MonoBehaviour
         
         for (int i = 0; i < coinCount; i++)
         {
-            // Random position around the enemy
             Vector2 randomOffset = Random.insideUnitCircle * coinDropRadius;
             Vector3 spawnPosition = transform.position + new Vector3(randomOffset.x, randomOffset.y, 0);
             
             GameObject coin = Instantiate(coinPrefab, spawnPosition, Quaternion.identity);
             
-            // Apply random force if coin has Rigidbody2D
             Rigidbody2D rb = coin.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                // Create upward and outward direction
                 Vector2 randomDirection = Random.insideUnitCircle.normalized;
-                float upwardBias = Random.Range(0.5f, 1.5f); // Adds upward force
+                float upwardBias = Random.Range(0.5f, 1.5f); 
                 Vector2 throwDirection = new Vector2(randomDirection.x, Mathf.Abs(randomDirection.y) + upwardBias).normalized;
                 
                 rb.AddForce(throwDirection * coinDropForce, ForceMode2D.Impulse);

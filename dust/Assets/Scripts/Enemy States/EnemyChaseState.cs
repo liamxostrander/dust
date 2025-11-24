@@ -16,7 +16,6 @@ public class EnemyChaseState : EnemyState
         base.Enter();
         isComplete = false;
         
-        // Play chase animation at increased speed
         if (stateMachine.animator != null && chaseAnim != null)
         {
             stateMachine.animator.Play(chaseAnim.name);
@@ -33,7 +32,6 @@ public class EnemyChaseState : EnemyState
     
     public override void Do()
     {
-        // Check if player is in attack range (includes height/angle checks) and cooldown is ready
         if (stateMachine.IsPlayerInAttackRange() && stateMachine.CanAttack())
         {
             isComplete = true;
@@ -48,13 +46,11 @@ public class EnemyChaseState : EnemyState
 
     public override void FixedDo()
     {
-        // Chase player
         stateMachine.ChasePlayer();
     }
     
     public override void Exit()
     {        
-        // Reset animation speed
         if (stateMachine.animator != null)
         {
             stateMachine.animator.speed = 1f;

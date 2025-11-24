@@ -40,23 +40,14 @@ public class EnemyHurtState : EnemyState
     
     public override void Do()
     {
-        // Don't allow any movement during hurt state - let physics handle it
-        // The enemy should not try to move or chase during knockback
-        
-        // Return to chase state after hurt animation completes
         if (time >= hurtDuration)
         {
-            if (stateMachine.chaseState != null)
-            {
-                stateMachine.SwitchState(stateMachine.chaseState);
-            }
+            isComplete = true;
         }
     }
     
     public override void FixedDo()
     {
-        // Override to prevent any physics-based movement during hurt state
-        // Let the knockback velocity naturally decay
     }
     
     public override void Exit()

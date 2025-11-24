@@ -34,12 +34,6 @@ public class EnemyPatrolState : EnemyState
 
     public override void FixedDo()
     {
-        // Flying enemies check for walls ahead
-        if (stateMachine.isFlying && stateMachine.IsWallAhead())
-        {
-            stateMachine.shouldReverseDirection = true;
-        }
-
         // Flying enemies always patrol, ground enemies only when grounded
         if (stateMachine.isFlying || stateMachine.isGrounded)
         {

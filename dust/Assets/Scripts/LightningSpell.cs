@@ -25,7 +25,6 @@ public class LightningSpell : MonoBehaviour
     {
         spawnTime = Time.time;
         
-        // Position at target and play animation
         transform.position = targetPosition;
         
         if (animator == null)
@@ -39,13 +38,11 @@ public class LightningSpell : MonoBehaviour
             animationDuration = strikeAnimation.length;
         }
         
-        // Play sound at start
         if (strikeSound != null)
         {
             AudioSource.PlayClipAtPoint(strikeSound, transform.position);
         }
         
-        // Destroy after animation completes
         Destroy(gameObject, animationDuration);
     }
     
@@ -53,7 +50,6 @@ public class LightningSpell : MonoBehaviour
     {
         float elapsed = Time.time - spawnTime;
         
-        // Deal damage at the specified timing in the animation
         if (!hasDealtDamage && elapsed >= animationDuration * damageTiming)
         {
             DealDamage();

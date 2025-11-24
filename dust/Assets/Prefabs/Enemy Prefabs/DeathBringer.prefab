@@ -234,7 +234,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -295,6 +295,7 @@ MonoBehaviour:
   attackCooldown: 2
   attackDamage: 1
   justFinishedAttack: 0
+  uncancellableAttacks: 1
   idleState: {fileID: 3820166136568060834}
   patrolState: {fileID: 7519790500326860205}
   chaseState: {fileID: 4950454643338969564}

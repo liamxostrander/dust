@@ -21,20 +21,33 @@ public class EnemyStateMachine : MonoBehaviour
     public float detectionRange = 5f;
     public float visionConeAngle = 90f;
     public bool useVisionCone = true;
+    [Tooltip("If true, enemy will flee from player instead of chasing")]
+    public bool isSkittish = false;
     
     [Header("Flying Enemy Settings")]
     public bool isFlying = false;
     public float flyingHeight = 3f;
+    [Tooltip("Minimum height above ground to maintain")]
+    public float minFlyingHeight = 2f;
     public float verticalPatrolAmplitude = 1f;
     public float verticalPatrolSpeed = 1f;
     public float flyingChaseVerticalSpeed = 3f;
     public float flyingWallCheckDistance = 1f;
+    [Tooltip("How far down to check for ground")]
+    public float groundCheckDistance = 3f;
+    [Tooltip("Collider2D component from WorldBounds object that defines arena boundaries")]
+    public Collider2D worldBoundsCollider;
+    [Tooltip("Speed at which enemy returns to arena center when out of bounds")]
+    public float returnToArenaSpeed = 5f;
     
     [Header("Flying Attack (Swoop) Settings")]
+    [Tooltip("If true, flying enemies will perform swoop attacks (melee only)")]
+    public bool useSwoopAttack = true;
     public float swoopSpeed = 8f;
     public float swoopReturnSpeed = 4f;
     public float minHeightAbovePlayerForSwoop = 1f;
     [HideInInspector] public Vector2 preSwoopPosition;
+    [HideInInspector] public float spawnYPosition;
     
     [Header("Spell Casting Settings")]
     public bool canCastSpells = false;
@@ -63,12 +76,22 @@ public class EnemyStateMachine : MonoBehaviour
     public int attackDamage = 1;
     private float lastAttackTime = -999f;
     [HideInInspector] public bool justFinishedAttack = false;
+    [Tooltip("If true, enemy will not be interrupted during attacks when taking damage")]
+    public bool uncancellableAttacks = false;
+    
+    [Header("Ranged Attack Settings")]
+    [Tooltip("Enable ranged attacks instead of melee")]
+    public bool useRangedAttack = false;
+    [Tooltip("Range for ranged attacks (typically longer than melee)")]
+    public float rangedAttackRange = 8f;
 
     [Header("States")]
     public EnemyIdleState idleState;
     public EnemyPatrolState patrolState;
     public EnemyChaseState chaseState;
+    public EnemyFleeState fleeState;
     public EnemyMeleeState attackState;
+    public EnemyRangedState rangedAttackState;
     public EnemySpellCastState spellCastState;
     public EnemyDeathState deathState;
     public EnemyHurtState hurtState;
@@ -83,13 +106,41 @@ public class EnemyStateMachine : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         
+        // Store spawn position for flying enemies to maintain relative height
+        if (isFlying)
+        {
+            spawnYPosition = transform.position.y;
+        }
+        
+        // Auto-find WorldBounds for flying enemies if not assigned
+        if (isFlying && worldBoundsCollider == null)
+        {
+            GameObject worldBoundsObj = GameObject.Find("VisualFX/WorldBounds");
+            if (worldBoundsObj == null)
+            {
+                // Try without the path in case it's at root level
+                worldBoundsObj = GameObject.Find("WorldBounds");
+            }
+            
+            if (worldBoundsObj != null)
+            {
+                worldBoundsCollider = worldBoundsObj.GetComponent<Collider2D>();
+            }
+            else
+            {
+                Debug.LogWarning($"Flying enemy {gameObject.name} could not find WorldBounds object in scene!");
+            }
+        }
+        
         if (animator == null) animator = GetComponent<Animator>();
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (idleState == null) idleState = GetComponent<EnemyIdleState>();
         if (patrolState == null) patrolState = GetComponent<EnemyPatrolState>();
         if (chaseState == null) chaseState = GetComponent<EnemyChaseState>();
+        if (fleeState == null) fleeState = GetComponent<EnemyFleeState>();
         if (attackState == null) attackState = GetComponent<EnemyMeleeState>();
+        if (rangedAttackState == null) rangedAttackState = GetComponent<EnemyRangedState>();
         if (spellCastState == null) spellCastState = GetComponent<EnemySpellCastState>();
         if (deathState == null) deathState = GetComponent<EnemyDeathState>();
         if (hurtState == null) hurtState = GetComponent<EnemyHurtState>();
@@ -97,7 +148,9 @@ public class EnemyStateMachine : MonoBehaviour
         if (idleState != null) idleState.Initialize(this);
         if (patrolState != null) patrolState.Initialize(this);
         if (chaseState != null) chaseState.Initialize(this);
+        if (fleeState != null) fleeState.Initialize(this);
         if (attackState != null) attackState.Initialize(this);
+        if (rangedAttackState != null) rangedAttackState.Initialize(this);
         if (spellCastState != null) spellCastState.Initialize(this);
         if (deathState != null) deathState.Initialize(this);
         if (hurtState != null) hurtState.Initialize(this);
@@ -134,7 +187,7 @@ public class EnemyStateMachine : MonoBehaviour
             // Check if we should interrupt current state for spell casting
             // (Don't interrupt spell cast, hurt, death, or attack states)
             if (currentState != spellCastState && currentState != hurtState && 
-                currentState != deathState && currentState != attackState)
+                currentState != deathState && currentState != attackState && currentState != rangedAttackState)
             {
                 if (canCastSpells && IsPlayerInSpellRange() && CanCastSpell() && spellCastState != null)
                 {
@@ -144,8 +197,7 @@ public class EnemyStateMachine : MonoBehaviour
                 }
             }
             
-            // Don't allow state transitions during hurt or death states
-            if (currentState.isComplete && currentState != hurtState && currentState != deathState)
+            if (currentState.isComplete && currentState != deathState)
             {
                 currentState.Exit();
                 SelectState();
@@ -179,11 +231,17 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void HandleDamaged(float damage, Vector2 knockback)
     {
-        // Don't interrupt death state
         if (currentState == deathState)
             return;
 
-        // Check if hurt state exists
+        // If uncancellable attacks is enabled and enemy is attacking, skip hurt state
+        // Enemy still takes damage (handled by IsDamageable), but won't be interrupted
+        if (uncancellableAttacks && (currentState == attackState || currentState == rangedAttackState || currentState == spellCastState))
+        {
+            Debug.Log("Enemy hit during attack but has uncancellable attacks - no interrupt");
+            return;
+        }
+
         if (hurtState == null)
         {
             Debug.LogWarning("EnemyHurtState not assigned!");
@@ -193,19 +251,17 @@ public class EnemyStateMachine : MonoBehaviour
         // Set the knockback immediately
         hurtState.SetKnockbackDirection(knockback);
         
-        // Switch to hurt state
         SwitchState(hurtState);
     }
     private void HandleDeath()
     {
-        // Transition to death state
         SwitchState(deathState);
     }
 
     private void UpdateSpriteDirection()
     {
-        // Flying enemies face the player during chase and attack
-        if (isFlying && player != null && (currentState == chaseState || currentState == attackState))
+        // Face the player during chase state
+        if (player != null && currentState == chaseState)
         {
             float directionToPlayer = player.position.x - transform.position.x;
             if (Mathf.Abs(directionToPlayer) > 0.1f)
@@ -236,7 +292,7 @@ public class EnemyStateMachine : MonoBehaviour
 
 
     /// Determine the next state based on current conditions.
-    /// Priority: spell cast -> attack recovery -> attack range -> chase -> edge detection -> patrol
+    /// Priority: spell cast -> attack recovery -> attack range -> chase/flee -> edge detection -> patrol
     void SelectState()
     {
         EnemyState newState = currentState;
@@ -255,9 +311,69 @@ public class EnemyStateMachine : MonoBehaviour
         {
             newState = idleState;
         }
+        // Skittish enemies have different behavior
+        else if (isSkittish && playerDetected)
+        {
+            // Check if player is too close (invading safe space)
+            float distanceToPlayer = player != null ? Vector2.Distance(transform.position, player.position) : float.MaxValue;
+            float safeShootingDistance = fleeState != null ? fleeState.safeDistance : 8f;
+            float fleeThreshold = safeShootingDistance * 0.7f;
+            
+            // Player is too close - flee!
+            if (distanceToPlayer < fleeThreshold)
+            {
+                newState = fleeState != null ? fleeState : patrolState;
+            }
+            // In the safe zone - can attack if ready
+            else if (distanceToPlayer >= fleeThreshold && distanceToPlayer <= safeShootingDistance)
+            {
+                // Check if we can attack (cooldown ready and within effective range)
+                float effectiveRange = useRangedAttack ? rangedAttackRange : attackRange;
+                bool canAttackNow = Time.time >= lastAttackTime + attackCooldown && distanceToPlayer <= effectiveRange;
+                
+                if (canAttackNow)
+                {
+                    if (useRangedAttack && rangedAttackState != null)
+                    {
+                        newState = rangedAttackState;
+                    }
+                    else
+                    {
+                        newState = attackState;
+                    }
+                }
+                else
+                {
+                    // Wait in idle until ready to attack
+                    newState = idleState;
+                }
+            }
+            // Beyond safe distance - maintain position (idle)
+            else
+            {
+                newState = idleState;
+            }
+        }
+        // Normal enemy behavior (not skittish)
         else if (playerInAttackRange && Time.time >= lastAttackTime + attackCooldown)
         {
-            newState = attackState;
+            // Choose between ranged and melee attack based on settings
+            if (useRangedAttack)
+            {
+                if (rangedAttackState != null)
+                {
+                    newState = rangedAttackState;
+                }
+                else
+                {
+                    Debug.LogWarning($"{gameObject.name} has useRangedAttack enabled but no EnemyRangedState component!");
+                    newState = idleState; 
+                }
+            }
+            else if (attackState != null)
+            {
+                newState = attackState;
+            }
         }
         else if (currentState == idleState && playerInAttackRange)
         {
@@ -283,7 +399,6 @@ public class EnemyStateMachine : MonoBehaviour
         }
     }
     
-    /// Check if player is within detection range and vision cone.
     public bool IsPlayerDetected()
     {
         if (player == null) return false;
@@ -302,17 +417,19 @@ public class EnemyStateMachine : MonoBehaviour
         return angleToPlayer <= visionConeAngle / 2f;
     }
 
-    /// Check if player is within attack range and attack cone.
     public bool IsPlayerInAttackRange()
     {
         if (player == null) return false;
         
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-        if (distanceToPlayer > attackRange)
+        
+        // Use different range for ranged attacks
+        float effectiveRange = useRangedAttack ? rangedAttackRange : attackRange;
+        if (distanceToPlayer > effectiveRange)
             return false;
         
-        // Flying enemies need to be above the player to swoop
-        if (isFlying)
+        // Flying enemies with swoop attacks need to be above the player
+        if (isFlying && useSwoopAttack && !useRangedAttack)
         {
             float heightDifference = transform.position.y - player.position.y;
             if (heightDifference < minHeightAbovePlayerForSwoop)
@@ -347,30 +464,57 @@ public class EnemyStateMachine : MonoBehaviour
         
         if (isFlying)
         {
-            // Flying enemies position themselves above the player for swooping
-            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-            float horizontalDistance = Mathf.Abs(player.position.x - transform.position.x);
-            
-            // When close horizontally, prioritize getting above the player
-            if (horizontalDistance <= attackRange * 1.5f)
+            // Check if out of bounds - if so, reverse toward center
+            if (IsOutOfBounds())
             {
-                float targetY = player.position.y + flyingHeight;
-                float verticalDirection = Mathf.Sign(targetY - transform.position.y);
+                ReturnToArenaCenter();
+                return;
+            }
+            
+            Vector2 velocity = Vector2.zero;
+            
+            // Flying enemies with swoop need to position above player
+            if (useSwoopAttack && !useRangedAttack)
+            {
+                float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+                float horizontalDistance = Mathf.Abs(player.position.x - transform.position.x);
                 
-                rb.linearVelocity = new Vector2(
-                    directionToPlayer * chaseSpeed * 0.5f, // Slow down horizontal movement
-                    verticalDirection * flyingChaseVerticalSpeed
-                );
+                // When close horizontally, prioritize getting above the player
+                if (horizontalDistance <= attackRange * 1.5f)
+                {
+                    float targetY = player.position.y + flyingHeight;
+                    float verticalDirection = Mathf.Sign(targetY - transform.position.y);
+                    
+                    velocity = new Vector2(
+                        directionToPlayer * chaseSpeed * 0.5f, // Slow down horizontal movement
+                        verticalDirection * flyingChaseVerticalSpeed
+                    );
+                }
+                else
+                {
+                    // Normal chase: move toward player
+                    Vector2 directionVector = (player.position - transform.position).normalized;
+                    velocity = new Vector2(
+                        directionVector.x * chaseSpeed,
+                        directionVector.y * flyingChaseVerticalSpeed
+                    );
+                }
             }
             else
             {
-                // Normal chase: move toward player
+                // Non-swooping flying enemies (ranged, etc.) - just chase normally
+                // Maintain flying height while chasing horizontally
                 Vector2 directionVector = (player.position - transform.position).normalized;
-                rb.linearVelocity = new Vector2(
+                float targetY = spawnYPosition + flyingHeight;
+                float verticalVelocity = (targetY - transform.position.y) * 2f;
+                
+                velocity = new Vector2(
                     directionVector.x * chaseSpeed,
-                    directionVector.y * flyingChaseVerticalSpeed
+                    verticalVelocity
                 );
             }
+            
+            rb.linearVelocity = velocity;
         }
         else
         {
@@ -409,6 +553,71 @@ public class EnemyStateMachine : MonoBehaviour
             
             // Ground enemies only chase horizontally
             rb.linearVelocity = new Vector2(directionToPlayer * chaseSpeed, rb.linearVelocity.y);
+        }
+    }
+    
+    public void FleeFromPlayer()
+    {
+        if (player == null) return;
+        
+        // Move in opposite direction from player
+        float directionAwayFromPlayer = -Mathf.Sign(player.position.x - transform.position.x);
+        
+        if (isFlying)
+        {
+            // Check if out of bounds - if so, return to arena center
+            if (IsOutOfBounds())
+            {
+                ReturnToArenaCenter();
+                return;
+            }
+            
+            // Calculate flee direction
+            Vector2 fleeDirection = (transform.position - player.position).normalized;
+            
+            // Normal flee: move away from player
+            rb.linearVelocity = new Vector2(
+                fleeDirection.x * chaseSpeed,
+                fleeDirection.y * flyingChaseVerticalSpeed
+            );
+        }
+        else
+        {
+            // Ground enemy edge detection
+            Vector2 rayStart;
+            if (groundCheck != null)
+            {
+                rayStart = new Vector2(
+                    groundCheck.bounds.center.x + directionAwayFromPlayer * edgeCheckDistance,
+                    groundCheck.bounds.center.y
+                );
+            }
+            else if (groundCheckPoint != null)
+            {
+                rayStart = new Vector2(
+                    transform.position.x + directionAwayFromPlayer * edgeCheckDistance,
+                    groundCheckPoint.position.y
+                );
+            }
+            else
+            {
+                rayStart = new Vector2(
+                    transform.position.x + directionAwayFromPlayer * edgeCheckDistance,
+                    transform.position.y - 0.5f
+                );
+            }
+            
+            RaycastHit2D edgeHit = Physics2D.Raycast(rayStart, Vector2.down, edgeCheckDistance * 2, groundLayer);
+            
+            // If there's an edge ahead, stop moving (trapped)
+            if (!edgeHit.collider)
+            {
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+                return;
+            }
+            
+            // Ground enemies flee horizontally away from player
+            rb.linearVelocity = new Vector2(directionAwayFromPlayer * chaseSpeed, rb.linearVelocity.y);
         }
     }
     
@@ -464,17 +673,17 @@ public class EnemyStateMachine : MonoBehaviour
         
         if (isFlying)
         {
-            // Check for walls ahead
-            if (IsWallAhead())
+            // Check if out of bounds - if so, reverse direction
+            if (IsOutOfBounds())
             {
-                shouldReverseDirection = true;
-                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-                return;
+                // Reverse direction when hitting bounds
+                lastMoveDirection = -lastMoveDirection;
+                moveDirection = lastMoveDirection;
             }
             
-            // Flying patrol with sine wave vertical movement
+            // Normal flying patrol with sine wave vertical movement
             float verticalOffset = Mathf.Sin(Time.time * verticalPatrolSpeed) * verticalPatrolAmplitude;
-            float targetY = flyingHeight + verticalOffset;
+            float targetY = spawnYPosition + flyingHeight + verticalOffset;
             float verticalVelocity = (targetY - transform.position.y) * 2f; // Simple proportional controller
             
             rb.linearVelocity = new Vector2(moveDirection * patrolSpeed, verticalVelocity);
@@ -520,7 +729,6 @@ public class EnemyStateMachine : MonoBehaviour
     /// Check if enemy is grounded using box collider.
     void CheckGrounded()
     {
-        // Flying enemies are never considered grounded
         if (isFlying)
         {
             isGrounded = false;
@@ -542,6 +750,8 @@ public class EnemyStateMachine : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         if (!showGizmos) return;
+        
+        // === DETECTION RANGE ===
         if (useVisionCone)
         {
             // Determine facing direction
@@ -577,7 +787,95 @@ public class EnemyStateMachine : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, detectionRange);
         }
         
-        // Ground check visualization using BoxCollider2D bounds
+        // === RANGED ATTACK RANGE ===
+        if (useRangedAttack)
+        {
+            // Draw ranged attack range in cyan/light blue
+            Gizmos.color = new Color(0f, 1f, 1f, 0.5f); // Cyan
+            Gizmos.DrawWireSphere(transform.position, rangedAttackRange);
+            
+            #if UNITY_EDITOR
+            UnityEditor.Handles.color = new Color(0f, 1f, 1f, 0.2f);
+            UnityEditor.Handles.DrawSolidDisc(transform.position, Vector3.forward, rangedAttackRange);
+            #endif
+        }
+        else
+        {
+            // === MELEE ATTACK RANGE ===
+            if (useAttackCone)
+            {
+                // Determine facing direction
+                Vector2 facingDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+                
+                // Draw the attack cone in red
+                Gizmos.color = new Color(1f, 0f, 0f, 0.3f); // Semi-transparent red
+                
+                // Draw the cone edges
+                float halfAngle = attackConeAngle / 2f;
+                Vector2 coneEdge1 = Quaternion.Euler(0, 0, halfAngle) * facingDirection * attackRange;
+                Vector2 coneEdge2 = Quaternion.Euler(0, 0, -halfAngle) * facingDirection * attackRange;
+                
+                // Draw lines for cone edges
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position, (Vector2)transform.position + coneEdge1);
+                Gizmos.DrawLine(transform.position, (Vector2)transform.position + coneEdge2);
+                
+                // Draw arc at the end of the cone
+                Vector3 previousPoint = (Vector2)transform.position + coneEdge1;
+                for (int i = 1; i <= 20; i++)
+                {
+                    float angle = Mathf.Lerp(-halfAngle, halfAngle, i / 20f);
+                    Vector2 point = Quaternion.Euler(0, 0, angle) * facingDirection * attackRange;
+                    Gizmos.DrawLine(previousPoint, (Vector2)transform.position + point);
+                    previousPoint = (Vector2)transform.position + point;
+                }
+            }
+            else
+            {
+                // Draw sphere attack range
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(transform.position, attackRange);
+            }
+            
+            // Draw attack hitbox (actual damage area)
+            Vector2 attackDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+            Vector2 attackPosition = (Vector2)transform.position + attackDirection * attackHitboxRadius;
+            Gizmos.color = new Color(1f, 0.5f, 0f, 1f); // Orange for hitbox
+            Gizmos.DrawWireSphere(attackPosition, attackHitboxRadius);
+        }
+        
+        // === SKITTISH BEHAVIOR RANGES ===
+        if (isSkittish && fleeState != null)
+        {
+            float safeDistance = fleeState.safeDistance;
+            float fleeThreshold = safeDistance * 0.7f;
+            
+            // Draw flee threshold (inner circle - red zone)
+            Gizmos.color = new Color(1f, 0f, 0f, 0.3f); // Red
+            Gizmos.DrawWireSphere(transform.position, fleeThreshold);
+            
+            // Draw safe distance (outer circle - green zone)
+            Gizmos.color = new Color(0f, 1f, 0f, 0.3f); // Green
+            Gizmos.DrawWireSphere(transform.position, safeDistance);
+            
+            #if UNITY_EDITOR
+            // Fill the safe zone between flee threshold and safe distance
+            UnityEditor.Handles.color = new Color(0f, 1f, 0f, 0.1f);
+            UnityEditor.Handles.DrawSolidDisc(transform.position, Vector3.forward, safeDistance);
+            UnityEditor.Handles.color = new Color(1f, 0f, 0f, 0.1f);
+            UnityEditor.Handles.DrawSolidDisc(transform.position, Vector3.forward, fleeThreshold);
+            #endif
+        }
+        
+        // === SPELL CAST RANGE ===
+        if (canCastSpells && spellCastRange < 100f)
+        {
+            // Draw spell range in purple
+            Gizmos.color = new Color(0.5f, 0f, 1f, 0.3f); // Purple
+            Gizmos.DrawWireSphere(transform.position, spellCastRange);
+        }
+        
+        // === GROUND CHECK ===
         if (groundCheck != null)
         {
             Gizmos.color = isGrounded ? Color.green : Color.red;
@@ -591,86 +889,80 @@ public class EnemyStateMachine : MonoBehaviour
             Gizmos.DrawWireSphere(groundCheckPosition, groundCheckRadius);
         }
 
-        // Edge check visualization - show both left and right rays
-        Gizmos.color = Color.blue;
-        float dir = rb != null && Mathf.Abs(rb.linearVelocity.x) > 0.1f ? Mathf.Sign(rb.linearVelocity.x) : 1f;
-        
-        Vector2 rayStart;
-        if (groundCheck != null)
+        // === EDGE DETECTION ===
+        if (!isFlying)
         {
-            rayStart = new Vector2(
-                groundCheck.bounds.center.x + dir * edgeCheckDistance,
-                groundCheck.bounds.center.y
-            );
-        }
-        else if (groundCheckPoint != null)
-        {
-            rayStart = new Vector2(
-                transform.position.x + dir * edgeCheckDistance,
-                groundCheckPoint.position.y
-            );
-        }
-        else
-        {
-            rayStart = new Vector2(
-                transform.position.x + dir * edgeCheckDistance,
-                transform.position.y - 0.5f
-            );
-        }
-        
-        // Draw the edge detection ray
-        Gizmos.DrawLine(rayStart, rayStart + Vector2.down * (edgeCheckDistance * 2));
-        Gizmos.DrawWireSphere(rayStart, 0.1f);
-        
-        // Draw attack range cone or sphere
-        if (useAttackCone)
-        {
-            // Determine facing direction
-            Vector2 facingDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+            Gizmos.color = Color.blue;
+            float dir = rb != null && Mathf.Abs(rb.linearVelocity.x) > 0.1f ? Mathf.Sign(rb.linearVelocity.x) : 1f;
             
-            // Draw the attack cone in red
-            Gizmos.color = new Color(1f, 0f, 0f, 0.3f); // Semi-transparent red
-            
-            // Draw the cone edges
-            float halfAngle = attackConeAngle / 2f;
-            Vector2 coneEdge1 = Quaternion.Euler(0, 0, halfAngle) * facingDirection * attackRange;
-            Vector2 coneEdge2 = Quaternion.Euler(0, 0, -halfAngle) * facingDirection * attackRange;
-            
-            // Draw lines for cone edges
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, (Vector2)transform.position + coneEdge1);
-            Gizmos.DrawLine(transform.position, (Vector2)transform.position + coneEdge2);
-            
-            // Draw arc at the end of the cone
-            Vector3 previousPoint = (Vector2)transform.position + coneEdge1;
-            for (int i = 1; i <= 20; i++)
+            Vector2 rayStart;
+            if (groundCheck != null)
             {
-                float angle = Mathf.Lerp(-halfAngle, halfAngle, i / 20f);
-                Vector2 point = Quaternion.Euler(0, 0, angle) * facingDirection * attackRange;
-                Gizmos.DrawLine(previousPoint, (Vector2)transform.position + point);
-                previousPoint = (Vector2)transform.position + point;
+                rayStart = new Vector2(
+                    groundCheck.bounds.center.x + dir * edgeCheckDistance,
+                    groundCheck.bounds.center.y
+                );
             }
-        }
-        else
-        {
-            // Draw sphere attack range
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRange);
+            else if (groundCheckPoint != null)
+            {
+                rayStart = new Vector2(
+                    transform.position.x + dir * edgeCheckDistance,
+                    groundCheckPoint.position.y
+                );
+            }
+            else
+            {
+                rayStart = new Vector2(
+                    transform.position.x + dir * edgeCheckDistance,
+                    transform.position.y - 0.5f
+                );
+            }
+            
+            // Draw the edge detection ray
+            Gizmos.DrawLine(rayStart, rayStart + Vector2.down * (edgeCheckDistance * 2));
+            Gizmos.DrawWireSphere(rayStart, 0.1f);
         }
         
-        // Draw attack hitbox (actual damage area)
-        Vector2 attackDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-        Vector2 attackPosition = (Vector2)transform.position + attackDirection * attackHitboxRadius;
-        Gizmos.color = new Color(1f, 0.5f, 0f, 1f); // Orange for hitbox
-        Gizmos.DrawWireSphere(attackPosition, attackHitboxRadius);
-        
-        // Draw current state and reverse direction flag
-        string state = currentState != null ? currentState.GetType().Name : "No State";
-        if (shouldReverseDirection)
+        // === FLYING ENEMY OBSTACLE DETECTION ===
+        if (isFlying)
         {
-            state += " (Will Reverse)";
+            // Draw ground detection ray
+            bool tooClose = IsTooCloseToGround();
+            Gizmos.color = tooClose ? Color.red : Color.green;
+            Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundCheckDistance);
+            
+            // Draw minimum flying height zone
+            Gizmos.color = new Color(1f, 0.5f, 0f, 0.2f); // Orange
+            Gizmos.DrawLine(transform.position + Vector3.left * 0.5f + Vector3.down * minFlyingHeight, 
+                           transform.position + Vector3.right * 0.5f + Vector3.down * minFlyingHeight);
+            
+            // Draw wall detection
+            float dir = rb != null && Mathf.Abs(rb.linearVelocity.x) > 0.1f ? Mathf.Sign(rb.linearVelocity.x) : 1f;
+
+            Gizmos.DrawLine(transform.position, 
+                           transform.position + Vector3.right * dir * flyingWallCheckDistance);
         }
-        UnityEditor.Handles.Label(transform.position + Vector3.up * 2f, state);
+        
+        // === STATE LABEL ===
+        #if UNITY_EDITOR
+        string stateInfo = currentState != null ? currentState.GetType().Name.Replace("Enemy", "").Replace("State", "") : "No State";
+        if (shouldReverseDirection) stateInfo += " (Reversing)";
+        if (isSkittish) stateInfo += " [Skittish]";
+        if (useRangedAttack) stateInfo += " [Ranged]";
+        if (uncancellableAttacks) stateInfo += " [Uncancel]";
+        
+        UnityEditor.Handles.Label(transform.position + Vector3.up * 2f, stateInfo);
+        
+        // Legend
+        Vector3 legendPos = transform.position + Vector3.up * 3f + Vector3.right * 2f;
+        string legend = "Yellow=Detection";
+        if (useRangedAttack) legend += " | Cyan=RangedAtk";
+        else legend += " | Red=MeleeAtk";
+        if (isSkittish) legend += " | Red/Green=Flee/Safe";
+        if (canCastSpells && spellCastRange < 100f) legend += " | Purple=Spell";
+        
+        UnityEditor.Handles.Label(legendPos, legend);
+        #endif
     }
     #endregion
 
@@ -678,7 +970,6 @@ public class EnemyStateMachine : MonoBehaviour
     {
         if (!isFlying) return false;
         
-        // Check for walls in the direction of movement
         float direction = Mathf.Sign(rb.linearVelocity.x);
         if (direction == 0) direction = lastMoveDirection;
         
@@ -688,5 +979,42 @@ public class EnemyStateMachine : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, flyingWallCheckDistance, groundLayer);
         
         return hit.collider != null;
+    }
+    
+    public bool IsTooCloseToGround()
+    {
+        if (!isFlying) return false;
+        
+        Vector2 rayOrigin = transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, groundCheckDistance, groundLayer);
+        
+        if (hit.collider != null)
+        {
+            float heightAboveGround = hit.distance;
+            return heightAboveGround < minFlyingHeight;
+        }
+        
+        return false;
+    }
+    
+    public bool IsOutOfBounds()
+    {
+        if (!isFlying || worldBoundsCollider == null) return false;
+        
+        Bounds bounds = worldBoundsCollider.bounds;
+        Vector2 pos = transform.position;
+        
+        return pos.x < bounds.min.x || pos.x > bounds.max.x ||
+            pos.y < bounds.min.y || pos.y > bounds.max.y;
+    }
+
+    public void ReturnToArenaCenter()
+    {
+        if (!isFlying || worldBoundsCollider == null) return;
+        
+        Vector2 arenaCenter = worldBoundsCollider.bounds.center;
+        Vector2 directionToCenter = (arenaCenter - (Vector2)transform.position).normalized;
+        
+        rb.linearVelocity = directionToCenter * returnToArenaSpeed;
     }
 }

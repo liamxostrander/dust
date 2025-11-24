@@ -41,10 +41,25 @@ public class EnemyIdleState : EnemyState
     {
         if (stateMachine.isFlying)
         {
-            // Flying enemies maintain their height during idle
-            float targetY = stateMachine.flyingHeight;
-            float verticalVelocity = (targetY - stateMachine.transform.position.y) * 2f;
-            stateMachine.rb.linearVelocity = new Vector2(0, verticalVelocity);
+            // Flying enemies with swoop attacks need to maintain proper height for swooping
+            // Ranged/spell-casting enemies can hover in place
+            if (stateMachine.useSwoopAttack && !stateMachine.useRangedAttack && !stateMachine.canCastSpells)
+            {
+                if (stateMachine.player != null)
+                {
+                    float targetY = stateMachine.player.position.y + stateMachine.flyingHeight;
+                    float verticalVelocity = (targetY - stateMachine.transform.position.y) * 2f;
+                    stateMachine.rb.linearVelocity = new Vector2(0, verticalVelocity);
+                }
+                else
+                {
+                    stateMachine.rb.linearVelocity = Vector2.zero;
+                }
+            }
+            else
+            {
+                stateMachine.rb.linearVelocity = Vector2.zero;
+            }
         }
         else
         {
@@ -54,14 +69,12 @@ public class EnemyIdleState : EnemyState
     
     public override void Exit()
     {
-        // Handle edge detection
         if (stateMachine.shouldReverseDirection)
         {
             stateMachine.lastMoveDirection *= -1;
             stateMachine.shouldReverseDirection = false;
         }
         
-        // Clear attack recovery flags
         if (stateMachine.justFinishedAttack)
         {
             stateMachine.justFinishedAttack = false;
