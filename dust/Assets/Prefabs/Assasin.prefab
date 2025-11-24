@@ -794,6 +794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitState
   hitAnim: {fileID: 2459078804267041145, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  additionalKnockbackTime: 0.05
 --- !u!1 &8716640178211188474
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,7 +805,7 @@ GameObject:
   m_Component:
   - component: {fileID: 854009606591504131}
   - component: {fileID: 2759218640024225718}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Player
   m_Icon: {fileID: 0}

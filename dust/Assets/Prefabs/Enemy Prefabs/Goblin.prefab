@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyIdleState
   idleDuration: 1
-  attackIdleDuration: 1
+  attackIdleDuration: 0.1
   idleAnim: {fileID: 7400000, guid: 702b7605daa96ad48b28f9a861cc3c15, type: 2}
 --- !u!1 &2748854627689617381
 GameObject:
@@ -73,13 +73,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2748854627689617381}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.5483171, w: 0.8362705}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.58333, y: 1, z: 1}
+  m_LocalScale: {x: 0.7364541, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3235173374868687617}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 66.503}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!70 &7100193126546470998
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b56032fbdad343dcb40d270e02c1d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackDamage
-  knockbackForce: 5
-  knockupForce: 2
+  knockbackForce: 15
+  knockupForce: 5
 --- !u!1 &3187651417452515738
 GameObject:
   m_ObjectHideFlags: 0
@@ -542,7 +542,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -574,16 +574,23 @@ MonoBehaviour:
   detectionRange: 5
   visionConeAngle: 90
   useVisionCone: 0
+  isSkittish: 0
   isFlying: 0
   flyingHeight: 3
+  minFlyingHeight: 2
   verticalPatrolAmplitude: 1
   verticalPatrolSpeed: 1
   flyingChaseVerticalSpeed: 3
   flyingWallCheckDistance: 1
+  groundCheckDistance: 3
+  worldBoundsCollider: {fileID: 0}
+  returnToArenaSpeed: 5
+  useSwoopAttack: 1
   swoopSpeed: 8
   swoopReturnSpeed: 4
   minHeightAbovePlayerForSwoop: 1
   preSwoopPosition: {x: 0, y: 0}
+  spawnYPosition: 0
   canCastSpells: 0
   spellCastRange: 100
   spellCooldown: 10
@@ -596,18 +603,22 @@ MonoBehaviour:
   groundCheck: {fileID: 8455740056318157676}
   groundCheckRadius: 0.2
   isGrounded: 0
-  attackRange: 2.5
+  attackRange: 1.8
   attackConeAngle: 90
   useAttackCone: 0
   attackHitboxRadius: 1.15
-  attackCooldown: 1
+  attackCooldown: 0.1
   attackDamage: 5
   justFinishedAttack: 0
   uncancellableAttacks: 0
+  useRangedAttack: 0
+  rangedAttackRange: 8
   idleState: {fileID: 6069393862152614300}
   patrolState: {fileID: 7061766633757111070}
   chaseState: {fileID: 5509235524536599055}
+  fleeState: {fileID: 0}
   attackState: {fileID: 963202678825931017}
+  rangedAttackState: {fileID: 0}
   spellCastState: {fileID: 0}
   deathState: {fileID: 4419238986780907392}
   hurtState: {fileID: 7905763544739973913}

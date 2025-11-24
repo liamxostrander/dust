@@ -234,9 +234,29 @@ public class PlayerMovementSM : MonoBehaviour
 
     void HandleXMovement()
     {
+        if (!canMove)
+            return;
+
         float targetVX = moveX * moveSpeed * control * speedMultiplier;
-        if (canMove)
-            rb.linearVelocity = new Vector2(Mathf.Lerp(rb.linearVelocity.x, targetVX, 0.35f), rb.linearVelocity.y);
+        float currentVX = rb.linearVelocity.x;
+
+        if (Mathf.Abs(moveX) > 0.01f)
+        {
+            float newVX = Mathf.Lerp(currentVX, targetVX, 0.35f);
+            rb.linearVelocity = new Vector2(newVX, rb.linearVelocity.y);
+        }
+        else
+        {
+            // if (isGrounded)
+            // {
+            float friction = 0.90f; // tweak this
+            rb.linearVelocity = new Vector2(currentVX * friction, rb.linearVelocity.y);
+            // }
+            // else
+            // {
+            //     // In air → do NOTHING so knockback continues naturally
+            // }
+        }
     }
     void HandleJump()
     {

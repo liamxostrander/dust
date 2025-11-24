@@ -624,20 +624,20 @@ public class EnemyStateMachine : MonoBehaviour
     /// Perform melee attack
     public void PerformAttack()
     {
-        lastAttackTime = Time.time;
+        // lastAttackTime = Time.time;
         
-        Vector2 attackDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
-        Vector2 attackPosition = (Vector2)transform.position + attackDirection * (attackHitboxRadius);
+        // Vector2 attackDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        // Vector2 attackPosition = (Vector2)transform.position + attackDirection * (attackHitboxRadius);
         
-        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPosition, attackHitboxRadius, playerLayer);
+        // Collider2D[] hits = Physics2D.OverlapCircleAll(attackPosition, attackHitboxRadius, playerLayer);
         
-        if (hits.Length > 0)
-        {
-            foreach (Collider2D hit in hits)
-            {
-                Debug.Log($"Enemy attack hit player: {hit.gameObject.name}!");
-            }
-        }
+        // if (hits.Length > 0)
+        // {
+        //     foreach (Collider2D hit in hits)
+        //     {
+        //         // Debug.Log($"Enemy attack hit player: {hit.gameObject.name}!");
+        //     }
+        // }
     }
     
     public bool CanAttack()

@@ -24,7 +24,7 @@ public class EnemyAttackDamage : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (enemy == null) return;
-        
+        Debug.Log(other + " " + other.tag);
         if (!other.CompareTag("Player")) return;
         
         IsDamageable dmg = other.GetComponentInParent<IsDamageable>();
