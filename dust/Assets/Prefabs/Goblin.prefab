@@ -47,6 +47,90 @@ MonoBehaviour:
   idleDuration: 1
   attackIdleDuration: 1
   idleAnim: {fileID: 7400000, guid: 702b7605daa96ad48b28f9a861cc3c15, type: 2}
+--- !u!1 &2748854627689617381
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8390548409300464117}
+  - component: {fileID: 7100193126546470998}
+  - component: {fileID: 7132893902338605874}
+  m_Layer: 11
+  m_Name: AttackHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8390548409300464117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748854627689617381}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: 0.5483171, w: 0.8362705}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.58333, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3235173374868687617}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 66.503}
+--- !u!70 &7100193126546470998
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748854627689617381}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 0
+--- !u!114 &7132893902338605874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748854627689617381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b56032fbdad343dcb40d270e02c1d53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackDamage
+  knockbackForce: 5
+  knockupForce: 2
 --- !u!1 &3187651417452515738
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +517,7 @@ Transform:
   m_Children:
   - {fileID: 2990641812624256873}
   - {fileID: 5214243719320948824}
+  - {fileID: 8390548409300464117}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4475541419246152362
@@ -516,7 +601,7 @@ MonoBehaviour:
   useAttackCone: 0
   attackHitboxRadius: 1.15
   attackCooldown: 1
-  attackDamage: 1
+  attackDamage: 5
   justFinishedAttack: 0
   idleState: {fileID: 6069393862152614300}
   patrolState: {fileID: 7061766633757111070}
@@ -540,6 +625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IsDamageable
   maxHealth: 100
   currentHealth: 0
+  isPlayer: 0
   isInvulnerable: 0
   invulnerabilityDuration: 0.3
   coinPrefab: {fileID: 100000, guid: 49e6ee33250214a9facc214f3a2fecb7, type: 3}
@@ -702,7 +788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.ShadowCaster2D
   m_ShadowGroup: 0
-  m_Priority: 0
+  m_Priority: 5
   m_ComponentVersion: 5
   m_HasRenderer: 1
   m_UseRendererSilhouette: 1

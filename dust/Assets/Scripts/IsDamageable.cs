@@ -6,6 +6,7 @@ public class IsDamageable : MonoBehaviour
     [Header("Health Settings")]
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
+    [SerializeField] private bool isPlayer = false;
     
     [Header("Damage Settings")]
     [SerializeField] private bool isInvulnerable = false;
@@ -49,6 +50,7 @@ public class IsDamageable : MonoBehaviour
         if (!IsAlive || isInvulnerable || invulnerabilityTimer > 0)
             return;
         
+
         currentHealth = Mathf.Max(0, currentHealth - damage);
         
         // Invoke combined event with both damage and knockback
@@ -84,7 +86,8 @@ public class IsDamageable : MonoBehaviour
     
     private void Die()
     {
-        DropCoins();
+        if (!isPlayer)
+            DropCoins();
         OnDeath?.Invoke();
     }
     
