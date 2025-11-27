@@ -61,6 +61,11 @@ public class PlayerMovementSM : MonoBehaviour
     [SerializeField] float lowJumpMultiplier = 2.5f;
     [SerializeField] float fastFallMultiplier = 3.0f;
     [SerializeField] float maxFallSpeed = -25f;
+
+    [Header("UI")]
+    [SerializeField] public WeaponSlots weaponSlots;
+
+    [Header("Other")]
     public Rigidbody2D rb;
     private IsDamageable damageable;
     float lastJumpPressTimer = 0f;
@@ -152,13 +157,18 @@ public class PlayerMovementSM : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Alpha1)){
             playerWeaponController.EquipSword(0);
+            weaponSlots.SetMeleeActive();
         }
         else if (Input.GetKey(KeyCode.Alpha2))
         {
             playerWeaponController.EquipSword(1);
+            weaponSlots.SetRangedActive();
         }
-        
-        
+        else if (Input.GetKey(KeyCode.Alpha3))
+        {
+            playerWeaponController.EquipSword(1);
+            weaponSlots.SetSpellActive();
+        }
     }
     void Update()
     {
