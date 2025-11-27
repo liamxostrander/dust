@@ -36,6 +36,7 @@ public class PlayerCurrency : MonoBehaviour
             return false;
 
         Coins -= amount;
+        coinCounter.setValue(Coins);
         OnCoinsChanged?.Invoke(Coins);
         return true;
     }
