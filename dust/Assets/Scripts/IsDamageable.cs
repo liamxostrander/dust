@@ -7,6 +7,7 @@ public class IsDamageable : MonoBehaviour
     [SerializeField] private float maxHealth = 100f;
     [SerializeField] private float currentHealth;
     [SerializeField] private bool isPlayer = false;
+    [SerializeField] public StatusBar healthBar;
     
     [Header("Damage Settings")]
     [SerializeField] private bool isInvulnerable = false;
@@ -34,7 +35,10 @@ public class IsDamageable : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        
+        if (healthBar != null)
+        {
+            healthBar.setMaxValue(maxHealth);
+        }
     }
     
     void Update()
@@ -52,7 +56,10 @@ public class IsDamageable : MonoBehaviour
         
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
-        
+        if (healthBar != null)
+        {
+            healthBar.setValue(currentHealth);
+        }
         OnDamagedWithKnockback?.Invoke(damage, knockback);
         OnHealthChanged?.Invoke(currentHealth);
         
