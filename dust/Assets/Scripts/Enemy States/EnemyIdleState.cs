@@ -41,25 +41,9 @@ public class EnemyIdleState : EnemyState
     {
         if (stateMachine.isFlying)
         {
-            // Flying enemies with swoop attacks need to maintain proper height for swooping
-            // Ranged/spell-casting enemies can hover in place
-            if (stateMachine.useSwoopAttack && !stateMachine.useRangedAttack && !stateMachine.canCastSpells)
-            {
-                if (stateMachine.player != null)
-                {
-                    float targetY = stateMachine.player.position.y + stateMachine.flyingHeight;
-                    float verticalVelocity = (targetY - stateMachine.transform.position.y) * 2f;
-                    stateMachine.rb.linearVelocity = new Vector2(0, verticalVelocity);
-                }
-                else
-                {
-                    stateMachine.rb.linearVelocity = Vector2.zero;
-                }
-            }
-            else
-            {
-                stateMachine.rb.linearVelocity = Vector2.zero;
-            }
+            // Flying enemies hover in place during idle/cooldown
+            // This creates a window for players to maneuver around them
+            stateMachine.rb.linearVelocity = Vector2.zero;
         }
         else
         {

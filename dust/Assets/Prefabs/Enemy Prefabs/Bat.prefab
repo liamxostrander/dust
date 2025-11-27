@@ -141,16 +141,23 @@ MonoBehaviour:
   detectionRange: 7
   visionConeAngle: 90
   useVisionCone: 0
+  isSkittish: 0
   isFlying: 1
   flyingHeight: 3
+  minFlyingHeight: 2
   verticalPatrolAmplitude: 1
   verticalPatrolSpeed: 1
   flyingChaseVerticalSpeed: 3
   flyingWallCheckDistance: 1
+  groundCheckDistance: 3
+  worldBoundsCollider: {fileID: 0}
+  returnToArenaSpeed: 5
+  useSwoopAttack: 1
   swoopSpeed: 8
   swoopReturnSpeed: 8
   minHeightAbovePlayerForSwoop: 2
   preSwoopPosition: {x: 0, y: 0}
+  spawnYPosition: 0
   canCastSpells: 0
   spellCastRange: 100
   spellCooldown: 10
@@ -170,10 +177,15 @@ MonoBehaviour:
   attackCooldown: 1.5
   attackDamage: 1
   justFinishedAttack: 0
+  uncancellableAttacks: 0
+  useRangedAttack: 0
+  rangedAttackRange: 8
   idleState: {fileID: 8038776599427398313}
   patrolState: {fileID: 6693322783196425691}
   chaseState: {fileID: 8875064480306621811}
+  fleeState: {fileID: 0}
   attackState: {fileID: 142872055015837067}
+  rangedAttackState: {fileID: 0}
   spellCastState: {fileID: 0}
   deathState: {fileID: 1964095898841555521}
   hurtState: {fileID: 3218577993386606148}
@@ -192,6 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IsDamageable
   maxHealth: 50
   currentHealth: 0
+  isPlayer: 0
   isInvulnerable: 0
   invulnerabilityDuration: 0.3
   coinPrefab: {fileID: 100000, guid: 49e6ee33250214a9facc214f3a2fecb7, type: 3}
@@ -292,7 +305,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 9999
   m_Sprite: {fileID: 7013631516640934163, guid: 79c6567e25d01cd46bd4810a5779b5a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -354,7 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.ShadowCaster2D
   m_ShadowGroup: 0
-  m_Priority: 0
+  m_Priority: 9999
   m_ComponentVersion: 5
   m_HasRenderer: 1
   m_UseRendererSilhouette: 1
@@ -712,6 +725,7 @@ MonoBehaviour:
   attackAnim: {fileID: 7400000, guid: ed491a6bd072624449ced732bef7773f, type: 2}
   attackDuration: 0.5
   attackTiming: 0.3
+  swoopCancelDistanceMultiplier: 1.5
 --- !u!1 &9072703041964236991
 GameObject:
   m_ObjectHideFlags: 0

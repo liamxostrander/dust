@@ -13,11 +13,17 @@ public class EnemyMeleeState : EnemyState
     [Range(0f, 1f)]
     public float attackTiming = 0.3f; // When in animation to trigger damage (0-1)
     
+    [Header("Swoop Settings")]
+    [Tooltip("Distance multiplier - swoop cancels if player is this many times attack range away")]
+    public float swoopCancelDistanceMultiplier = 3f;
+    
     private bool hasAttacked = false;
     
     // Swoop attack states for flying enemies
     private enum SwoopPhase { Swooping, Returning }
     private SwoopPhase swoopPhase = SwoopPhase.Swooping;
+    private Vector2 attackDirection; // Direction bat was moving when it attacked
+    private float returnStartTime; // When the return phase started
     
     public override void Enter()
     {
@@ -62,26 +68,33 @@ public class EnemyMeleeState : EnemyState
     {
         if (stateMachine.isFlying && stateMachine.useSwoopAttack)
         {
-            // Handle swoop attack for flying enemies
             if (swoopPhase == SwoopPhase.Swooping)
             {
-                // Check if close enough to player to trigger attack
+                // Check if enemy has intersected with or passed through player's position
                 float distanceToPlayer = Vector2.Distance(stateMachine.transform.position, stateMachine.player.position);
-                if (!hasAttacked && distanceToPlayer <= stateMachine.attackHitboxRadius * 2f)
+                
+                // Cancel swoop if player has moved too far away
+                if (distanceToPlayer > stateMachine.attackRange * swoopCancelDistanceMultiplier)
+                {
+                    isComplete = true;
+                    return;
+                }
+                
+                // Trigger attack when enemy reaches the player's center position
+                if (!hasAttacked && distanceToPlayer <= 0.1f)
                 {
                     stateMachine.PerformAttack();
                     hasAttacked = true;
                     swoopPhase = SwoopPhase.Returning;
+                    // Store the direction bat was moving for bounce-back
+                    attackDirection = stateMachine.rb.linearVelocity.normalized;
+                    returnStartTime = time;
                 }
             }
             else if (swoopPhase == SwoopPhase.Returning)
             {
-                Vector2 targetReturnPosition = new Vector2(
-                    stateMachine.player.position.x,
-                    stateMachine.player.position.y + stateMachine.flyingHeight
-                );
-                float distanceToReturn = Vector2.Distance(stateMachine.transform.position, targetReturnPosition);
-                if (distanceToReturn <= 0.5f)
+                // Bounce back for a short duration then complete
+                if (time - returnStartTime >= 0.4f) // Bounce back for 0.4 seconds
                 {
                     isComplete = true;
                 }
@@ -110,18 +123,16 @@ public class EnemyMeleeState : EnemyState
         {
             if (swoopPhase == SwoopPhase.Swooping)
             {
-                // Swoop towards player
-                Vector2 directionToPlayer = (stateMachine.player.position - stateMachine.transform.position).normalized;
+                // Swoop directly toward player's center position for guaranteed intersection
+                Vector2 playerCenter = stateMachine.player.position;
+                Vector2 directionToPlayer = (playerCenter - (Vector2)stateMachine.transform.position).normalized;
                 stateMachine.rb.linearVelocity = directionToPlayer * stateMachine.swoopSpeed;
             }
             else if (swoopPhase == SwoopPhase.Returning)
             {
-                Vector2 targetReturnPosition = new Vector2(
-                    stateMachine.player.position.x,
-                    stateMachine.player.position.y + stateMachine.flyingHeight
-                );
-                Vector2 directionToReturn = (targetReturnPosition - (Vector2)stateMachine.transform.position).normalized;
-                stateMachine.rb.linearVelocity = directionToReturn * stateMachine.swoopReturnSpeed;
+                // Bounce back in opposite direction of attack (like knockback)
+                Vector2 bounceDirection = -attackDirection;
+                stateMachine.rb.linearVelocity = bounceDirection * stateMachine.swoopReturnSpeed;
             }
         }
         else

@@ -428,14 +428,6 @@ public class EnemyStateMachine : MonoBehaviour
         if (distanceToPlayer > effectiveRange)
             return false;
         
-        // Flying enemies with swoop attacks need to be above the player
-        if (isFlying && useSwoopAttack && !useRangedAttack)
-        {
-            float heightDifference = transform.position.y - player.position.y;
-            if (heightDifference < minHeightAbovePlayerForSwoop)
-                return false;
-        }
-        
         if (!useAttackCone)
             return true;
         
@@ -471,48 +463,12 @@ public class EnemyStateMachine : MonoBehaviour
                 return;
             }
             
-            Vector2 velocity = Vector2.zero;
-            
-            // Flying enemies with swoop need to position above player
-            if (useSwoopAttack && !useRangedAttack)
-            {
-                float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-                float horizontalDistance = Mathf.Abs(player.position.x - transform.position.x);
-                
-                // When close horizontally, prioritize getting above the player
-                if (horizontalDistance <= attackRange * 1.5f)
-                {
-                    float targetY = player.position.y + flyingHeight;
-                    float verticalDirection = Mathf.Sign(targetY - transform.position.y);
-                    
-                    velocity = new Vector2(
-                        directionToPlayer * chaseSpeed * 0.5f, // Slow down horizontal movement
-                        verticalDirection * flyingChaseVerticalSpeed
-                    );
-                }
-                else
-                {
-                    // Normal chase: move toward player
-                    Vector2 directionVector = (player.position - transform.position).normalized;
-                    velocity = new Vector2(
-                        directionVector.x * chaseSpeed,
-                        directionVector.y * flyingChaseVerticalSpeed
-                    );
-                }
-            }
-            else
-            {
-                // Non-swooping flying enemies (ranged, etc.) - just chase normally
-                // Maintain flying height while chasing horizontally
-                Vector2 directionVector = (player.position - transform.position).normalized;
-                float targetY = spawnYPosition + flyingHeight;
-                float verticalVelocity = (targetY - transform.position.y) * 2f;
-                
-                velocity = new Vector2(
-                    directionVector.x * chaseSpeed,
-                    verticalVelocity
-                );
-            }
+            // All flying enemies chase directly toward the player
+            Vector2 directionVector = (player.position - transform.position).normalized;
+            Vector2 velocity = new Vector2(
+                directionVector.x * chaseSpeed,
+                directionVector.y * flyingChaseVerticalSpeed
+            );
             
             rb.linearVelocity = velocity;
         }
@@ -682,8 +638,10 @@ public class EnemyStateMachine : MonoBehaviour
             }
             
             // Normal flying patrol with sine wave vertical movement
+            // Use current Y position as base instead of spawn position for natural continuation
             float verticalOffset = Mathf.Sin(Time.time * verticalPatrolSpeed) * verticalPatrolAmplitude;
-            float targetY = spawnYPosition + flyingHeight + verticalOffset;
+            float baseY = transform.position.y;
+            float targetY = baseY + verticalOffset;
             float verticalVelocity = (targetY - transform.position.y) * 2f; // Simple proportional controller
             
             rb.linearVelocity = new Vector2(moveDirection * patrolSpeed, verticalVelocity);
