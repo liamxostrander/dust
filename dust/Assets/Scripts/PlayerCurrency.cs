@@ -5,6 +5,8 @@ using System;
 public class PlayerCurrency : MonoBehaviour
 {
     [SerializeField] private int startingCoins = 0;
+    [SerializeField] public CoinCounter coinCounter;
+
 
     public int Coins { get; private set; }
 
@@ -14,6 +16,7 @@ public class PlayerCurrency : MonoBehaviour
     private void Awake()
     {
         Coins = startingCoins;
+        coinCounter.setValue(startingCoins);
         OnCoinsChanged?.Invoke(Coins);
     }
 
@@ -21,6 +24,7 @@ public class PlayerCurrency : MonoBehaviour
     {
         if (amount <= 0) return;
         Coins += amount;
+        coinCounter.setValue(Coins);
         OnCoinsChanged?.Invoke(Coins);
     }
 
