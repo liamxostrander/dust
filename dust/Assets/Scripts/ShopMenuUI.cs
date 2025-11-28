@@ -170,6 +170,25 @@ public class ShopMenuUI : MonoBehaviour
 
         PlaySfx(purchaseSfx);
         StartCoroutine(FadeOutItemSlot(_selectedIndex));
+        var purchased = item;
+
+        var controller = FindFirstObjectByType<PlayerWeaponController>();
+        if (controller != null && purchased.weaponPrefab != null)
+        {
+            controller.AssignPurchasedWeapon(purchased);
+        }
+
+        if (purchased.nextItem != null)
+        {
+            _items[_selectedIndex] = purchased.nextItem;
+        }
+        else
+        {
+            _items[_selectedIndex] = null;
+        }
+
+        RefreshItemLabels();
+
     }
 
     public void Open(int currentCurrency = -1, Shopkeeper.ShopItem[] items = null)

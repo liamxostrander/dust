@@ -3,12 +3,16 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Shopkeeper : MonoBehaviour
 {
+    public enum WeaponCategory { Melee, Ranged, Magic }
     [System.Serializable]
     public class ShopItem
     {
         public string itemName;
         public int price;
         public Sprite icon;
+        public GameObject weaponPrefab;
+        public WeaponCategory category;
+        public ShopItem nextItem;
     }
 
     [Header("Interaction")]

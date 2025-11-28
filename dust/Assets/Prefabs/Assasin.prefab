@@ -710,11 +710,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da53e48355d34eb39fc711867f9427b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponController
-  swordPrefabs:
+  weaponSlots:
   - {fileID: 2961826946537195349, guid: 8f8637f9164e14bc0a2e250114b30401, type: 3}
-  - {fileID: 8114339841191764525, guid: 815ff5b11ddab4b2ab77872c4f9771dc, type: 3}
-  swordPivot: {fileID: 9131598270360368242}
-  currentSword: {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  currentWeapon: {fileID: 0}
+  pivot: {fileID: 9131598270360368242}
+  currentWeaponIdx: 0
+  weaponSlotsUI: {fileID: 0}
 --- !u!114 &7504121654987731176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,6 +733,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   isPlayer: 1
+  healthBar: {fileID: 0}
   isInvulnerable: 0
   invulnerabilityDuration: 0.5
   coinPrefab: {fileID: 0}

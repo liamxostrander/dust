@@ -25,7 +25,7 @@ public class SlashState : State
     public override void Enter()
     {
         isComplete = false;
-        GameObject swordObject = input.playerWeaponController.currentSword;
+        GameObject swordObject = input.playerWeaponController.currentWeapon;
         swordObject.GetComponentInChildren<SwordDamage>().ResetRecoil();
         swordAnimator = swordObject.GetComponent<Animator>();
         stats = swordObject.GetComponent<WeaponStats>();

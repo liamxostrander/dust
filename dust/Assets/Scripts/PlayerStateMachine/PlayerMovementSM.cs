@@ -62,9 +62,6 @@ public class PlayerMovementSM : MonoBehaviour
     [SerializeField] float fastFallMultiplier = 3.0f;
     [SerializeField] float maxFallSpeed = -25f;
 
-    [Header("UI")]
-    [SerializeField] public WeaponSlots weaponSlots;
-
     [Header("Other")]
     public Rigidbody2D rb;
     private IsDamageable damageable;
@@ -94,7 +91,6 @@ public class PlayerMovementSM : MonoBehaviour
         damageable.OnDeath.AddListener(HandlePlayerDeath);
         rb = GetComponent<Rigidbody2D>();
         playerWeaponController = GetComponent<PlayerWeaponController>();
-        playerWeaponController.EquipSword(0);
         rb.freezeRotation = true;
         jumpsRemaining = maxJumps;
         idleState.Setup(rb, animator, this);
@@ -152,24 +148,6 @@ public class PlayerMovementSM : MonoBehaviour
         }
 
     }
-
-    void CheckWeaponEquipped()
-    {
-        if (Input.GetKey(KeyCode.Alpha1)){
-            playerWeaponController.EquipSword(0);
-            weaponSlots.SetMeleeActive();
-        }
-        else if (Input.GetKey(KeyCode.Alpha2))
-        {
-            playerWeaponController.EquipSword(1);
-            weaponSlots.SetRangedActive();
-        }
-        else if (Input.GetKey(KeyCode.Alpha3))
-        {
-            playerWeaponController.EquipSword(1);
-            weaponSlots.SetSpellActive();
-        }
-    }
     void Update()
     {
         if (ShopMenuUI.Instance != null && ShopMenuUI.Instance.IsOpen)
@@ -180,7 +158,6 @@ public class PlayerMovementSM : MonoBehaviour
         }
 
         CheckInput();
-        CheckWeaponEquipped();
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
             lastJumpPressTimer = jumpBufferTime;
