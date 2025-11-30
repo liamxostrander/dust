@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -3444466470189854655}
   - component: {fileID: 2510380146172025936}
   - component: {fileID: 7913244555428796321}
+  - component: {fileID: -5763300604897366998}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -36,6 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8476754839260834541}
+  - {fileID: 2142670905849357816}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8030278340718408862
@@ -155,9 +157,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chest
   possibleUpgrades:
-  - {fileID: 11400000, guid: e5d3ed42cfc7d1845b32d85c89a04967, type: 2}
   - {fileID: 11400000, guid: 85ba096fb674af5489ea4c1b5febd617, type: 2}
-  sfx: {fileID: 0}
+  - {fileID: 11400000, guid: e5d3ed42cfc7d1845b32d85c89a04967, type: 2}
+  - {fileID: 11400000, guid: 91436a2d4e5888643988dd3b8f505d01, type: 2}
+  - {fileID: 11400000, guid: b1a0cde3f3a689841a354895ce73e5d6, type: 2}
+  sfx: {fileID: -5763300604897366998}
   openSfx: {fileID: 8300000, guid: ad7cff28ca05e674aa3855e87e55114a, type: 3}
   interactKey: 101
   playerMask:
@@ -170,6 +174,10 @@ MonoBehaviour:
   openStateName: Open
   destroyAfterOpen: 1
   postOpenDelay: 0.05
+  upgradeVisualPrefab: {fileID: 5706945780200313943, guid: 82f80a836e21ec643b82c554faf5144f, type: 3}
+  upgradeVisualAnchor: {fileID: 2142670905849357816}
+  bobAmplitude: 0.25
+  bobFrequency: 2
 --- !u!50 &-3444466470189854655
 Rigidbody2D:
   serializedVersion: 5
@@ -233,6 +241,134 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChestOrigin
   spawner: {fileID: 0}
   originPoint: {fileID: 0}
+--- !u!82 &-5763300604897366998
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800505009822921304}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &5921190935284416822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2142670905849357816}
+  m_Layer: 0
+  m_Name: UpgradeVisualAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2142670905849357816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5921190935284416822}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.524, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2202632022677932672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9143642265410034418
 GameObject:
   m_ObjectHideFlags: 0

@@ -76,11 +76,23 @@ public class IsDamageable : MonoBehaviour
     
     public void Heal(float amount)
     {
-        if (!IsAlive)
+        if (!IsAlive || amount <= 0f)
             return;
-        
-        float healedAmount = Mathf.Min(amount, maxHealth - currentHealth);
-        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+
+        float oldHealth = currentHealth;
+        float newHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        float healedAmount = newHealth - oldHealth;
+
+        if (healedAmount <= 0f)
+            return;
+
+        currentHealth = newHealth;
+
+        if (healthBar != null)
+        {
+            healthBar.setValue(currentHealth);
+        }
+
         OnHealed?.Invoke(healedAmount);
         OnHealthChanged?.Invoke(currentHealth);
     }

@@ -256,6 +256,16 @@ public class EnemyStateMachine : MonoBehaviour
     private void HandleDeath()
     {
         SwitchState(deathState);
+
+        var playerUpgrades = FindFirstObjectByType<PlayerUpgrades>();
+        if (playerUpgrades != null && playerUpgrades.CurrentMods.healOnKill > 0f)
+        {
+            var playerDamageable = playerUpgrades.GetComponent<IsDamageable>();
+            if (playerDamageable != null && playerDamageable.IsAlive)
+            {
+                playerDamageable.Heal(playerUpgrades.CurrentMods.healOnKill);
+            }
+        }
     }
 
     private void UpdateSpriteDirection()

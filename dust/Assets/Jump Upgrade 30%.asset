@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e80f430318ae346acd5e15faa81882, type: 3}
   m_Name: Jump Upgrade 30%
   m_EditorClassIdentifier: Assembly-CSharp::JumpUpgradeSO
-  description: 
-  pickupSfx: {fileID: 8300000, guid: d9be064a9cb35f04989f2c945f1f9ded, type: 3}
+  displayName: Frog Legs
+  description: +30% Jump Height
+  worldSprite: {fileID: -5384196879669525509, guid: 907f89460edec8b46aa9c8e9d168ff59, type: 3}
+  pickupSfx: {fileID: 8300000, guid: e66ad2cbe0209ef4baf6fe5e77bb410c, type: 3}
   bonusPercent: 0.3

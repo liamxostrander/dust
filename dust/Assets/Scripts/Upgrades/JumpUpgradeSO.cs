@@ -12,6 +12,8 @@ public class JumpUpgradeSO : UpgradeSO
 
     public override string GetDisplayText()
     {
-        return $"+{Mathf.RoundToInt(bonusPercent * 100f)}% Jump Power";
+        string title = !string.IsNullOrEmpty(displayName) ? displayName : name;
+        string desc = $"+{Mathf.RoundToInt(bonusPercent * 100f)}% Jump Height";
+        return $"{title}\n{desc}";
     }
 }

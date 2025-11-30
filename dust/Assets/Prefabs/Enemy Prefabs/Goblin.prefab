@@ -477,6 +477,7 @@ MonoBehaviour:
   attackAnim: {fileID: 7400000, guid: c2516f6b5dcaed847b5854c732314f52, type: 2}
   attackDuration: 0.5
   attackTiming: 0.3
+  swoopCancelDistanceMultiplier: 3
 --- !u!1 &9164346795679971251
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +639,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   isPlayer: 0
+  healthBar: {fileID: 0}
   isInvulnerable: 0
   invulnerabilityDuration: 0.3
   coinPrefab: {fileID: 100000, guid: 49e6ee33250214a9facc214f3a2fecb7, type: 3}

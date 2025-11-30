@@ -9,12 +9,18 @@ public class PlayerUpgrades : MonoBehaviour
     {
         public float speedMult;
         public float jumpMult;
+        public float lifestealPercent;
+        public float healOnKill;
+        public float coinMagnetRadius;
     }
 
     public PlayerMovementSM movement;
     public List<UpgradeSO> acquired = new();
 
     public AccumulatedMods CurrentMods { get; private set; }
+    public float LifeStealPercent => CurrentMods.lifestealPercent;
+    public float HealOnKill => CurrentMods.healOnKill;
+    public float CoinMagnetRadius => CurrentMods.coinMagnetRadius;
 
     public System.Action<string> OnUpgradeApplied;
 
@@ -25,7 +31,9 @@ public class PlayerUpgrades : MonoBehaviour
 
     void Awake()
     {
-        if (!movement) movement = GetComponent<PlayerMovementSM>();
+        if (!movement)
+            movement = GetComponent<PlayerMovementSM>();
+
         Recalculate();
     }
 
@@ -58,18 +66,37 @@ public class PlayerUpgrades : MonoBehaviour
         }
     }
 
+    public void ClearAllUpgrades()
+    {
+        if (acquired.Count == 0) return;
+
+        acquired.Clear();
+        Recalculate();
+    }
+
     public void Recalculate()
     {
-        var m = new AccumulatedMods { speedMult = 1f, jumpMult = 1f };
+        var m = new AccumulatedMods
+        {
+            speedMult        = 1f,
+            jumpMult         = 1f,
+            lifestealPercent = 0f,
+            healOnKill       = 0f,
+            coinMagnetRadius = 0f 
+        };
 
         foreach (var u in acquired)
-            if (u) u.Apply(ref m);
+        {
+            if (u == null) continue;
+            u.Apply(ref m);
+        }
 
         if (movement)
         {
             movement.speedMultiplier = m.speedMult;
             movement.jumpMultiplier  = m.jumpMult;
         }
+
         CurrentMods = m;
     }
 }
