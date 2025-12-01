@@ -83,6 +83,7 @@ public class EnemyMeleeState : EnemyState
                 // Trigger attack when enemy reaches the player's center position
                 if (!hasAttacked && distanceToPlayer <= 0.1f)
                 {
+                    stateMachine.PlaySound(stateMachine.meleeAttackSound);
                     stateMachine.PerformAttack();
                     hasAttacked = true;
                     swoopPhase = SwoopPhase.Returning;
@@ -106,6 +107,7 @@ public class EnemyMeleeState : EnemyState
             // Trigger attack at the specified timing in the animation
             if (!hasAttacked && time >= attackDuration * attackTiming)
             {
+                stateMachine.PlaySound(stateMachine.meleeAttackSound);
                 stateMachine.PerformAttack();
                 hasAttacked = true;
             }

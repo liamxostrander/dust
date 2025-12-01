@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.XR;
+using System.Collections;
 
 /// Main enemy state machine that controls enemy AI behavior.
 /// Manages state transitions and provides helper functions for states.
+[RequireComponent(typeof(AudioSource))]
 public class EnemyStateMachine : MonoBehaviour
 {
     private EnemyState currentState;
@@ -14,6 +16,27 @@ public class EnemyStateMachine : MonoBehaviour
     public LayerMask playerLayer;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
+    public AudioSource audioSource;
+    
+    [Header("Audio")]
+    public AudioClip meleeAttackSound;
+    public AudioClip rangedAttackSound;
+    public AudioClip spellCastSound;
+    public AudioClip hurtSound;
+    public AudioClip deathSound;
+    public AudioClip idleGruntSound;
+    [Range(0f, 1f)]
+    public float sfxVolume = 0.5f;
+    [Tooltip("Enable subtle random pitch variation for SFX")]
+    public bool enablePitchVariation = true;
+    [Range(0f, 0.5f)]
+    [Tooltip("Max pitch deviation from 1.0 (e.g., 0.05 = ±5%)")]
+    public float pitchVariance = 0.05f;
+    [Tooltip("Minimum time between idle grunts in seconds")]
+    public float minIdleGruntInterval = 3f;
+    [Tooltip("Maximum time between idle grunts in seconds")]
+    public float maxIdleGruntInterval = 8f;
+    [HideInInspector] public float nextIdleGruntTime;
     
     [Header("Movement Settings")]
     public float patrolSpeed = 2f;
@@ -134,6 +157,7 @@ public class EnemyStateMachine : MonoBehaviour
         
         if (animator == null) animator = GetComponent<Animator>();
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
 
         if (idleState == null) idleState = GetComponent<EnemyIdleState>();
         if (patrolState == null) patrolState = GetComponent<EnemyPatrolState>();
@@ -163,6 +187,9 @@ public class EnemyStateMachine : MonoBehaviour
             damageable.OnDeath.AddListener(HandleDeath);
         }
 
+        // Initialize idle grunt timer
+        nextIdleGruntTime = Time.time + Random.Range(minIdleGruntInterval, maxIdleGruntInterval);
+        
         // Set initial state
         currentState = patrolState;
         if (currentState != null)
@@ -179,6 +206,7 @@ public class EnemyStateMachine : MonoBehaviour
     {
         CheckGrounded();
         UpdateSpriteDirection();
+        CheckIdleGrunt();
         
         if (currentState != null)
         {
@@ -711,6 +739,46 @@ public class EnemyStateMachine : MonoBehaviour
         {
             Vector2 groundCheckPosition = new Vector2(transform.position.x, transform.position.y - 0.5f);
             isGrounded = Physics2D.OverlapCircle(groundCheckPosition, groundCheckRadius, groundLayer);
+        }
+    }
+    
+    /// Play a sound effect using this enemy's AudioSource, keeping pitch during playback
+    public void PlaySound(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            StartCoroutine(PlaySoundWithPitch(clip));
+        }
+    }
+
+    private IEnumerator PlaySoundWithPitch(AudioClip clip)
+    {
+        float originalPitch = audioSource.pitch;
+        if (enablePitchVariation && pitchVariance > 0f)
+        {
+            float delta = Random.Range(-pitchVariance, pitchVariance);
+            audioSource.pitch = Mathf.Clamp(1f + delta, 0.1f, 3f);
+        }
+
+        audioSource.PlayOneShot(clip, sfxVolume);
+
+        // Wait for the clip duration (scaled by time scale)
+        yield return new WaitForSeconds(clip.length);
+
+        audioSource.pitch = originalPitch;
+    }
+    
+    /// Check and play idle grunt at random intervals
+    private void CheckIdleGrunt()
+    {
+        // Only play idle grunts when not in death or hurt state
+        if (currentState == deathState || currentState == hurtState)
+            return;
+            
+        if (idleGruntSound != null && Time.time >= nextIdleGruntTime)
+        {
+            PlaySound(idleGruntSound);
+            nextIdleGruntTime = Time.time + Random.Range(minIdleGruntInterval, maxIdleGruntInterval);
         }
     }
     

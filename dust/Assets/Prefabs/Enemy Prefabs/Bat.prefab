@@ -136,6 +136,19 @@ MonoBehaviour:
     m_Bits: 513
   animator: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  audioSource: {fileID: 9062852744468240828}
+  meleeAttackSound: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}
+  rangedAttackSound: {fileID: 0}
+  spellCastSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: cde8d115a8e837d4cb90a6458b0e5dbb, type: 3}
+  deathSound: {fileID: 0}
+  idleGruntSound: {fileID: 8300000, guid: c80bd9174440b9344bc42339396bb067, type: 3}
+  sfxVolume: 0.7
+  enablePitchVariation: 1
+  pitchVariance: 0.2
+  minIdleGruntInterval: 7
+  maxIdleGruntInterval: 10
+  nextIdleGruntTime: 0
   patrolSpeed: 2
   chaseSpeed: 4
   detectionRange: 7
@@ -205,6 +218,7 @@ MonoBehaviour:
   maxHealth: 50
   currentHealth: 0
   isPlayer: 0
+  healthBar: {fileID: 0}
   isInvulnerable: 0
   invulnerabilityDuration: 0.3
   coinPrefab: {fileID: 100000, guid: 49e6ee33250214a9facc214f3a2fecb7, type: 3}

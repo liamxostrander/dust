@@ -52,6 +52,8 @@ public class EnemyRangedState : EnemyState
     
     private void ShootBullet()
     {
+        stateMachine.PlaySound(stateMachine.rangedAttackSound);
+        
         if (bulletPrefab == null)
         {
             Debug.LogError("Bullet prefab not assigned to EnemyRangedState!");

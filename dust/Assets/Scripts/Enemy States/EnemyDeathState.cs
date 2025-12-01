@@ -12,6 +12,8 @@ public class EnemyDeathState : EnemyState
     {
         base.Enter();
         
+        stateMachine.PlaySound(stateMachine.deathSound);
+        
         if (stateMachine.animator != null && deathAnim != null)
         {
             stateMachine.animator.Play(deathAnim.name);

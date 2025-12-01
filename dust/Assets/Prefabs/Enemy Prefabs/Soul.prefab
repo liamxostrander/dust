@@ -396,6 +396,19 @@ MonoBehaviour:
     m_Bits: 513
   animator: {fileID: 5226999272463952120}
   spriteRenderer: {fileID: 1071587853553447716}
+  audioSource: {fileID: 4189706268707413341}
+  meleeAttackSound: {fileID: 0}
+  rangedAttackSound: {fileID: 8300000, guid: fd684c3102336ef4eaa30a73997066a9, type: 3}
+  spellCastSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: f4effed206cc1f843ab17266fdbc27c0, type: 3}
+  deathSound: {fileID: 0}
+  idleGruntSound: {fileID: 0}
+  sfxVolume: 1
+  enablePitchVariation: 1
+  pitchVariance: 0.15
+  minIdleGruntInterval: 3
+  maxIdleGruntInterval: 8
+  nextIdleGruntTime: 0
   patrolSpeed: 2
   chaseSpeed: 4
   detectionRange: 14
@@ -417,6 +430,7 @@ MonoBehaviour:
   swoopReturnSpeed: 8
   minHeightAbovePlayerForSwoop: 2
   preSwoopPosition: {x: 0, y: 0}
+  spawnYPosition: 0
   canCastSpells: 0
   spellCastRange: 100
   spellCooldown: 10
@@ -463,6 +477,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IsDamageable
   maxHealth: 100
   currentHealth: 0
+  isPlayer: 0
+  healthBar: {fileID: 0}
   isInvulnerable: 0
   invulnerabilityDuration: 0.3
   coinPrefab: {fileID: 100000, guid: 49e6ee33250214a9facc214f3a2fecb7, type: 3}

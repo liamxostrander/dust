@@ -20,6 +20,8 @@ public class EnemyHurtState : EnemyState
     {
         base.Enter();
         
+        stateMachine.PlaySound(stateMachine.hurtSound);
+        
         if (stateMachine.animator != null && hurtAnim != null)
         {
             stateMachine.animator.Play(hurtAnim.name);

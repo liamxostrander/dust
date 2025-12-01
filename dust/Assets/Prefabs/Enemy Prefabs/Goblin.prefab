@@ -570,6 +570,19 @@ MonoBehaviour:
     m_Bits: 513
   animator: {fileID: 189315208617494573}
   spriteRenderer: {fileID: 8739497894787609355}
+  audioSource: {fileID: 0}
+  meleeAttackSound: {fileID: 8300000, guid: 88b1cbe3caa3fee4b8b103b5edd7aba9, type: 3}
+  rangedAttackSound: {fileID: 0}
+  spellCastSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: 55ff9ee924450cd459fed1fd6a8eb8e8, type: 3}
+  deathSound: {fileID: 0}
+  idleGruntSound: {fileID: 8300000, guid: 285ea37d6a357e54e88e0566b0ec2120, type: 3}
+  sfxVolume: 1
+  enablePitchVariation: 1
+  pitchVariance: 0.3
+  minIdleGruntInterval: 10
+  maxIdleGruntInterval: 15
+  nextIdleGruntTime: 0
   patrolSpeed: 2
   chaseSpeed: 4
   detectionRange: 5

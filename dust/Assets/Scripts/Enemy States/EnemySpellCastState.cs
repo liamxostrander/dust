@@ -51,6 +51,8 @@ public class EnemySpellCastState : EnemyState
     
     private void CastSpell()
     {
+        stateMachine.PlaySound(stateMachine.spellCastSound);
+        
         if (stateMachine.player == null)
         {
             Debug.LogWarning("Cannot cast spell - player not found!");
