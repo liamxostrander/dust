@@ -235,7 +235,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -270,6 +270,8 @@ MonoBehaviour:
   deathSound: {fileID: 0}
   idleGruntSound: {fileID: 0}
   sfxVolume: 0.5
+  enablePitchVariation: 1
+  pitchVariance: 0.05
   minIdleGruntInterval: 3
   maxIdleGruntInterval: 8
   nextIdleGruntTime: 0
@@ -904,8 +906,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7823403721716575270}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.002, y: -0.026, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.343, y: -0.026, z: 0}
   m_LocalScale: {x: 0.42083132, y: 0.5714285, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -924,7 +926,7 @@ CapsuleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -945,8 +947,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.03538632, y: -0.3739928}
-  m_Size: {x: 1.275122, y: 2.0101838}
+  m_Offset: {x: -0.035386328, y: 0.031763084}
+  m_Size: {x: 1.275122, y: 1.1986735}
   m_Direction: 0
 --- !u!114 &6151043413622720441
 MonoBehaviour:
