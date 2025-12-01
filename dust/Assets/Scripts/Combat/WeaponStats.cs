@@ -7,5 +7,9 @@ public class WeaponStats : MonoBehaviour
     public AnimationClip dashSliceAnimation;
     public float damage = 25f;
     public float knockback = 5f;
+    public bool isRanged = false;
+    public GameObject projectilePrefab;
+    public float projectileSpeed = 12f;
+    public Transform projectileSpawnPoint;
 }
 

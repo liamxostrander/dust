@@ -26,7 +26,11 @@ public class SlashState : State
     {
         isComplete = false;
         GameObject swordObject = input.playerWeaponController.currentWeapon;
-        swordObject.GetComponentInChildren<SwordDamage>().ResetRecoil();
+        SwordDamage swordDamage = swordObject.GetComponentInChildren<SwordDamage>();
+        if (swordDamage != null)
+        {
+            swordDamage.ResetRecoil();
+        }
         swordAnimator = swordObject.GetComponent<Animator>();
         stats = swordObject.GetComponent<WeaponStats>();
         swordSlashAnim = stats.slashAnimation;
@@ -52,6 +56,12 @@ public class SlashState : State
         
 
         SwordAnim(attackDir);
+        if (stats.isRanged)
+        {
+            ProjectileLauncher launcher = swordObject.GetComponent<ProjectileLauncher>();
+            if (launcher != null)
+                launcher.LaunchProjectile(attackDir, input.spriteRenderer.flipX);
+        }
         attackDir.y = 0;
         input.rb.AddForce(attackDir * attack1Impulse, ForceMode2D.Impulse);
 

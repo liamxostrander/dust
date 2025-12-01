@@ -243,7 +243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9131598270360368242
 Transform:
   m_ObjectHideFlags: 0
@@ -712,7 +712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponController
   weaponSlots:
   - {fileID: 2961826946537195349, guid: 8f8637f9164e14bc0a2e250114b30401, type: 3}
-  - {fileID: 0}
+  - {fileID: 2720905001174543930, guid: 37dd6ada197e54ac2bb44ed0714b3a15, type: 3}
   - {fileID: 0}
   currentWeapon: {fileID: 0}
   pivot: {fileID: 9131598270360368242}

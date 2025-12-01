@@ -136,7 +136,10 @@ public class PlayerMovementSM : MonoBehaviour
 
     void CheckInput()
     {
-        moveX = Input.GetAxisRaw("Horizontal");
+        float x = 0f;
+        if (Input.GetKey(KeyCode.A)) x = -1f;
+        if (Input.GetKey(KeyCode.D)) x = 1f;
+        moveX = x;
 
         if (moveX > 0 && !isSlashing)
         {
