@@ -19,12 +19,14 @@ public class SwordDamage : MonoBehaviour
     // public AudioSource audioSource;
     private HitStop hitStop;
     private Rigidbody2D playerRb;
+    private WeaponStats stats;
 
     [Header("Hit FX")]
     [SerializeField] private GameObject hitEffectPrefab;
 
     void Start() {
         hitStop = FindFirstObjectByType<HitStop>();
+        stats = FindFirstObjectByType<WeaponStats>();
         playerRb = transform.root.GetComponent<Rigidbody2D>();
         // audioSource = GetComponent<AudioSource>();
         // audioSource = FindFirstObjectByType<PlayerMovementSM>().audioSource;
@@ -56,7 +58,7 @@ public class SwordDamage : MonoBehaviour
                 // fallback if your effect is an animation instead of particles
                 Destroy(effect, 1f);
             }
-            StartCoroutine(hitStop.DoHitStop(0.08f));
+            HitStop.Instance.DoHitstopGlobal(stats.hitstopDuration);
             if (CameraShake.Instance != null)
                 CameraShake.Instance.ShakeOnce(screenShakeDuration, screenShakeMagnitude);
             // Calculate direction from player to enemy

@@ -78,13 +78,13 @@ public class Projectile : MonoBehaviour
                 Destroy(fx, 1f);
             }
         }
-        
+
         if (hitSound != null && PlayerMovementSM.GlobalSFXSource != null)
             PlayerMovementSM.GlobalSFXSource.PlayOneShot(hitSound);
 
         if (hitEnemy){
-            if (hitStop != null)
-                StartCoroutine(hitStop.DoHitStop(hitstopDuration));
+            if (hitEnemy && HitStop.Instance != null)
+                HitStop.Instance.DoHitstopGlobal(hitstopDuration);
 
             if (CameraShake.Instance != null)
                 CameraShake.Instance.ShakeOnce(screenShakeDuration, screenShakeMagnitude);

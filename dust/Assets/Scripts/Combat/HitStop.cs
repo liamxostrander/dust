@@ -1,23 +1,33 @@
 using UnityEngine;
 using System.Collections;
 
-
 public class HitStop : MonoBehaviour
 {
+    public static HitStop Instance;
+
     private bool isFrozen = false;
 
-    public IEnumerator DoHitStop(float duration)
+    void Awake()
     {
-        if (isFrozen) yield break; // prevent stacking
+        Instance = this;
+    }
+
+    public void DoHitstopGlobal(float duration)
+    {
+        StartCoroutine(DoHitStopRoutine(duration));
+    }
+
+    private IEnumerator DoHitStopRoutine(float duration)
+    {
+        if (isFrozen) yield break;
         isFrozen = true;
 
-        float originalTimeScale = Time.timeScale;
+        float original = Time.timeScale;
         Time.timeScale = 0f;
 
         yield return new WaitForSecondsRealtime(duration);
 
-        Time.timeScale = originalTimeScale;
+        Time.timeScale = original;
         isFrozen = false;
     }
 }
-
