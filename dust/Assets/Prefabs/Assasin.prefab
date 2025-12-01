@@ -49,7 +49,6 @@ MonoBehaviour:
   attack1Impulse: 4
   comboWindow: 0.2
   swordPivot: {fileID: 4124785412755128904}
-  slashSound: {fileID: 8300000, guid: c458b6714dab015479d507b21fd2cead, type: 3}
 --- !u!1 &2768024811508513931
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +512,6 @@ MonoBehaviour:
   sliceAnim: {fileID: 8439980009718112272, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
   animStartTime: 0.1
   swordPivot: {fileID: 4124785412755128904}
-  dashSliceSound: {fileID: 8300000, guid: ec821bac988334e28baa87268bafdf09, type: 3}
 --- !u!1 &7072244433888983010
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponController
   weaponSlots:
   - {fileID: 2961826946537195349, guid: 8f8637f9164e14bc0a2e250114b30401, type: 3}
-  - {fileID: 2720905001174543930, guid: 37dd6ada197e54ac2bb44ed0714b3a15, type: 3}
+  - {fileID: 0}
   - {fileID: 0}
   currentWeapon: {fileID: 0}
   pivot: {fileID: 9131598270360368242}

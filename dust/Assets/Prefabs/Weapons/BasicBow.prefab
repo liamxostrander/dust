@@ -128,9 +128,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponStats
   slashAnimation: {fileID: 7400000, guid: 90b98738d8d1c4dc3b21071f5f837b87, type: 2}
+  slashSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
   dashSliceAnimation: {fileID: 7400000, guid: 46ab1e9c58a304145a67ab94f43627be, type: 2}
+  dashSliceSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
   damage: 25
   knockback: 5
+  hitstopDuration: 0.08
   isRanged: 1
   projectilePrefab: {fileID: 3126060349857622515, guid: 85d25fac6d5c2433d84dbaf0388c3a91, type: 3}
   projectileSpeed: 20

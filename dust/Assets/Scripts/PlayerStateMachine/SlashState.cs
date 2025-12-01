@@ -20,7 +20,7 @@ public class SlashState : State
     float timer;
 
     [Header("Attack SFX")]
-    public AudioClip slashSound; 
+    
     private AudioSource audioSource;
     public override void Enter()
     {
@@ -70,7 +70,7 @@ public class SlashState : State
             audioSource = input.audioSource;
         }
 
-        audioSource.clip = slashSound;
+        audioSource.clip = stats.slashSound;
         audioSource.loop = false;
         audioSource.time = 0f;
         audioSource.pitch = 1f;

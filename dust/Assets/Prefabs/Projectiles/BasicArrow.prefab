@@ -135,6 +135,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Projectile
   lifetime: 3
   damage: 20
+  hitEffectPrefab: {fileID: 467751860875805754, guid: 7c6d9bb9c8994364dbe5ba2e32dd4d13, type: 3}
+  hitstopDuration: 0.06
+  screenShakeMagnitude: 0.1
+  screenShakeDuration: 0.08
+  hitSound: {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
 --- !u!96 &5412819077907677513
 TrailRenderer:
   serializedVersion: 3

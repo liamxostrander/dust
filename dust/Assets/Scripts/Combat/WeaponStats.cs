@@ -4,7 +4,9 @@ using UnityEngine;
 public class WeaponStats : MonoBehaviour
 {
     public AnimationClip slashAnimation;
+    public AudioClip slashSound; 
     public AnimationClip dashSliceAnimation;
+    public AudioClip dashSliceSound; 
     public float damage = 25f;
     public float knockback = 5f;
     public float hitstopDuration = 0.08f;

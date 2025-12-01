@@ -14,13 +14,16 @@ public class DashSliceState : State
     float timer;
 
     [Header("Attack SFX")]
-    public AudioClip dashSliceSound; 
     private AudioSource audioSource;
     public override void Enter()
     {  
         isComplete = false;
         GameObject swordObject = input.playerWeaponController.currentWeapon;
-        swordObject.GetComponentInChildren<SwordDamage>().ResetRecoil();
+        SwordDamage swordDamage = swordObject.GetComponentInChildren<SwordDamage>();
+        if (swordDamage != null)
+        {
+            swordDamage.ResetRecoil();
+        }
         swordAnimator = swordObject.GetComponent<Animator>();
         stats = swordObject.GetComponent<WeaponStats>();
         swordDashSliceAnim = stats.dashSliceAnimation;
@@ -44,12 +47,18 @@ public class DashSliceState : State
         animator.Play(sliceAnim.name, 0, animStartTime);
         timer = sliceAnim.length - animStartTime;
         SwordAnim(attackDir);
+        if (stats.isRanged)
+        {
+            ProjectileLauncher launcher = swordObject.GetComponent<ProjectileLauncher>();
+            if (launcher != null)
+                launcher.LaunchProjectile(attackDir, input.spriteRenderer.flipX);
+        }
         if (audioSource == null)
         {
             audioSource = input.audioSource;
         }
 
-        audioSource.clip = dashSliceSound;
+        audioSource.clip = stats.dashSliceSound;
         audioSource.loop = false;
         audioSource.time = 0f;
         audioSource.pitch = 1f;
