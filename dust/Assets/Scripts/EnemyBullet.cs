@@ -46,7 +46,7 @@ public class EnemyBullet : MonoBehaviour
     {
         if (!hasHit && rb != null)
         {
-            rb.linearVelocity = direction * speed;
+            rb.linearVelocity = direction * speed; // was rb.linearVelocity
         }
     }
     
@@ -57,24 +57,28 @@ public class EnemyBullet : MonoBehaviour
         
         if (rb != null)
         {
-            rb.linearVelocity = direction * speed;
+            rb.linearVelocity = direction * speed; // was rb.linearVelocity
         }
     }
     
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (hasHit) return;
-        
-        if (collision.CompareTag("Player"))
+
+        // Look for damageable on the collider or its parents (handles child hitboxes)
+        IsDamageable damageable = collision.GetComponentInParent<IsDamageable>();
+        if (damageable != null)
         {
-            IsDamageable damageable = collision.GetComponent<IsDamageable>();
-            if (damageable != null)
-            {
-                Vector2 knockback = direction * 3f;
-                damageable.TakeDamage(damage, knockback);
-                Debug.Log($"Enemy bullet hit player for {damage} damage!");
-            }
-            
+            Vector2 knockback = direction * 3f;
+            damageable.TakeDamage(damage, knockback);
+            Debug.Log($"Enemy bullet hit player for {damage} damage!");
+            OnHit();
+            return;
+        }
+
+        // Optionally destroy on terrain or other obstacles
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+        {
             OnHit();
         }
     }

@@ -71,6 +71,12 @@ public class EnemyStateMachine : MonoBehaviour
     public float minHeightAbovePlayerForSwoop = 1f;
     [HideInInspector] public Vector2 preSwoopPosition;
     [HideInInspector] public float spawnYPosition;
+    // Add drift settings for skittish/flee-capable flying enemies
+    [Header("Skittish Drift Settings")]
+    [Tooltip("Horizontal drift speed toward player when outside flee safe distance")]
+    public float skittishDriftSpeed = 1f;
+    [Tooltip("Vertical drift speed toward player when outside flee safe distance")]
+    public float skittishDriftVerticalSpeed = 0.5f;
     
     [Header("Spell Casting Settings")]
     public bool canCastSpells = false;
@@ -667,6 +673,32 @@ public class EnemyStateMachine : MonoBehaviour
         
         if (isFlying)
         {
+            // When skittish or capable of fleeing, override normal patrol to drift slowly toward player
+            // but only when the player is outside the flee safe distance.
+            bool canFlee = isSkittish || fleeState != null;
+            if (canFlee && player != null)
+            {
+                float safeDistance = fleeState != null ? fleeState.safeDistance : 8f;
+                float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
+                if (distanceToPlayer > safeDistance)
+                {
+                    // Drift gently toward the player
+                    if (IsOutOfBounds())
+                    {
+                        ReturnToArenaCenter();
+                        return;
+                    }
+
+                    Vector2 dir = (player.position - transform.position).normalized;
+                    rb.linearVelocity = new Vector2(
+                        dir.x * skittishDriftSpeed,
+                        dir.y * skittishDriftVerticalSpeed
+                    );
+                    return; // Override normal patrol
+                }
+            }
+
             // Check if out of bounds - if so, reverse direction
             if (IsOutOfBounds())
             {
