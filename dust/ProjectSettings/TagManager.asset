@@ -8,6 +8,7 @@ TagManager:
   - QuitButton
   - ResumeButton
   - MainMenuButton
+  - Ground
   layers:
   - Default
   - TransparentFX

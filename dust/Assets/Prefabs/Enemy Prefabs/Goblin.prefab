@@ -605,7 +605,10 @@ MonoBehaviour:
   minHeightAbovePlayerForSwoop: 1
   preSwoopPosition: {x: 0, y: 0}
   spawnYPosition: 0
+  skittishDriftSpeed: 1
+  skittishDriftVerticalSpeed: 0.5
   canCastSpells: 0
+  ShouldCastLightning: 0
   spellCastRange: 100
   spellCooldown: 10
   spellDamage: 2
@@ -637,6 +640,16 @@ MonoBehaviour:
   deathState: {fileID: 4419238986780907392}
   hurtState: {fileID: 7905763544739973913}
   showGizmos: 1
+  showDetectionGizmos: 1
+  showAttackRangeGizmos: 1
+  showEdgeCheckGizmos: 1
+  showWallCheckGizmos: 1
+  maxStepHeight: 1
+  maxJumpHeight: 2
+  wallCheckForwardDistance: 0.4
+  clearanceWidth: 0.5
+  jumpUpVelocity: 8
+  wallCheckVerticalOffset: -0.3
 --- !u!114 &8488617941645846178
 MonoBehaviour:
   m_ObjectHideFlags: 0

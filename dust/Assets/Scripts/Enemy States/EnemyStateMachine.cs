@@ -80,6 +80,7 @@ public class EnemyStateMachine : MonoBehaviour
     
     [Header("Spell Casting Settings")]
     public bool canCastSpells = false;
+    public bool ShouldCastLightning = false;
     public float spellCastRange = 100f; // Can cast from anywhere
     public float spellCooldown = 10f;
     public int spellDamage = 2;
@@ -157,7 +158,7 @@ public class EnemyStateMachine : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"Flying enemy {gameObject.name} could not find WorldBounds object in scene!");
+                // Removed debug log
             }
         }
         
@@ -260,7 +261,7 @@ public class EnemyStateMachine : MonoBehaviour
     private void HandleKnockback(Vector2 knockback)
     {
         pendingKnockback = knockback;
-        Debug.Log($"Knockback received: {knockback}");
+        // Removed debug log
     }
 
     private void HandleDamaged(float damage, Vector2 knockback)
@@ -268,11 +269,18 @@ public class EnemyStateMachine : MonoBehaviour
         if (currentState == deathState)
             return;
 
+        // Spells are always uncancellable: do not interrupt spell casting when hit
+        if (currentState == spellCastState)
+        {
+            // Removed debug log
+            return;
+        }
+
         // If uncancellable attacks is enabled and enemy is attacking, skip hurt state
         // Enemy still takes damage (handled by IsDamageable), but won't be interrupted
-        if (uncancellableAttacks && (currentState == attackState || currentState == rangedAttackState || currentState == spellCastState))
+        if (uncancellableAttacks && (currentState == attackState || currentState == rangedAttackState))
         {
-            Debug.Log("Enemy hit during attack but has uncancellable attacks - no interrupt");
+            // Removed debug log
             return;
         }
 

@@ -14,6 +14,11 @@ public class EnemySpellCastState : EnemyState
     
     [Header("Spell Prefab")]
     public GameObject lightningSpellPrefab;
+
+    [Header("Summon Settings")]
+    public GameObject skeletonSummonPrefab;
+    public float summonSideOffset = 1.0f; // distance to the side of necromancer
+    public Transform summonPoint; // optional child transform, if set overrides side offset
     
     private bool hascastSpell = false;
     
@@ -58,27 +63,58 @@ public class EnemySpellCastState : EnemyState
             Debug.LogWarning("Cannot cast spell - player not found!");
             return;
         }
-        
-        if (lightningSpellPrefab == null)
+
+        // Decide which spell to cast (example: alternate, or driven by stateMachine)
+        // Replace this selection logic with your own trigger/flag.
+        bool castLightning = stateMachine.ShouldCastLightning; // e.g., a method/flag on your state machine
+
+        GameObject prefabToSpawn = castLightning ? lightningSpellPrefab : skeletonSummonPrefab;
+        if (prefabToSpawn == null)
         {
-            Debug.LogError("Lightning spell prefab not assigned!");
+            Debug.LogError("Spell prefab not assigned!");
             return;
         }
-        
-        // Spawn lightning above player's current position
-        Vector3 playerPosition = stateMachine.player.position;
-        Vector3 spellSpawnPosition = new Vector3(playerPosition.x, playerPosition.y + 5f, playerPosition.z);
-        
-        GameObject spell = Instantiate(lightningSpellPrefab, spellSpawnPosition, Quaternion.identity);
-        
-        LightningSpell lightningScript = spell.GetComponent<LightningSpell>();
-        if (lightningScript != null)
+
+        Vector3 spawnPos;
+        Quaternion spawnRot = Quaternion.identity;
+
+        if (castLightning)
         {
-            lightningScript.damage = stateMachine.spellDamage;
-            lightningScript.targetPosition = playerPosition;
+            // Lightning spawns above player's current position
+            Vector3 playerPosition = stateMachine.player.position;
+            spawnPos = new Vector3(playerPosition.x, playerPosition.y + 5f, playerPosition.z);
+
+            GameObject spell = Instantiate(prefabToSpawn, spawnPos, spawnRot);
+
+            // Configure lightning
+            LightningSpell lightningScript = spell.GetComponent<LightningSpell>();
+            if (lightningScript != null)
+            {
+                lightningScript.damage = stateMachine.spellDamage;
+                lightningScript.targetPosition = playerPosition;
+            }
+
+            // Removed debug log
         }
-        
-        Debug.Log($"Miniboss cast lightning spell at player position: {playerPosition}");
+        else
+        {
+            // Skeleton spawns next to necromancer (or at summonPoint if provided)
+            Transform necro = stateMachine.transform;
+            if (summonPoint != null)
+            {
+                spawnPos = summonPoint.position;
+            }
+            else
+            {
+                float facingSign = Mathf.Sign(necro.localScale.x); // assumes scale X indicates facing
+                Vector3 sideOffset = new Vector3(summonSideOffset * facingSign, 0f, 0f);
+                spawnPos = necro.position + sideOffset;
+            }
+
+            GameObject summon = Instantiate(prefabToSpawn, spawnPos, spawnRot);
+
+            // Removed debug log
+        }
     }
     
     public override void Exit()

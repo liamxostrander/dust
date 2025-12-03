@@ -91,7 +91,7 @@ public class EnemyRangedState : EnemyState
             Debug.LogWarning("Bullet prefab doesn't have EnemyBullet component!");
         }
         
-        Debug.Log($"Enemy shot bullet towards player");
+            // Removed debug log
     }
     
     public override void Exit()

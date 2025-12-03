@@ -304,7 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFleeState
   fleeAnim: {fileID: 7400000, guid: cbbd58c7d38469e41b3773df937d7151, type: 2}
   animationSpeedMultiplier: 1.5
-  safeDistance: 14
+  safeDistance: 10
 --- !u!1 &7445998461624405166
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +431,10 @@ MonoBehaviour:
   minHeightAbovePlayerForSwoop: 2
   preSwoopPosition: {x: 0, y: 0}
   spawnYPosition: 0
+  skittishDriftSpeed: 3
+  skittishDriftVerticalSpeed: 3
   canCastSpells: 0
+  ShouldCastLightning: 0
   spellCastRange: 100
   spellCooldown: 10
   spellDamage: 2

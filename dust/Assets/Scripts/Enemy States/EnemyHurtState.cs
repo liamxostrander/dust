@@ -13,7 +13,7 @@ public class EnemyHurtState : EnemyState
     public void SetKnockbackDirection(Vector2 knockback)
     {
         knockbackVelocity = knockback;
-        Debug.Log($"Knockback set in hurt state: {knockback}");
+        // Removed debug log
     }
     
     public override void Enter()
@@ -31,7 +31,7 @@ public class EnemyHurtState : EnemyState
         // Apply knockback as velocity
         if (stateMachine.rb != null)
         {
-            Debug.Log($"Applying knockback velocity: {knockbackVelocity} to rb");
+            // Removed debug log
             stateMachine.rb.linearVelocity = knockbackVelocity;
         }
         else
