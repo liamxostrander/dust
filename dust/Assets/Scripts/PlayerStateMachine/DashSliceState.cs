@@ -26,6 +26,26 @@ public class DashSliceState : State
         }
         swordAnimator = swordObject.GetComponent<Animator>();
         stats = swordObject.GetComponent<WeaponStats>();
+        if (audioSource == null)
+        {
+            audioSource = input.audioSource;
+        }
+
+        audioSource.clip = stats.dashSliceSound;
+        audioSource.loop = false;
+        audioSource.time = 0f;
+        audioSource.pitch = 1f;
+        if (!audioSource.isPlaying)
+            audioSource.Play();
+        if (stats.isOrbStaff)
+        {
+            OrbSummoner orbSummoner = swordObject.GetComponent<OrbSummoner>();
+            if (orbSummoner != null)
+                orbSummoner.SummonOrb();
+
+            isComplete = true;
+            return;
+        }
         swordDashSliceAnim = stats.dashSliceAnimation;
 
         Vector2 attackDir = Vector2.zero;
@@ -53,17 +73,6 @@ public class DashSliceState : State
             if (launcher != null)
                 launcher.LaunchProjectile(attackDir, input.spriteRenderer.flipX);
         }
-        if (audioSource == null)
-        {
-            audioSource = input.audioSource;
-        }
-
-        audioSource.clip = stats.dashSliceSound;
-        audioSource.loop = false;
-        audioSource.time = 0f;
-        audioSource.pitch = 1f;
-        if (!audioSource.isPlaying)
-            audioSource.Play();
     }
     public override void Do()
     {

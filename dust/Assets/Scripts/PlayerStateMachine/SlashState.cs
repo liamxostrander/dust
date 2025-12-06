@@ -31,8 +31,32 @@ public class SlashState : State
         {
             swordDamage.ResetRecoil();
         }
-        swordAnimator = swordObject.GetComponent<Animator>();
+
         stats = swordObject.GetComponent<WeaponStats>();
+
+        if (audioSource == null)
+        {
+            audioSource = input.audioSource;
+        }
+        audioSource.clip = stats.slashSound;
+        audioSource.loop = false;
+        audioSource.time = 0f;
+        audioSource.pitch = 1f;
+        if (!audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+
+        if (stats.isOrbStaff)
+        {
+            OrbSummoner orbSummoner = swordObject.GetComponent<OrbSummoner>();
+            if (orbSummoner != null)
+                orbSummoner.SummonOrb();
+
+            isComplete = true;
+            return;
+        }
+        swordAnimator = swordObject.GetComponent<Animator>();
         swordSlashAnim = stats.slashAnimation;
 
         if (input.isGrounded) input.control = input.slashControl;
@@ -56,6 +80,7 @@ public class SlashState : State
         
 
         SwordAnim(attackDir);
+
         if (stats.isRanged)
         {
             ProjectileLauncher launcher = swordObject.GetComponent<ProjectileLauncher>();
@@ -64,18 +89,6 @@ public class SlashState : State
         }
         attackDir.y = 0;
         input.rb.AddForce(attackDir * attack1Impulse, ForceMode2D.Impulse);
-
-        if (audioSource == null)
-        {
-            audioSource = input.audioSource;
-        }
-
-        audioSource.clip = stats.slashSound;
-        audioSource.loop = false;
-        audioSource.time = 0f;
-        audioSource.pitch = 1f;
-        if (!audioSource.isPlaying)
-            audioSource.Play();
     }
     public override void Do()
     {
@@ -114,10 +127,8 @@ public class SlashState : State
     {
         swordPivot.SetActive(false);
         input.isSlashing = false;
-        if (audioSource != null && audioSource.isPlaying)
-        {
+        if (!stats.isOrbStaff && audioSource != null && audioSource.isPlaying)
             audioSource.Stop();
-        }
     }
     
 }
