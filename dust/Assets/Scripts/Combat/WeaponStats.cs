@@ -29,6 +29,7 @@ public class WeaponStats : MonoBehaviour
     public float orbSpeed = 12f;
     public float orbExplosionRadius = 2f;
     public float orbExplosionDamage = 30f;
-
+    public GameObject orbExplosionFX;
+    public AudioClip orbExplosionSFX;
 }
 
