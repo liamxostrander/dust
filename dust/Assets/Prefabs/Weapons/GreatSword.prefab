@@ -121,14 +121,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8933838244224312722}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.8543337, w: 0.5197249}
-  m_LocalPosition: {x: 1.7, y: -1.31, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4712286980981202995}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -117.372}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2408560344389168085
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponStats
   slashAnimation: {fileID: 7400000, guid: 4a8ec0ff07a49473b84acc517beb364e, type: 2}
-  dashSliceAnimation: {fileID: 0}
+  dashSliceAnimation: {fileID: 7400000, guid: ad48f883bfddd44e98ac0f2d5ec91e0f, type: 2}
   slashSound: {fileID: 0}
   dashSliceSound: {fileID: 0}
   damage: 50
