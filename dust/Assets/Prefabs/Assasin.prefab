@@ -285,7 +285,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.08, y: 0.04, z: 0}
-  m_LocalScale: {x: 0.4625, y: 0.1575, z: 1}
+  m_LocalScale: {x: 0.23703125, y: 0.1575, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5899023650178650985}
@@ -672,6 +672,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 8432469712876998508}
+  wallSlideSpeed: -2.5
+  wallJumpForce: 16
+  wallJumpDirection: {x: 1, y: 1.3}
+  wallCheckDistance: 0.1
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 64
+  playerCollider: {fileID: 2759218640024225718}
   fallMultiplier: 2
   lowJumpMultiplier: 2.5
   fastFallMultiplier: 3

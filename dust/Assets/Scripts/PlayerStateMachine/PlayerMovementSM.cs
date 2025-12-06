@@ -55,6 +55,15 @@ public class PlayerMovementSM : MonoBehaviour
     [SerializeField] LayerMask groundMask;
     [SerializeField] BoxCollider2D groundCheck;
 
+    [Header("Wall Movement")]
+    [SerializeField] float wallSlideSpeed = -2.5f;
+    [SerializeField] float wallCheckDistance = 0.1f;
+    [SerializeField] LayerMask wallMask;
+    [SerializeField] public CapsuleCollider2D playerCollider;
+
+    bool isTouchingWallLeft;
+    bool isTouchingWallRight;
+    bool isWallSliding;
 
     [Header("Gravity")]
     [SerializeField] float fallMultiplier = 2.0f;
@@ -83,6 +92,8 @@ public class PlayerMovementSM : MonoBehaviour
     public PlayerWeaponController playerWeaponController;
     public GameObject currentSword;
     public Transform swordPivot;
+
+
 
     void Awake()
     {
@@ -202,8 +213,9 @@ public class PlayerMovementSM : MonoBehaviour
             state = dashSliceState;
             state.Enter();
         }
-
+        
         if (lastJumpPressTimer > 0f) lastJumpPressTimer -= Time.deltaTime;
+        
 
         if (state.isComplete)
         {
@@ -215,9 +227,11 @@ public class PlayerMovementSM : MonoBehaviour
     void FixedUpdate()
     {
         CheckGrounded();
+        CheckWalls();
         if (isGrounded) jumpsRemaining = maxJumps;
         if (isDashing) return;
 
+        HandleWallSlide();
         HandleXMovement();
         HandleJump();
     }
@@ -250,6 +264,38 @@ public class PlayerMovementSM : MonoBehaviour
     }
     void HandleJump()
     {
+        // ===============================
+        // WALL JUMP
+        // ===============================
+        if (lastJumpPressTimer > 0f && isWallSliding)
+        {
+            lastJumpPressTimer = 0f;
+
+            bool left = isTouchingWallLeft;
+
+            // Push player *off* the wall immediately
+            float jumpDir = left ? 1f : -1f;
+
+            Vector2 newVel = new Vector2(jumpDir * 10f, jumpImpulse * 1.0f);
+
+            rb.linearVelocity = newVel;
+
+            // Temporarily disable X movement to avoid re-sticking
+            StartCoroutine(DisableXMovementFor(0.12f));
+
+            // Play jump sound
+            audioSource.clip = jumpSound;
+            audioSource.pitch = 1.15f;
+            audioSource.loop = false;
+            audioSource.Play();
+
+            jumpsRemaining = maxJumps - 1;
+            return;
+        }
+
+        // ===============================
+        // NORMAL JUMP (existing logic)
+        // ===============================
         if (lastJumpPressTimer > 0f)
         {
             if (isGrounded || jumpsRemaining > 0)
@@ -257,11 +303,12 @@ public class PlayerMovementSM : MonoBehaviour
                 audioSource.clip = jumpSound;
                 audioSource.loop = false;
                 audioSource.pitch = 1.3f;
+
                 if (audioSource.isPlaying)
-                {
                     audioSource.Stop();
-                }
+
                 audioSource.Play();
+
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
                 rb.AddForce(Vector2.up * (jumpImpulse * jumpMultiplier), ForceMode2D.Impulse);
 
@@ -289,10 +336,54 @@ public class PlayerMovementSM : MonoBehaviour
         rb.linearVelocity = v;
     }
 
+    void HandleWallSlide()
+    {
+        isWallSliding = false;
+
+        if (isGrounded) return;
+
+        bool touchingWall = (isTouchingWallLeft && moveX < 0) || (isTouchingWallRight && moveX > 0);
+        
+        if (touchingWall)
+        {
+            isWallSliding = true;
+
+            // Disable horizontal control while sliding
+            float vY = rb.linearVelocity.y;
+
+            // Clamp falling speed
+            if (vY < wallSlideSpeed)
+                vY = wallSlideSpeed;
+
+            rb.linearVelocity = new Vector2(0f, vY);
+        }
+    }
+
+
+
     void CheckGrounded()
     {
         isGrounded = Physics2D.OverlapAreaAll(groundCheck.bounds.min, groundCheck.bounds.max, groundMask).Length > 0;
     }
+
+    void CheckWalls()
+    {
+        Collider2D col = playerCollider;
+        Vector2 center = col.bounds.center;
+        float height = col.bounds.size.y;
+        float width = col.bounds.size.x;
+
+        // Use a generous overlap width — guaranteed to hit the wall collider
+        float sideOffset = width * 0.55f;  // extends past your capsule edge
+
+        Vector2 boxSize = new Vector2(0.2f, height * 0.9f);
+
+        isTouchingWallLeft  = Physics2D.OverlapBox(center + Vector2.left  * sideOffset, boxSize, 0, wallMask);
+        isTouchingWallRight = Physics2D.OverlapBox(center + Vector2.right * sideOffset, boxSize, 0, wallMask);
+
+        Debug.Log($"Left:{isTouchingWallLeft}, Right:{isTouchingWallRight}, Offset:{sideOffset}");
+    }
+
 
     void TryDash(int dir)
     {
@@ -376,5 +467,14 @@ public class PlayerMovementSM : MonoBehaviour
         state.Enter();
         if (rb != null)
             rb.linearVelocity = Vector2.zero;
+    }
+    IEnumerator DisableXMovementFor(float duration)
+    {
+        float oldControl = control;
+        control = 0f;
+
+        yield return new WaitForSeconds(duration);
+
+        control = oldControl;
     }
 }
