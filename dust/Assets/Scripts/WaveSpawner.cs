@@ -60,6 +60,22 @@ public class WaveSpawner : MonoBehaviour
     [Tooltip("Optional SFX when intermission ends / next wave begins.")]
     public AudioClip intermissionEndSfx;
 
+    [Header("Intermission Camera Focus")]
+    [Tooltip("Camera that will be steered to show the shopkeeper when he first appears.")]
+    public CameraFollow intermissionCamera;
+
+    [Tooltip("How long to pan to/from the shopkeeper (seconds, unscaled).")]
+    public float shopFocusPanTime = 0.7f;
+
+    [Tooltip("How long to hold on the shopkeeper (seconds, unscaled).")]
+    public float shopFocusHoldTime = 0.6f;
+
+    [Tooltip("If true, only play the camera focus the first time the shopkeeper appears.")]
+    public bool onlyShowShopFocusOnce = true;
+
+    private bool _hasShownShopFocus = false;
+
+
     [Serializable]
     public class Wave
     {
@@ -95,6 +111,9 @@ public class WaveSpawner : MonoBehaviour
 
     private void Start()
     {
+        if (intermissionCamera == null)
+            intermissionCamera = FindFirstObjectByType<CameraFollow>();
+
         if (autoStart && TotalWaves > 0)
         {
             StartWaves();
@@ -243,6 +262,13 @@ public class WaveSpawner : MonoBehaviour
         if (sfxSource && intermissionStartSfx)
             sfxSource.PlayOneShot(intermissionStartSfx, 0.3f);
 
+        if (shopkeeper != null && intermissionCamera != null &&
+            (!_hasShownShopFocus || !onlyShowShopFocusOnce))
+        {
+            _hasShownShopFocus = true;
+            yield return StartCoroutine(FocusCameraOnShopkeeper());
+        }
+
         float t = Mathf.Max(0f, intermissionDuration);
         int lastWhole = Mathf.CeilToInt(t);
 
@@ -303,4 +329,61 @@ public class WaveSpawner : MonoBehaviour
         int m = Mathf.FloorToInt(seconds / 60f);
         return $"{m}:{s:00}";
     }
+
+        private IEnumerator FocusCameraOnShopkeeper()
+    {
+        if (shopkeeper == null || intermissionCamera == null)
+            yield break;
+
+        Transform camTransform = intermissionCamera.transform;
+        Transform originalTarget = intermissionCamera.target;
+        float originalSmooth = intermissionCamera.smooth;
+
+        float totalCutsceneTime = shopFocusPanTime * 2f + shopFocusHoldTime;
+        var player = FindFirstObjectByType<PlayerMovementSM>();
+        if (player != null)
+        {
+            player.DisableMovement(totalCutsceneTime);
+        }
+
+        intermissionCamera.enabled = false;
+
+        Vector3 startPos = camTransform.position;
+        Vector3 shopPos = shopkeeper.transform.position;
+        Vector3 targetPos = new Vector3(shopPos.x, shopPos.y, startPos.z);
+
+        float originalTimeScale = Time.timeScale;
+        Time.timeScale = 0f; 
+
+        float elapsed = 0f;
+        while (elapsed < shopFocusPanTime)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / shopFocusPanTime);
+            camTransform.position = Vector3.Lerp(startPos, targetPos, t);
+            yield return null;
+        }
+
+        elapsed = 0f;
+        while (elapsed < shopFocusHoldTime)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        elapsed = 0f;
+        while (elapsed < shopFocusPanTime)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = Mathf.Clamp01(elapsed / shopFocusPanTime);
+            camTransform.position = Vector3.Lerp(targetPos, startPos, t);
+            yield return null;
+        }
+
+        Time.timeScale = originalTimeScale;
+        intermissionCamera.enabled = true;
+        intermissionCamera.target = originalTarget;
+        intermissionCamera.smooth = originalSmooth;
+    }
+
 }
