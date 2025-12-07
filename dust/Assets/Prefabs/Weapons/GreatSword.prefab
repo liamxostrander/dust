@@ -340,6 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199e62123c6964e19aedb151079e4995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponStats
+  weaponIcon: {fileID: -460413151, guid: 6eb16e372762d6b4cb708c44ebfab931, type: 3}
   slashAnimation: {fileID: 7400000, guid: 4a8ec0ff07a49473b84acc517beb364e, type: 2}
   dashSliceAnimation: {fileID: 7400000, guid: ad48f883bfddd44e98ac0f2d5ec91e0f, type: 2}
   slashSound: {fileID: 0}

@@ -127,17 +127,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199e62123c6964e19aedb151079e4995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponStats
+  weaponIcon: {fileID: 7611935248097239919, guid: 210a48f399e414236b529553fd828b88, type: 3}
   slashAnimation: {fileID: 7400000, guid: 90b98738d8d1c4dc3b21071f5f837b87, type: 2}
-  slashSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
   dashSliceAnimation: {fileID: 7400000, guid: 46ab1e9c58a304145a67ab94f43627be, type: 2}
+  slashSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
   dashSliceSound: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
   damage: 25
   knockback: 5
   hitstopDuration: 0.08
+  isOrbStaff: 0
   isRanged: 1
   projectilePrefab: {fileID: 3126060349857622515, guid: 85d25fac6d5c2433d84dbaf0388c3a91, type: 3}
   projectileSpeed: 20
   projectileSpawnPoint: {fileID: 3867000315610169906}
+  orbPrefab: {fileID: 0}
+  orbHoverHeight: 1.2
+  orbDetectRadius: 6
+  orbSpeed: 12
+  orbExplosionRadius: 2
+  orbExplosionDamage: 30
+  orbExplosionFX: {fileID: 0}
+  orbExplosionSFX: {fileID: 0}
 --- !u!114 &9071119400930005007
 MonoBehaviour:
   m_ObjectHideFlags: 0

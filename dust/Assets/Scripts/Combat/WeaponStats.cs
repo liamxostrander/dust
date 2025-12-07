@@ -1,8 +1,13 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 
 public class WeaponStats : MonoBehaviour
 {
+
+    [Header("UI")]
+    public Sprite weaponIcon;
+
     [Header("Animations")]
     public AnimationClip slashAnimation;
     public AnimationClip dashSliceAnimation;
@@ -23,6 +28,7 @@ public class WeaponStats : MonoBehaviour
     public float projectileSpeed = 12f;
     public Transform projectileSpawnPoint;
     
+    [Header("Orb Staff Stats")]
     public GameObject orbPrefab;
     public float orbHoverHeight = 1.2f;
     public float orbDetectRadius = 6f;

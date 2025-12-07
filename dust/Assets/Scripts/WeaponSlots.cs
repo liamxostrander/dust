@@ -25,7 +25,7 @@ public class WeaponSlots : MonoBehaviour
             Sprite currentSprite;
             Color currentAlpha = Color.white;
             if (currentWeapon != null){
-                currentSprite = currentWeapon.GetComponent<SpriteRenderer>().sprite;
+                currentSprite = currentWeapon.GetComponent<WeaponStats>().weaponIcon;
                 currentAlpha.a = 1f;
             }
             else{

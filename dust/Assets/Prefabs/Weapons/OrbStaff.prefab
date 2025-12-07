@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199e62123c6964e19aedb151079e4995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponStats
+  weaponIcon: {fileID: -2836284546635135099, guid: 52eed680bfa0446ab99c14165aa4e902, type: 3}
   slashAnimation: {fileID: 0}
   dashSliceAnimation: {fileID: 0}
   slashSound: {fileID: 8300000, guid: 2df49f6bb18bd3247bd788e26695f4ff, type: 3}
