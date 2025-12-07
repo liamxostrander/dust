@@ -4,6 +4,7 @@ using UnityEngine;
 public class Shopkeeper : MonoBehaviour
 {
     public enum WeaponCategory { Melee, Ranged, Magic }
+
     [System.Serializable]
     public class ShopItem
     {
@@ -12,7 +13,6 @@ public class Shopkeeper : MonoBehaviour
         public Sprite icon;
         public GameObject weaponPrefab;
         public WeaponCategory category;
-        public ShopItem nextItem;
     }
 
     [Header("Interaction")]
@@ -24,7 +24,7 @@ public class Shopkeeper : MonoBehaviour
     public int debugCurrencyAmount = 123;
 
     [Header("Inventory")]
-    [Tooltip("One entry per slot in the shop UI (name + price).")]
+    [Tooltip("Items appear in order; only the first few are shown at once.")]
     public ShopItem[] items;
 
     private PlayerCurrency playerCurrency;
@@ -83,7 +83,6 @@ public class Shopkeeper : MonoBehaviour
         if (Input.GetKeyDown(interactKey) && !ShopMenuUI.Instance.IsOpen)
         {
             int amount = (playerCurrency != null) ? playerCurrency.Coins : debugCurrencyAmount;
-
             ShopMenuUI.Instance.Open(amount, items);
         }
     }

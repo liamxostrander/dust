@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ShopMenuUI : MonoBehaviour
 {
@@ -20,7 +21,6 @@ public class ShopMenuUI : MonoBehaviour
 
     [Header("Item Labels")]
     public TMP_Text[] itemNameTexts;
-
     public TMP_Text[] itemPriceTexts;
 
     [Header("Currency Display")]
@@ -45,9 +45,30 @@ public class ShopMenuUI : MonoBehaviour
     float _previousTimeScale = 1f;
 
     private Shopkeeper.ShopItem[] _items;
-    private bool[] _soldOut;
+
+    private List<Shopkeeper.ShopItem> _itemQueue = new List<Shopkeeper.ShopItem>();
+    private bool _queueInitialized = false;
 
     public bool IsOpen => _isOpen;
+
+    bool HasItemAt(int index)
+    {
+        return _items != null &&
+            index >= 0 &&
+            index < _items.Length &&
+            _items[index] != null;
+    }
+
+    int GetFirstNonEmptyIndex()
+    {
+        if (_items == null) return -1;
+        for (int i = 0; i < _items.Length; i++)
+        {
+            if (_items[i] != null)
+                return i;
+        }
+        return -1;
+    }
 
     void Awake()
     {
@@ -88,10 +109,30 @@ public class ShopMenuUI : MonoBehaviour
 
     void MoveSelection(int dir)
     {
-        if (itemSlots == null || itemSlots.Length == 0) return;
+        if (_items == null || _items.Length == 0) return;
+
+        if (!HasItemAt(_selectedIndex))
+        {
+            _selectedIndex = GetFirstNonEmptyIndex();
+            if (_selectedIndex == -1) return; // no items at all
+        }
 
         int previous = _selectedIndex;
-        _selectedIndex = Mathf.Clamp(_selectedIndex + dir, 0, itemSlots.Length - 1);
+        int newIndex = _selectedIndex;
+
+        for (int attempts = 0; attempts < _items.Length; attempts++)
+        {
+            newIndex += dir;
+
+            if (newIndex < 0 || newIndex >= _items.Length)
+                break;
+
+            if (HasItemAt(newIndex))
+            {
+                _selectedIndex = newIndex;
+                break;
+            }
+        }
 
         if (previous != _selectedIndex)
         {
@@ -125,14 +166,14 @@ public class ShopMenuUI : MonoBehaviour
             return;
         }
 
-        if (_soldOut != null && _selectedIndex < _soldOut.Length && _soldOut[_selectedIndex])
+        var item = _items[_selectedIndex];
+        if (item == null)
         {
-            Debug.Log("[Shop] Item already purchased.");
+            Debug.Log("[Shop] Empty slot selected.");
             PlaySfx(cannotAffordSfx);
             return;
         }
 
-        var item = _items[_selectedIndex];
         int price = Mathf.Max(0, item.price);
 
         int available = (playerCurrency != null)
@@ -163,13 +204,9 @@ public class ShopMenuUI : MonoBehaviour
                 currencyText.text = $"{currencyLabel}: {debugCurrencyAmount}";
         }
 
-        Debug.Log($"[Shop] Bought '{item.itemName}' for {price} coins (debug only).");
-
-        if (_soldOut != null && _selectedIndex < _soldOut.Length)
-            _soldOut[_selectedIndex] = true;
-
+        Debug.Log($"[Shop] Bought '{item.itemName}' for {price} coins.");
         PlaySfx(purchaseSfx);
-        StartCoroutine(FadeOutItemSlot(_selectedIndex));
+
         var purchased = item;
 
         var controller = FindFirstObjectByType<PlayerWeaponController>();
@@ -178,30 +215,70 @@ public class ShopMenuUI : MonoBehaviour
             controller.AssignPurchasedWeapon(purchased);
         }
 
-        if (purchased.nextItem != null)
+        if (_itemQueue != null && purchased != null)
         {
-            _items[_selectedIndex] = purchased.nextItem;
+            _itemQueue.Remove(purchased);
         }
-        else
+
+        int slotCount = itemSlots != null ? itemSlots.Length : 0;
+        if (_items == null || _items.Length != slotCount)
         {
-            _items[_selectedIndex] = null;
+            _items = new Shopkeeper.ShopItem[slotCount];
+        }
+
+        for (int i = 0; i < slotCount; i++)
+        {
+            if (_itemQueue != null && i < _itemQueue.Count)
+            {
+                _items[i] = _itemQueue[i];
+            }
+            else
+            {
+                _items[i] = null;
+            }
         }
 
         RefreshItemLabels();
-
     }
 
     public void Open(int currentCurrency = -1, Shopkeeper.ShopItem[] items = null)
     {
         if (_isOpen) return;
 
-        _items = items;
-        _soldOut = (_items != null) ? new bool[_items.Length] : null;
-        SetOpen(true);
+        if (!_queueInitialized)
+        {
+            _itemQueue.Clear();
+            if (items != null)
+            {
+                foreach (var it in items)
+                {
+                    if (it != null)
+                        _itemQueue.Add(it);
+                }
+            }
+            _queueInitialized = true;
+        }
 
-        _selectedIndex = 0;
-        UpdateHighlight();
+        int slotCount = itemSlots != null ? itemSlots.Length : 0;
+
+        if (_items == null || _items.Length != slotCount)
+        {
+            _items = new Shopkeeper.ShopItem[slotCount];
+        }
+
+        for (int i = 0; i < slotCount; i++)
+        {
+            if (_itemQueue != null && i < _itemQueue.Count)
+                _items[i] = _itemQueue[i];
+            else
+                _items[i] = null;
+        }
+
+        _selectedIndex = GetFirstNonEmptyIndex();
+
+        SetOpen(true);
         RefreshItemLabels();
+        UpdateHighlight();
 
         if (currencyText != null)
         {
@@ -246,29 +323,89 @@ public class ShopMenuUI : MonoBehaviour
 
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            string name = "";
-            string price = "";
-            Sprite icon = null;
+            bool hasItem = HasItemAt(i);
 
-            if (_items != null && i < _items.Length && _items[i] != null)
+            // Frame / slot root
+            Image frame = itemSlots[i];
+            if (frame != null)
             {
-                name  = _items[i].itemName;
-                price = _items[i].price.ToString();
-                icon  = _items[i].icon;
+                // Hide the whole slot GameObject if there is no item
+                frame.gameObject.SetActive(hasItem);
             }
 
-            if (itemNameTexts != null && i < itemNameTexts.Length && itemNameTexts[i] != null)
-                itemNameTexts[i].text = name;
+            // Icon
+            Image iconImage = (itemIconImages != null && i < itemIconImages.Length)
+                ? itemIconImages[i]
+                : null;
 
-            if (itemPriceTexts != null && i < itemPriceTexts.Length && itemPriceTexts[i] != null)
-                itemPriceTexts[i].text = "¢" + price;
+            // Name / price text
+            TMP_Text nameText = (itemNameTexts != null && i < itemNameTexts.Length)
+                ? itemNameTexts[i]
+                : null;
 
-            if (itemIconImages != null && i < itemIconImages.Length && itemIconImages[i] != null)
+            TMP_Text priceText = (itemPriceTexts != null && i < itemPriceTexts.Length)
+                ? itemPriceTexts[i]
+                : null;
+
+            if (hasItem)
             {
-                itemIconImages[i].sprite  = icon;
-                itemIconImages[i].enabled = (icon != null);
+                var item = _items[i];
+
+                if (nameText != null)
+                    nameText.text = item.itemName;
+
+                if (priceText != null)
+                    priceText.text = "¢" + item.price; // or "$" if you prefer
+
+                if (iconImage != null)
+                {
+                    iconImage.sprite = item.icon;
+                    iconImage.enabled = (item.icon != null);
+                }
+
+                // Make sure children are active if slot is visible
+                if (nameText != null)  nameText.gameObject.SetActive(true);
+                if (priceText != null) priceText.gameObject.SetActive(true);
+                if (iconImage != null) iconImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                // No item => clear texts, hide icon, hide texts
+                if (nameText != null)
+                {
+                    nameText.text = "";
+                    nameText.gameObject.SetActive(false);
+                }
+
+                if (priceText != null)
+                {
+                    priceText.text = "";
+                    priceText.gameObject.SetActive(false);
+                }
+
+                if (iconImage != null)
+                {
+                    iconImage.sprite = null;
+                    iconImage.enabled = false;
+                    iconImage.gameObject.SetActive(false);
+                }
             }
         }
+
+        // After refreshing, make sure selection points at a visible item
+        if (_items != null && _items.Length > 0)
+        {
+            if (!HasItemAt(_selectedIndex))
+            {
+                _selectedIndex = GetFirstNonEmptyIndex();
+            }
+        }
+        else
+        {
+            _selectedIndex = -1;
+        }
+
+        UpdateHighlight();
     }
 
     void OnEnable()
@@ -294,7 +431,6 @@ public class ShopMenuUI : MonoBehaviour
             GlobalAudio.SFX.PlayOneShot(clip, sfxVolume);
         }
     }
-
 
     private void HandleCoinsChanged(int amount)
     {
@@ -370,5 +506,4 @@ public class ShopMenuUI : MonoBehaviour
         if (nameText)  nameText.text = "";
         if (priceText) priceText.text = "";
     }
-
 }
