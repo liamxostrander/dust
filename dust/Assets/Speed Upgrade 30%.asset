@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Speed Upgrade 30%
   m_EditorClassIdentifier: Assembly-CSharp::SpeedUpgradeSO
   displayName: Speed Shoes
-  description: +30% Movement Speed
+  description: +15% Movement Speed
   worldSprite: {fileID: 4490116447593039513, guid: 09e8e57cef316074396e107688d765f3, type: 3}
   pickupSfx: {fileID: 8300000, guid: 5c4b09c864821934abc01e7ee798ff42, type: 3}
-  bonusPercent: 0.3
+  bonusPercent: 0.15

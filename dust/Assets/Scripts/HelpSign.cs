@@ -10,6 +10,9 @@ public class HelpSign : MonoBehaviour
 
     private bool _playerInRange = false;
 
+    private bool _pausedBySign = false;
+    private float _previousTimeScale = 1f;
+
     void OnValidate()
     {
         var col = GetComponent<Collider2D>();
@@ -52,19 +55,38 @@ public class HelpSign : MonoBehaviour
 
     void Update()
     {
-        if (!_playerInRange) return;
         if (HelpMenuUI.Instance == null) return;
+
+        if (_pausedBySign && !HelpMenuUI.Instance.IsOpen)
+        {
+            Time.timeScale = _previousTimeScale;
+            _pausedBySign = false;
+        }
+
+        if (!_playerInRange) return;
 
         if (Input.GetKeyDown(interactKey))
         {
             if (!HelpMenuUI.Instance.IsOpen)
             {
                 HelpMenuUI.Instance.Open();
+
+                if (!_pausedBySign)
+                {
+                    _previousTimeScale = Time.timeScale;
+                    Time.timeScale = 0f;
+                    _pausedBySign = true;
+                }
             }
-            else
-            {
-                HelpMenuUI.Instance.Close();
-            }
+        }
+    }
+
+    void OnDisable()
+    {
+        if (_pausedBySign)
+        {
+            Time.timeScale = _previousTimeScale;
+            _pausedBySign = false;
         }
     }
 }
