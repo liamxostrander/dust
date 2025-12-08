@@ -172,7 +172,10 @@ MonoBehaviour:
   minHeightAbovePlayerForSwoop: 2
   preSwoopPosition: {x: 0, y: 0}
   spawnYPosition: 0
+  skittishDriftSpeed: 1
+  skittishDriftVerticalSpeed: 0.5
   canCastSpells: 0
+  ShouldCastLightning: 0
   spellCastRange: 100
   spellCooldown: 10
   spellDamage: 2
@@ -227,6 +230,8 @@ MonoBehaviour:
   maxCoins: 5
   coinDropForce: 3
   coinDropRadius: 0.5
+  damagePopupPrefab: {fileID: -3317278123689973125, guid: 5524144f96d2d6e44bd37aa8045cc681, type: 3}
+  damagePopupColor: {r: 1, g: 1, b: 1, a: 1}
   OnDamagedWithKnockback:
     m_PersistentCalls:
       m_Calls: []
@@ -823,8 +828,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b56032fbdad343dcb40d270e02c1d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackDamage
+  attacker: {fileID: 0}
+  overrideDamage: 10
   knockbackForce: 10
   knockupForce: 5
+  horizontalOnly: 0
+  verticalOverride: -1
 --- !u!1 &9072703041964236991
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,10 @@ public class EnemySpellCastState : EnemyState
     public AnimationClip castAnim;
     public float castDuration = 1.5f;
     
+    // Add this: the lightning strike clip used on the prefab (non-looping)
+    public AnimationClip lightningStrikeClip;
+    public float lightningFallbackLifetime = 1.0f; // used if clip is missing
+    
     [Header("Spell Timing")]
     [Range(0f, 1f)]
     public float spellCastTiming = 0.7f; // When in animation to trigger spell (0-1)
@@ -64,9 +68,7 @@ public class EnemySpellCastState : EnemyState
             return;
         }
 
-        // Decide which spell to cast (example: alternate, or driven by stateMachine)
-        // Replace this selection logic with your own trigger/flag.
-        bool castLightning = stateMachine.ShouldCastLightning; // e.g., a method/flag on your state machine
+        bool castLightning = stateMachine.ShouldCastLightning;
 
         GameObject prefabToSpawn = castLightning ? lightningSpellPrefab : skeletonSummonPrefab;
         if (prefabToSpawn == null)
@@ -80,25 +82,33 @@ public class EnemySpellCastState : EnemyState
 
         if (castLightning)
         {
-            // Lightning spawns above player's current position
             Vector3 playerPosition = stateMachine.player.position;
-            spawnPos = new Vector3(playerPosition.x, playerPosition.y + 5f, playerPosition.z);
+            spawnPos = new Vector3(playerPosition.x, playerPosition.y, playerPosition.z);
 
             GameObject spell = Instantiate(prefabToSpawn, spawnPos, spawnRot);
 
-            // Configure lightning
-            LightningSpell lightningScript = spell.GetComponent<LightningSpell>();
-            if (lightningScript != null)
+            // Play the strike animation on the prefab’s Animator (one-shot)
+            Animator anim = spell.GetComponent<Animator>();
+            float lifetime = lightningFallbackLifetime;
+
+            if (anim != null && lightningStrikeClip != null)
             {
-                lightningScript.damage = stateMachine.spellDamage;
-                lightningScript.targetPosition = playerPosition;
+                anim.Play(lightningStrikeClip.name, 0, 0f);
+                lifetime = lightningStrikeClip.length;
+            }
+            else if (anim != null)
+            {
+                // If no clip reference, try current state length
+                var stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+                // Note: stateInfo.length can be unreliable for looping states; prefer explicit clip ref.
+                lifetime = Mathf.Max(0.1f, stateInfo.length);
             }
 
-            // Removed debug log
+            // Schedule despawn after animation
+            Destroy(spell, lifetime);
         }
         else
         {
-            // Skeleton spawns next to necromancer (or at summonPoint if provided)
             Transform necro = stateMachine.transform;
             if (summonPoint != null)
             {
@@ -106,14 +116,12 @@ public class EnemySpellCastState : EnemyState
             }
             else
             {
-                float facingSign = Mathf.Sign(necro.localScale.x); // assumes scale X indicates facing
+                float facingSign = Mathf.Sign(necro.localScale.x);
                 Vector3 sideOffset = new Vector3(summonSideOffset * facingSign, 0f, 0f);
                 spawnPos = necro.position + sideOffset;
             }
 
             GameObject summon = Instantiate(prefabToSpawn, spawnPos, spawnRot);
-
-            // Removed debug log
         }
     }
     
