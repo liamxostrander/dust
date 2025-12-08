@@ -129,8 +129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b56032fbdad343dcb40d270e02c1d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackDamage
+  attacker: {fileID: 0}
+  overrideDamage: 10
   knockbackForce: 15
   knockupForce: 5
+  horizontalOnly: 0
+  verticalOverride: -1
 --- !u!1 &3187651417452515738
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,16 +644,6 @@ MonoBehaviour:
   deathState: {fileID: 4419238986780907392}
   hurtState: {fileID: 7905763544739973913}
   showGizmos: 1
-  showDetectionGizmos: 1
-  showAttackRangeGizmos: 1
-  showEdgeCheckGizmos: 1
-  showWallCheckGizmos: 1
-  maxStepHeight: 1
-  maxJumpHeight: 2
-  wallCheckForwardDistance: 0.4
-  clearanceWidth: 0.5
-  jumpUpVelocity: 8
-  wallCheckVerticalOffset: -0.3
 --- !u!114 &8488617941645846178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -673,6 +667,8 @@ MonoBehaviour:
   maxCoins: 5
   coinDropForce: 3
   coinDropRadius: 0.5
+  damagePopupPrefab: {fileID: -3317278123689973125, guid: 5524144f96d2d6e44bd37aa8045cc681, type: 3}
+  damagePopupColor: {r: 1, g: 1, b: 1, a: 1}
   OnDamagedWithKnockback:
     m_PersistentCalls:
       m_Calls: []
