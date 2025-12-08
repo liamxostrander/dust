@@ -21,6 +21,10 @@ public class IsDamageable : MonoBehaviour
     [SerializeField] private float coinDropForce = 3f;
     [SerializeField] private float coinDropRadius = 0.5f;
     
+    [Header("Damage Popup")]
+    [SerializeField] private DamagePopup damagePopupPrefab;
+    [SerializeField] private Color damagePopupColor = Color.white;
+    
     [Header("Events")]
     public UnityEvent<float, Vector2> OnDamagedWithKnockback; 
     public UnityEvent<float> OnHealed;
@@ -53,13 +57,20 @@ public class IsDamageable : MonoBehaviour
     {
         if (!IsAlive || isInvulnerable || invulnerabilityTimer > 0)
             return;
-        
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
         if (healthBar != null)
         {
             healthBar.setValue(currentHealth);
         }
+
+        // Spawn damage popup (world-space)
+        if (damagePopupPrefab != null && damage > 0f)
+        {
+            var popup = Instantiate(damagePopupPrefab, transform.position, Quaternion.identity);
+            popup.Setup(damage, damagePopupColor);
+        }
+
         OnDamagedWithKnockback?.Invoke(damage, knockback);
         OnHealthChanged?.Invoke(currentHealth);
         

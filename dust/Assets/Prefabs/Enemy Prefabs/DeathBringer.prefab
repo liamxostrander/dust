@@ -297,10 +297,13 @@ MonoBehaviour:
   minHeightAbovePlayerForSwoop: 1
   preSwoopPosition: {x: 0, y: 0}
   spawnYPosition: 0
+  skittishDriftSpeed: 1
+  skittishDriftVerticalSpeed: 0.5
   canCastSpells: 1
+  ShouldCastLightning: 1
   spellCastRange: 100
   spellCooldown: 10
-  spellDamage: 2
+  spellDamage: 10
   lastSpellCastTime: -999
   groundCheckPoint: {fileID: 0}
   edgeCheckDistance: 0.75
@@ -352,6 +355,8 @@ MonoBehaviour:
   maxCoins: 5
   coinDropForce: 3
   coinDropRadius: 0.5
+  damagePopupPrefab: {fileID: -3317278123689973125, guid: 5524144f96d2d6e44bd37aa8045cc681, type: 3}
+  damagePopupColor: {r: 1, g: 1, b: 1, a: 1}
   OnDamagedWithKnockback:
     m_PersistentCalls:
       m_Calls: []
@@ -830,8 +835,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpellCastState
   castAnim: {fileID: 7400000, guid: bb2148f63e4dab747bab5fe8dd4eb9c4, type: 2}
   castDuration: 1.5
+  lightningStrikeClip: {fileID: 0}
+  lightningFallbackLifetime: 1
   spellCastTiming: 0.7
   lightningSpellPrefab: {fileID: 566451831859687859, guid: 2c32b923ed548cc4798c12ab8a5adff7, type: 3}
+  skeletonSummonPrefab: {fileID: 0}
+  summonSideOffset: 1
+  summonPoint: {fileID: 0}
 --- !u!1 &7197438127214266816
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,8 +972,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b56032fbdad343dcb40d270e02c1d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackDamage
+  attacker: {fileID: 0}
+  overrideDamage: 10
   knockbackForce: 5
   knockupForce: 2
+  horizontalOnly: 0
+  verticalOverride: -1
 --- !u!1 &9024284659583896445
 GameObject:
   m_ObjectHideFlags: 0

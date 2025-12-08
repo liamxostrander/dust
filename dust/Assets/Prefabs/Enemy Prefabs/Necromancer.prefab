@@ -161,6 +161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpellCastState
   castAnim: {fileID: 7400000, guid: 034519d0caa22df428d9c1810c0ce512, type: 2}
   castDuration: 1.5
+  lightningStrikeClip: {fileID: 0}
+  lightningFallbackLifetime: 1
   spellCastTiming: 0.7
   lightningSpellPrefab: {fileID: 0}
   skeletonSummonPrefab: {fileID: 2737269865165856616, guid: fd001ed29edd05345a317a8962798748, type: 3}
@@ -442,6 +444,8 @@ MonoBehaviour:
   maxCoins: 5
   coinDropForce: 3
   coinDropRadius: 0.5
+  damagePopupPrefab: {fileID: -3317278123689973125, guid: 5524144f96d2d6e44bd37aa8045cc681, type: 3}
+  damagePopupColor: {r: 1, g: 1, b: 1, a: 1}
   OnDamagedWithKnockback:
     m_PersistentCalls:
       m_Calls: []
