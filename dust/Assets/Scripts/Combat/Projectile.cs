@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour
     public float lifetime = 3f;
     public float damage = 20f;
     private LayerMask hitLayers;
+
     [Header("Hit FX")]
     [SerializeField] private GameObject hitEffectPrefab;
 
@@ -14,19 +15,27 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float screenShakeDuration = 0.08f;
     [SerializeField] private AudioClip hitSound;
 
+    private PlayerUpgrades playerUpgrades;
+
     Rigidbody2D rb;
     private HitStop hitStop;
+
     private const int LAYER_GROUND = 6;
-    private const int LAYER_ENEMY = 8;
+    private const int LAYER_ENEMY  = 8;
+
     private bool hasHit = false;
+
     void Start()
     {
         if (hitLayers == 0)
         {
             hitLayers = (1 << LAYER_GROUND) | (1 << LAYER_ENEMY);
         }
-        hitStop = FindFirstObjectByType<HitStop>();
-        rb = GetComponent<Rigidbody2D>();
+
+        hitStop        = FindFirstObjectByType<HitStop>();
+        rb             = GetComponent<Rigidbody2D>();
+        playerUpgrades = FindFirstObjectByType<PlayerUpgrades>();
+
         Destroy(gameObject, lifetime);
     }
 
@@ -43,12 +52,13 @@ public class Projectile : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if ((hitLayers.value & (1 << other.gameObject.layer)) == 0)
             return;
 
-        if (hasHit) 
+        if (hasHit)
             return;
         hasHit = true;
 
@@ -56,11 +66,19 @@ public class Projectile : MonoBehaviour
         if (col != null)
             col.enabled = false;
 
-        bool hitEnemy = other.gameObject.layer == 8;
+        bool hitEnemy = other.gameObject.layer == LAYER_ENEMY;
         IsDamageable dmg = other.GetComponent<IsDamageable>();
+
         if (dmg != null && dmg.IsAlive)
         {
-            dmg.TakeDamage(damage);
+            float finalDamage = damage;
+
+            if (hitEnemy && playerUpgrades != null)
+            {
+                finalDamage *= playerUpgrades.CurrentMods.rangedDamageMult;
+            }
+
+            dmg.TakeDamage(finalDamage);
         }
 
         if (hitEffectPrefab != null)
@@ -82,8 +100,9 @@ public class Projectile : MonoBehaviour
         if (hitSound != null && PlayerMovementSM.GlobalSFXSource != null)
             PlayerMovementSM.GlobalSFXSource.PlayOneShot(hitSound);
 
-        if (hitEnemy){
-            if (hitEnemy && HitStop.Instance != null)
+        if (hitEnemy)
+        {
+            if (HitStop.Instance != null)
                 HitStop.Instance.DoHitstopGlobal(hitstopDuration);
 
             if (CameraShake.Instance != null)

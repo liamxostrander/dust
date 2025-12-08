@@ -12,6 +12,8 @@ public class PlayerUpgrades : MonoBehaviour
         public float lifestealPercent;
         public float healOnKill;
         public float coinMagnetRadius;
+        public float rangedDamageMult;
+        public float projectileSpeedMult;
     }
 
     public PlayerMovementSM movement;
@@ -21,6 +23,8 @@ public class PlayerUpgrades : MonoBehaviour
     public float LifeStealPercent => CurrentMods.lifestealPercent;
     public float HealOnKill => CurrentMods.healOnKill;
     public float CoinMagnetRadius => CurrentMods.coinMagnetRadius;
+    public float RangedDamageMult    => CurrentMods.rangedDamageMult;
+    public float ProjectileSpeedMult => CurrentMods.projectileSpeedMult;
 
     public System.Action<string> OnUpgradeApplied;
 
@@ -78,11 +82,13 @@ public class PlayerUpgrades : MonoBehaviour
     {
         var m = new AccumulatedMods
         {
-            speedMult        = 1f,
-            jumpMult         = 1f,
-            lifestealPercent = 0f,
-            healOnKill       = 0f,
-            coinMagnetRadius = 0f 
+            speedMult           = 1f,
+            jumpMult            = 1f,
+            lifestealPercent    = 0f,
+            healOnKill          = 0f,
+            coinMagnetRadius    = 0f,
+            rangedDamageMult    = 1f,
+            projectileSpeedMult = 1f
         };
 
         foreach (var u in acquired)

@@ -5,9 +5,12 @@ public class ProjectileLauncher : MonoBehaviour
     [Header("References")]
     private WeaponStats stats;
 
+    private PlayerUpgrades playerUpgrades;
+
     void Awake()
     {
         stats = GetComponent<WeaponStats>();
+        playerUpgrades = FindFirstObjectByType<PlayerUpgrades>();
         if (stats == null)
         {
             Debug.LogError("ProjectileLauncher requires WeaponStats on the same object!");
@@ -36,8 +39,16 @@ public class ProjectileLauncher : MonoBehaviour
 
         // Velocity
         Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
+
+        float speed = stats.projectileSpeed;
+
+        if (playerUpgrades != null)
+        {
+            speed *= playerUpgrades.CurrentMods.projectileSpeedMult;
+        }
+
         if (rb != null)
-            rb.linearVelocity = attackDir.normalized * stats.projectileSpeed;
+            rb.linearVelocity = attackDir.normalized * speed;
 
         // Flip X if facing left (optional)
         if (isFlipped)
