@@ -157,7 +157,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chest
   possibleUpgrades:
+  - {fileID: 11400000, guid: b1a0cde3f3a689841a354895ce73e5d6, type: 2}
+  - {fileID: 11400000, guid: 85ba096fb674af5489ea4c1b5febd617, type: 2}
+  - {fileID: 11400000, guid: 91436a2d4e5888643988dd3b8f505d01, type: 2}
+  - {fileID: 11400000, guid: f08082a113c113740bd1990c49754f18, type: 2}
   - {fileID: 11400000, guid: dcbfe8da3d2c369409e98a6d9eb27abc, type: 2}
+  - {fileID: 11400000, guid: 20826e49574a9eb4fbcd7c4daf521671, type: 2}
+  - {fileID: 11400000, guid: 573a7bd6d0ddd6948a7ea3f87eb70dec, type: 2}
+  - {fileID: 11400000, guid: c330f94d447427a4baa67518e94854ce, type: 2}
+  - {fileID: 11400000, guid: e5d3ed42cfc7d1845b32d85c89a04967, type: 2}
   sfx: {fileID: -5763300604897366998}
   openSfx: {fileID: 8300000, guid: ad7cff28ca05e674aa3855e87e55114a, type: 3}
   interactKey: 101
