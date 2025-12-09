@@ -8,7 +8,8 @@ public class OrbBehaviour : MonoBehaviour
     private GameObject player;
 
     private Rigidbody2D rb;
-
+    private PlayerUpgrades playerUpgrades;
+    
     private enum OrbState { Hover, Seek, Explode }
     private OrbState state = OrbState.Hover;
 
@@ -20,6 +21,8 @@ public class OrbBehaviour : MonoBehaviour
     {
         stats = s;
         player = p;
+
+        playerUpgrades = p.GetComponent<PlayerUpgrades>();
 
         hoverYOffset = s.orbHoverHeight;
         detectRadius = s.orbDetectRadius;
@@ -143,7 +146,13 @@ public class OrbBehaviour : MonoBehaviour
     {
         IsDamageable dmg = h.GetComponent<IsDamageable>();
         if (dmg != null)
-            dmg.TakeDamage(stats.orbExplosionDamage);
+        {
+            float finalDamage = stats.orbExplosionDamage;
+            if (playerUpgrades != null)
+                finalDamage *= playerUpgrades.CurrentMods.magicDamageMult;
+
+            dmg.TakeDamage(finalDamage);
+        }
     }
 
     // ---------------------------------------------------

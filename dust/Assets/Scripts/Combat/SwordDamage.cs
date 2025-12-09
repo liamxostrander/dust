@@ -9,39 +9,37 @@ public class SwordDamage : MonoBehaviour
     [Header("Knockback Settings")]
     [SerializeField] private float knockbackForce = 5f;
     [SerializeField] private float knockbackUpwardForce = 0.3f; // Upward component
-    [SerializeField] private float playerRecoilForce = 2000f;      // Recoil applied to player
+    [SerializeField] private float playerRecoilForce = 2000f;   // Recoil applied to player
     [SerializeField] private float screenShakeMagnitude = 0.15f;
     [SerializeField] private float screenShakeDuration = 0.1f;
     private bool appliedRecoil;
 
     [Header("Hit SFX")]
     public AudioClip hitSound; 
-    // public AudioSource audioSource;
     private HitStop hitStop;
     private Rigidbody2D playerRb;
     private WeaponStats stats;
+
+    // NEW
+    private PlayerUpgrades playerUpgrades;
 
     [Header("Hit FX")]
     [SerializeField] private GameObject hitEffectPrefab;
 
     void Start() {
         hitStop = FindFirstObjectByType<HitStop>();
-        stats = FindFirstObjectByType<WeaponStats>();
+        stats   = FindFirstObjectByType<WeaponStats>();
         playerRb = transform.root.GetComponent<Rigidbody2D>();
-        // audioSource = GetComponent<AudioSource>();
-        // audioSource = FindFirstObjectByType<PlayerMovementSM>().audioSource;
-        // if (audioSource == null)
-        // {
-        //     audioSource = gameObject.AddComponent<AudioSource>();
-        //     audioSource.playOnAwake = false;
-        // }
+        playerUpgrades = transform.root.GetComponent<PlayerUpgrades>();
+        if (playerUpgrades == null)
+            playerUpgrades = FindFirstObjectByType<PlayerUpgrades>();
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (((1 << other.gameObject.layer) & enemyLayer) == 0)
             return;
         
-        // Deal damage with knockback
         IsDamageable damageable = other.GetComponent<IsDamageable>();
         if (damageable != null && damageable.IsAlive)
         {
@@ -55,25 +53,26 @@ public class SwordDamage : MonoBehaviour
             }
             else
             {
-                // fallback if your effect is an animation instead of particles
                 Destroy(effect, 1f);
             }
+
             HitStop.Instance.DoHitstopGlobal(stats.hitstopDuration);
             if (CameraShake.Instance != null)
                 CameraShake.Instance.ShakeOnce(screenShakeDuration, screenShakeMagnitude);
-            // Calculate direction from player to enemy
+
             Transform playerTransform = transform.root;
             Vector2 directionToEnemy = (other.transform.position - playerTransform.position).normalized;
             
-            // Apply knockback in that direction with upward force
             Vector2 knockback = new Vector2(
                 directionToEnemy.x * knockbackForce,
                 knockbackUpwardForce * knockbackForce
             );
-            
-            // Debug.Log($"Applying knockback: {knockback}, direction to enemy: {directionToEnemy}");
 
-            damageable.TakeDamage(damageAmount, knockback);
+            float finalDamage = damageAmount;
+            if (playerUpgrades != null)
+                finalDamage *= playerUpgrades.CurrentMods.meleeDamageMult;
+
+            damageable.TakeDamage(finalDamage, knockback);
             
             if (!appliedRecoil)
             {
@@ -84,9 +83,11 @@ public class SwordDamage : MonoBehaviour
                 
                 appliedRecoil = true;
             }
+
             PlayerMovementSM.GlobalSFXSource.PlayOneShot(hitSound);
         }
     }
+
     public void ResetRecoil()
     {
         appliedRecoil = false;

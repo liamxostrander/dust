@@ -17,6 +17,8 @@ public class PlayerUpgrades : MonoBehaviour
         public int extraProjectiles;
         public float projectileSpreadAngleDeg;
         public float passiveRegenPerSecond;
+        public float meleeDamageMult;
+        public float magicDamageMult;
     }
 
     public PlayerMovementSM movement;
@@ -28,6 +30,8 @@ public class PlayerUpgrades : MonoBehaviour
     public float CoinMagnetRadius => CurrentMods.coinMagnetRadius;
     public float RangedDamageMult    => CurrentMods.rangedDamageMult;
     public float ProjectileSpeedMult => CurrentMods.projectileSpeedMult;
+    public float MeleeDamageMult   => CurrentMods.meleeDamageMult;
+    public float MagicDamageMult   => CurrentMods.magicDamageMult;
 
     public System.Action<string> OnUpgradeApplied;
 
@@ -92,8 +96,10 @@ public class PlayerUpgrades : MonoBehaviour
             coinMagnetRadius    = 0f,
             rangedDamageMult    = 1f,
             projectileSpeedMult = 1f,
-            extraProjectiles        = 0,
-            projectileSpreadAngleDeg = 0f
+            extraProjectiles = 0,
+            projectileSpreadAngleDeg = 0f,
+            meleeDamageMult = 1f,
+            magicDamageMult = 1f
         };
 
         foreach (var u in acquired)
