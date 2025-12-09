@@ -14,6 +14,9 @@ public class PlayerUpgrades : MonoBehaviour
         public float coinMagnetRadius;
         public float rangedDamageMult;
         public float projectileSpeedMult;
+        public int extraProjectiles;
+        public float projectileSpreadAngleDeg;
+        public float passiveRegenPerSecond;
     }
 
     public PlayerMovementSM movement;
@@ -88,7 +91,9 @@ public class PlayerUpgrades : MonoBehaviour
             healOnKill          = 0f,
             coinMagnetRadius    = 0f,
             rangedDamageMult    = 1f,
-            projectileSpeedMult = 1f
+            projectileSpeedMult = 1f,
+            extraProjectiles        = 0,
+            projectileSpreadAngleDeg = 0f
         };
 
         foreach (var u in acquired)

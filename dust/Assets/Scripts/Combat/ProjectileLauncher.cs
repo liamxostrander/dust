@@ -17,7 +17,6 @@ public class ProjectileLauncher : MonoBehaviour
         }
     }
 
-    // Called from SlashState
     public void LaunchProjectile(Vector2 attackDir, bool isFlipped)
     {
         if (stats.projectilePrefab == null || stats.projectileSpawnPoint == null)
@@ -26,32 +25,47 @@ public class ProjectileLauncher : MonoBehaviour
             return;
         }
 
-        // Spawn
-        GameObject proj = Instantiate(
-            stats.projectilePrefab,
-            stats.projectileSpawnPoint.position,
-            Quaternion.identity
-        );
+        if (attackDir.sqrMagnitude < 0.001f)
+            attackDir = Vector2.right;
 
-        // Align rotation
-        float angle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
-        proj.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        // Velocity
-        Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
-
-        float speed = stats.projectileSpeed;
+        int extraProjectiles = 0;
+        float spreadAngleDeg = 0f;
+        float speedMult = 1f;
 
         if (playerUpgrades != null)
         {
-            speed *= playerUpgrades.CurrentMods.projectileSpeedMult;
+            var mods = playerUpgrades.CurrentMods;
+            extraProjectiles      = Mathf.Max(0, mods.extraProjectiles);
+            spreadAngleDeg        = mods.projectileSpreadAngleDeg;
+            speedMult             = mods.projectileSpeedMult;
         }
 
-        if (rb != null)
-            rb.linearVelocity = attackDir.normalized * speed;
+        int projectileCount = 1 + extraProjectiles;
 
-        // Flip X if facing left (optional)
-        if (isFlipped)
-            proj.transform.rotation = Quaternion.Euler(0, 0, angle + 180f);
+        float baseAngle = Mathf.Atan2(attackDir.y, attackDir.x) * Mathf.Rad2Deg;
+
+        float startOffset = -(spreadAngleDeg * (projectileCount - 1) * 0.5f);
+
+        for (int i = 0; i < projectileCount; i++)
+        {
+            float finalAngle = baseAngle + startOffset + spreadAngleDeg * i;
+
+            Vector2 dir = new Vector2(
+                Mathf.Cos(finalAngle * Mathf.Deg2Rad),
+                Mathf.Sin(finalAngle * Mathf.Deg2Rad)
+            ).normalized;
+
+            GameObject proj = Instantiate(
+                stats.projectilePrefab,
+                stats.projectileSpawnPoint.position,
+                Quaternion.Euler(0f, 0f, finalAngle)
+            );
+
+            Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
+            float speed = stats.projectileSpeed * speedMult;
+
+            if (rb != null)
+                rb.linearVelocity = dir * speed;
+        }
     }
 }
