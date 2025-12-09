@@ -164,6 +164,12 @@ public class PlayerMovementSM : MonoBehaviour
     }
     void Update()
     {
+        if (state == deathState)
+        {
+            state.Do();
+            return;
+        }
+            
         if (ShopMenuUI.Instance != null && ShopMenuUI.Instance.IsOpen)
         {
             moveX = 0f;
@@ -452,7 +458,7 @@ public class PlayerMovementSM : MonoBehaviour
     private void ApplyKnockback(float damage, Vector2 knockback)
     {
  
-        if (rb == null) return;
+        if (rb == null || state == deathState) return;
         state.Exit();
         state = hitState;
         state.Enter();
