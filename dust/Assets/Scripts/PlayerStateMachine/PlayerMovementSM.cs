@@ -387,7 +387,7 @@ public class PlayerMovementSM : MonoBehaviour
         isTouchingWallLeft  = Physics2D.OverlapBox(center + Vector2.left  * sideOffset, boxSize, 0, wallMask);
         isTouchingWallRight = Physics2D.OverlapBox(center + Vector2.right * sideOffset, boxSize, 0, wallMask);
 
-        Debug.Log($"Left:{isTouchingWallLeft}, Right:{isTouchingWallRight}, Offset:{sideOffset}");
+        //Debug.Log($"Left:{isTouchingWallLeft}, Right:{isTouchingWallRight}, Offset:{sideOffset}");
     }
 
 
