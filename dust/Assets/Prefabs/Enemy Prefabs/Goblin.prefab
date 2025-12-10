@@ -581,7 +581,7 @@ MonoBehaviour:
   hurtSound: {fileID: 8300000, guid: 55ff9ee924450cd459fed1fd6a8eb8e8, type: 3}
   deathSound: {fileID: 0}
   idleGruntSound: {fileID: 8300000, guid: 285ea37d6a357e54e88e0566b0ec2120, type: 3}
-  sfxVolume: 1
+  sfxVolume: 0.682
   enablePitchVariation: 1
   pitchVariance: 0.3
   minIdleGruntInterval: 10

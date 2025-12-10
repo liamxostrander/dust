@@ -265,15 +265,15 @@ MonoBehaviour:
   audioSource: {fileID: 6112871136485338330}
   meleeAttackSound: {fileID: 0}
   rangedAttackSound: {fileID: 0}
-  spellCastSound: {fileID: 0}
+  spellCastSound: {fileID: 8300000, guid: f1cb5d83282f2904a85f73111d068616, type: 3}
   hurtSound: {fileID: 0}
   deathSound: {fileID: 0}
-  idleGruntSound: {fileID: 0}
-  sfxVolume: 0.5
+  idleGruntSound: {fileID: 8300000, guid: 3c346aa5d12817649b74934128d3ad36, type: 3}
+  sfxVolume: 0.715
   enablePitchVariation: 1
   pitchVariance: 0.05
-  minIdleGruntInterval: 3
-  maxIdleGruntInterval: 8
+  minIdleGruntInterval: 5
+  maxIdleGruntInterval: 10
   nextIdleGruntTime: 0
   patrolSpeed: 2
   chaseSpeed: 4

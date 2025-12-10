@@ -357,10 +357,10 @@ MonoBehaviour:
   spellCastSound: {fileID: 0}
   hurtSound: {fileID: 0}
   deathSound: {fileID: 0}
-  idleGruntSound: {fileID: 0}
+  idleGruntSound: {fileID: 8300000, guid: 285ea37d6a357e54e88e0566b0ec2120, type: 3}
   sfxVolume: 1
   enablePitchVariation: 1
-  pitchVariance: 0.3
+  pitchVariance: 0.03
   minIdleGruntInterval: 10
   maxIdleGruntInterval: 15
   nextIdleGruntTime: 0

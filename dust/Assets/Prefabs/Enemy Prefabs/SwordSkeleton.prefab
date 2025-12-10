@@ -313,9 +313,9 @@ MonoBehaviour:
   meleeAttackSound: {fileID: 0}
   rangedAttackSound: {fileID: 0}
   spellCastSound: {fileID: 0}
-  hurtSound: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: f4337aef394c0f14b9b822831feda0c4, type: 3}
   deathSound: {fileID: 0}
-  idleGruntSound: {fileID: 0}
+  idleGruntSound: {fileID: 8300000, guid: fbd4a4578fcb2e140a5c622626590f51, type: 3}
   sfxVolume: 0.5
   enablePitchVariation: 1
   pitchVariance: 0.05
