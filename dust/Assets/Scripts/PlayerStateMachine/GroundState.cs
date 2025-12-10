@@ -17,6 +17,22 @@ public class GroundState : State
         float landingControl = Mathf.Lerp(input.groundControl, input.landControl, t);
         input.control = landingControl;
         timer = landAnim.length / 2;
+        if (input.landFX && input.fxSpawnPoint)
+        {
+            GameObject fx = GameObject.Instantiate(input.landFX, input.fxSpawnPoint.position, Quaternion.identity);
+            fx.transform.localScale *= Mathf.Lerp(0.5f, 2f, Mathf.Clamp01(input.lastFallSpeed / 20f));
+
+            // Get component
+            LandingFX fxController = fx.GetComponent<LandingFX>();
+
+            if (fxController != null)
+            {
+                // Speed range: soft landing = fast animation, hard landing = slower animation
+                float speed = Mathf.Lerp(1.8f, 0.8f, t);
+
+                fxController.SetPlaybackSpeed(speed);
+            }
+        }
         animator.Play(landAnim.name, 0, 0f);
         if (audioSource == null)
         {

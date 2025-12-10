@@ -26,6 +26,11 @@ public class DashSliceState : State
         }
         swordAnimator = swordObject.GetComponent<Animator>();
         stats = swordObject.GetComponent<WeaponStats>();
+        if (stats.isFireballStaff || stats.isIceStaff)
+        {
+            isComplete = true;
+            return;
+        }
         if (audioSource == null)
         {
             audioSource = input.audioSource;

@@ -821,6 +821,33 @@ public class EnemyStateMachine : MonoBehaviour
             nextIdleGruntTime = Time.time + Random.Range(minIdleGruntInterval, maxIdleGruntInterval);
         }
     }
+    public void ApplyIceSlow(float slowAmount, float duration)
+    {
+        StartCoroutine(ApplyIceSlowRoutine(slowAmount, duration));
+    }
+
+    private IEnumerator ApplyIceSlowRoutine(float slowAmount, float duration)
+    {
+        SpriteRenderer sr = spriteRenderer;
+
+        Color originalColor = sr.color;
+        Color icyColor = new Color(0.6f, 0.8f, 1f);
+
+        float originalPatrol = patrolSpeed;
+        float originalChase = chaseSpeed;
+
+        patrolSpeed *= slowAmount;
+        chaseSpeed *= slowAmount;
+        sr.color = icyColor;
+
+        yield return new WaitForSeconds(duration);
+
+        // Restore
+        sr.color = originalColor;
+        patrolSpeed = originalPatrol;
+        chaseSpeed = originalChase;
+    }
+
     
     #region Gizmos
     void OnDrawGizmosSelected()
@@ -1093,4 +1120,5 @@ public class EnemyStateMachine : MonoBehaviour
         
         rb.linearVelocity = directionToCenter * returnToArenaSpeed;
     }
+
 }

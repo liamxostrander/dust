@@ -257,6 +257,7 @@ MonoBehaviour:
   hitstopDuration: 0.08
   isOrbStaff: 0
   isRanged: 0
+  isFireballStaff: 0
   projectilePrefab: {fileID: 0}
   projectileSpeed: 12
   projectileSpawnPoint: {fileID: 0}
@@ -268,6 +269,9 @@ MonoBehaviour:
   orbExplosionDamage: 30
   orbExplosionFX: {fileID: 0}
   orbExplosionSFX: {fileID: 0}
+  fireballPrefab: {fileID: 0}
+  fireballSpeed: 12
+  fireballCooldown: 0.25
 --- !u!1 &5639472680042363821
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,7 +473,7 @@ MonoBehaviour:
     m_Bits: 256
   knockbackForce: 5
   knockbackUpwardForce: 0.3
-  playerRecoilForce: 10
+  playerRecoilForce: 5
   screenShakeMagnitude: 0.15
   screenShakeDuration: 0.1
   hitSound: {fileID: 8300000, guid: 2b21ef916f6943c439b71a7c74568878, type: 3}

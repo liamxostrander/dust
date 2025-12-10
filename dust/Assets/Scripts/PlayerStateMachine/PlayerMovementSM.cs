@@ -22,6 +22,13 @@ public class PlayerMovementSM : MonoBehaviour
     public Animator animator;
     public SpriteRenderer spriteRenderer;
 
+    [Header("FX")]
+    public GameObject jumpFX;
+    public GameObject landFX;
+    public GameObject dashFX;
+    public Transform fxSpawnPoint;
+    public Transform fxDashSpawnPoint;
+
     [Header("Audio")]
     [SerializeField] public AudioSource audioSource;
     public static AudioSource GlobalSFXSource;
@@ -57,7 +64,6 @@ public class PlayerMovementSM : MonoBehaviour
 
     [Header("Wall Movement")]
     [SerializeField] float wallSlideSpeed = -2.5f;
-    [SerializeField] float wallCheckDistance = 0.1f;
     [SerializeField] LayerMask wallMask;
     [SerializeField] public CapsuleCollider2D playerCollider;
 
@@ -92,6 +98,10 @@ public class PlayerMovementSM : MonoBehaviour
     public PlayerWeaponController playerWeaponController;
     public GameObject currentSword;
     public Transform swordPivot;
+
+    [Header("Spell Spawners")]
+    public Transform iceSpellSpawner;
+
 
 
 
@@ -318,6 +328,10 @@ public class PlayerMovementSM : MonoBehaviour
 
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
                 rb.AddForce(Vector2.up * (jumpImpulse * jumpMultiplier), ForceMode2D.Impulse);
+                if (jumpFX && fxSpawnPoint)
+                {
+                    Instantiate(jumpFX, fxSpawnPoint.position, Quaternion.identity);
+                }
 
                 if (isGrounded) jumpsRemaining = maxJumps - 1;
                 else jumpsRemaining--;
@@ -388,7 +402,6 @@ public class PlayerMovementSM : MonoBehaviour
         isTouchingWallLeft  = Physics2D.OverlapBox(center + Vector2.left  * sideOffset, boxSize, 0, wallMask);
         isTouchingWallRight = Physics2D.OverlapBox(center + Vector2.right * sideOffset, boxSize, 0, wallMask);
 
-        Debug.Log($"Left:{isTouchingWallLeft}, Right:{isTouchingWallRight}, Offset:{sideOffset}");
     }
 
 
@@ -396,6 +409,7 @@ public class PlayerMovementSM : MonoBehaviour
     {
         if (!canDash) return;
         if (!allowAirDash && !isGrounded) return;
+        SpawnDashFX(dir);
         StartCoroutine(DashRoutine(dir));
         audioSource.clip = dashSound;
         audioSource.loop = false;
@@ -430,6 +444,30 @@ public class PlayerMovementSM : MonoBehaviour
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
+
+    void SpawnDashFX(int dir)
+    {
+        if (dashFX == null) return;
+
+        // Base spawn position
+        Vector3 pos = fxDashSpawnPoint != null ? fxDashSpawnPoint.position : transform.position;
+
+        float xSign = Mathf.Sign(dir);
+
+        // Rotate effect since your art faces UP originally
+        float zRotation = xSign > 0 ? 90f : -90f;
+        Quaternion rot = Quaternion.Euler(0f, 0f, zRotation);
+
+        // Offset behind player depending on dash direction
+        pos += new Vector3(-xSign * 0.25f, 0f, 0f);
+
+        // IMPORTANT: instantiate WITHOUT parenting → world-space effect
+        Instantiate(dashFX, pos, rot);
+    }
+
+
+
+
     public IEnumerator SmoothControlTransition(float from, float to, float duration)
     {
         float elapsed = 0f;

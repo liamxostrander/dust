@@ -25,6 +25,7 @@ public class WeaponStats : MonoBehaviour
     public bool isOrbStaff = false;
     public bool isRanged = false;
     public bool isFireballStaff = false;
+    public bool isIceStaff = false;
     public GameObject projectilePrefab;
     public float projectileSpeed = 12f;
     public Transform projectileSpawnPoint;
@@ -40,9 +41,17 @@ public class WeaponStats : MonoBehaviour
     public AudioClip orbExplosionSFX;
 
     [Header ("Fireball Staff Stats")]
-    
     public GameObject fireballPrefab;
     public float fireballSpeed = 12f;
     public float fireballCooldown = 0.25f;
+
+    [Header ("Ice Staff Stats")]
+    public AnimationClip iceSpellAnimation;
+    public GameObject iceSpellFX;
+    public float iceDamage = 5f;
+    public float iceRange = 5f;
+    public float iceRadius = 1.2f;
+    public float iceSlowAmount = 0.4f;
+    public float iceSlowDuration = 5f;
 }
 

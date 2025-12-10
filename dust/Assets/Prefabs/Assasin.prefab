@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &824788267780245860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8874078777196232227}
+  m_Layer: 0
+  m_Name: MovementFXSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8874078777196232227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824788267780245860}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.06, y: 0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5899023650178650985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2524478369666454732
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +373,37 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &5715755530807763815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8670449672695768005}
+  m_Layer: 0
+  m_Name: DashFXSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8670449672695768005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5715755530807763815}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.57, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5899023650178650985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6073559203737303543
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,6 +625,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IdleState
   idleAnim: {fileID: -5252816984213320552, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+--- !u!1 &7268279438122647651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3076737747550334981}
+  m_Layer: 0
+  m_Name: IceSpellSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3076737747550334981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7268279438122647651}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5899023650178650985}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7907996678867762525
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,6 +696,9 @@ Transform:
   - {fileID: 3537548922069253423}
   - {fileID: 9131598270360368242}
   - {fileID: 3498120352487129553}
+  - {fileID: 8874078777196232227}
+  - {fileID: 8670449672695768005}
+  - {fileID: 3076737747550334981}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &9073575486175412577
@@ -655,6 +751,11 @@ MonoBehaviour:
   isDead: 0
   animator: {fileID: 3135114199434424583}
   spriteRenderer: {fileID: 2338619762614720802}
+  jumpFX: {fileID: 200472936786137353, guid: c73f52f8e19d840a2bbdf995a87fd10e, type: 3}
+  landFX: {fileID: 3854780289102241263, guid: 4b60c3eb369ee44a09e5a94af8ce21d7, type: 3}
+  dashFX: {fileID: 8727997729400063587, guid: 98c8ca04abdcc4960bad191196efd0c6, type: 3}
+  fxSpawnPoint: {fileID: 8874078777196232227}
+  fxDashSpawnPoint: {fileID: 8670449672695768005}
   audioSource: {fileID: 2824087949657028439}
   moveSpeed: 15
   airControl: 0.7
@@ -696,6 +797,7 @@ MonoBehaviour:
   playerWeaponController: {fileID: 0}
   currentSword: {fileID: 0}
   swordPivot: {fileID: 0}
+  iceSpellSpawner: {fileID: 3076737747550334981}
 --- !u!114 &5938048470447363326
 MonoBehaviour:
   m_ObjectHideFlags: 0

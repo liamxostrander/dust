@@ -85,11 +85,24 @@ public class SlashState : State
             return;
         }
 
-        timer = (swordSlashAnim.length > slashAnim.length) ? swordSlashAnim.length - animStartTime : slashAnim.length - animStartTime;
-        animator.Play(slashAnim.name, 0, animStartTime);
-        
+        if (stats.isIceStaff)
+        {
+            timer = slashAnim.length - animStartTime;
+            IceSpellCaster caster = swordObject.GetComponent<IceSpellCaster>();
+            if (caster != null)
+            {
+                caster.spawnPoint = input.iceSpellSpawner;  // ← FIX
+                caster.CastIceSpell(attackDir);
+            }
+        }
 
-        SwordAnim(attackDir);
+        if (!stats.isIceStaff)
+        {
+            timer = (swordSlashAnim.length > slashAnim.length) ? swordSlashAnim.length - animStartTime : slashAnim.length - animStartTime;
+            animator.Play(slashAnim.name, 0, animStartTime);
+            SwordAnim(attackDir);
+        }
+        
 
         if (stats.isRanged)
         {

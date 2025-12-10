@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5022459975427971080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2000690697854300535}
+  - component: {fileID: 3495152400112392342}
+  - component: {fileID: 8702671645903396006}
+  m_Layer: 0
+  m_Name: IceStaff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2000690697854300535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5022459975427971080}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3495152400112392342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5022459975427971080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 601058190cb4e4dd889b80e344fc36d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IceSpellCaster
+  spawnPoint: {fileID: 2000690697854300535}
+--- !u!114 &8702671645903396006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5022459975427971080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 199e62123c6964e19aedb151079e4995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponStats
+  weaponIcon: {fileID: 21300000, guid: db85f5b7941254773ae201d3504a0437, type: 3}
+  slashAnimation: {fileID: 0}
+  dashSliceAnimation: {fileID: 0}
+  slashSound: {fileID: 0}
+  dashSliceSound: {fileID: 0}
+  damage: 25
+  knockback: 5
+  hitstopDuration: 0.08
+  isOrbStaff: 0
+  isRanged: 0
+  isFireballStaff: 0
+  isIceStaff: 1
+  projectilePrefab: {fileID: 0}
+  projectileSpeed: 12
+  projectileSpawnPoint: {fileID: 0}
+  orbPrefab: {fileID: 0}
+  orbHoverHeight: 1.2
+  orbDetectRadius: 6
+  orbSpeed: 12
+  orbExplosionRadius: 2
+  orbExplosionDamage: 30
+  orbExplosionFX: {fileID: 0}
+  orbExplosionSFX: {fileID: 0}
+  fireballPrefab: {fileID: 0}
+  fireballSpeed: 12
+  fireballCooldown: 0.25
+  iceSpellAnimation: {fileID: 0}
+  iceSpellFX: {fileID: 3825862342964366777, guid: 0dd179ac60dac417fa353b08a215bfe8, type: 3}
+  iceDamage: 5
+  iceRange: 5
+  iceRadius: 1.2
+  iceSlowAmount: 0.4
+  iceSlowDuration: 5
