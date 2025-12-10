@@ -56,6 +56,7 @@ public class SlashState : State
             isComplete = true;
             return;
         }
+
         swordAnimator = swordObject.GetComponent<Animator>();
         swordSlashAnim = stats.slashAnimation;
 
@@ -74,6 +75,15 @@ public class SlashState : State
             attackDir = input.spriteRenderer.flipX ? Vector2.left : Vector2.right;
         attackDir.Normalize();
         input.spriteRenderer.flipX = attackDir.x < 0;
+        if (stats.isFireballStaff)
+        {
+            FireballLauncher launcher = swordObject.GetComponent<FireballLauncher>();
+            if (launcher != null)
+                launcher.TryLaunchFireball(attackDir);
+
+            isComplete = true; // no melee animations needed
+            return;
+        }
 
         timer = (swordSlashAnim.length > slashAnim.length) ? swordSlashAnim.length - animStartTime : slashAnim.length - animStartTime;
         animator.Play(slashAnim.name, 0, animStartTime);

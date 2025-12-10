@@ -227,6 +227,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathState
   deathAnim: {fileID: -6758483313513240000, guid: fde3573a145a546f08868eaa62fca8e6, type: 3}
+  deathCanvasGroup: {fileID: 0}
+  deathMenuUI: {fileID: 0}
+  deathMenuBackground: {fileID: 0}
+  deathText: {fileID: 0}
+  fadeDuration: 1.5
+  timer: 0
 --- !u!1 &4124785412755128904
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,8 +679,6 @@ MonoBehaviour:
     m_Bits: 64
   groundCheck: {fileID: 8432469712876998508}
   wallSlideSpeed: -2.5
-  wallJumpForce: 16
-  wallJumpDirection: {x: 1, y: 1.3}
   wallCheckDistance: 0.1
   wallMask:
     serializedVersion: 2
@@ -747,6 +751,8 @@ MonoBehaviour:
   maxCoins: 5
   coinDropForce: 3
   coinDropRadius: 0.5
+  damagePopupPrefab: {fileID: 0}
+  damagePopupColor: {r: 1, g: 1, b: 1, a: 1}
   OnDamagedWithKnockback:
     m_PersistentCalls:
       m_Calls: []
