@@ -68,6 +68,8 @@ MonoBehaviour:
   hitstopDuration: 0.08
   isOrbStaff: 1
   isRanged: 0
+  isFireballStaff: 0
+  isIceStaff: 0
   projectilePrefab: {fileID: 0}
   projectileSpeed: 12
   projectileSpawnPoint: {fileID: 0}
@@ -77,8 +79,21 @@ MonoBehaviour:
   orbSpeed: 12
   orbExplosionRadius: 2
   orbExplosionDamage: 30
-  orbExplosionFX: {fileID: 0}
+  orbManaCost: 20
+  orbExplosionFX: {fileID: 5586783540032275536, guid: 6e57a3cf9435eb14fb9928fa4ee60c63, type: 3}
   orbExplosionSFX: {fileID: 8300000, guid: 1d74880bed4586644a16a79a2d9dc8af, type: 3}
+  fireballPrefab: {fileID: 0}
+  fireballSpeed: 12
+  fireballCooldown: 0.25
+  fireballManaCost: 20
+  iceSpellAnimation: {fileID: 0}
+  iceSpellFX: {fileID: 0}
+  iceDamage: 5
+  iceRange: 5
+  iceRadius: 1.2
+  iceSlowAmount: 0.4
+  iceSlowDuration: 5
+  iceSpellManaCost: 20
 --- !u!212 &7374533003688613386
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -670,6 +670,7 @@ GameObject:
   - component: {fileID: 5938048470447363326}
   - component: {fileID: 7794089069923736091}
   - component: {fileID: 7504121654987731176}
+  - component: {fileID: 472818729681388277}
   m_Layer: 0
   m_Name: Assasin
   m_TagString: Player
@@ -780,7 +781,6 @@ MonoBehaviour:
     m_Bits: 64
   groundCheck: {fileID: 8432469712876998508}
   wallSlideSpeed: -2.5
-  wallCheckDistance: 0.1
   wallMask:
     serializedVersion: 2
     m_Bits: 64
@@ -867,6 +867,22 @@ MonoBehaviour:
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &472818729681388277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7907996678867762525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47053fa0a1f774d269e55640f462ac05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMana
+  maxMana: 100
+  regenRate: 5
+  currentMana: 0
+  manaBar: {fileID: 0}
 --- !u!1 &8319590838048440084
 GameObject:
   m_ObjectHideFlags: 0
