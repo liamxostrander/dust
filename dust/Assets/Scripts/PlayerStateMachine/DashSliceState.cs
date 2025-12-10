@@ -26,7 +26,7 @@ public class DashSliceState : State
         }
         swordAnimator = swordObject.GetComponent<Animator>();
         stats = swordObject.GetComponent<WeaponStats>();
-        if (stats.isFireballStaff || stats.isIceStaff)
+        if (stats.isFireballStaff || stats.isIceStaff || stats.isOrbStaff)
         {
             isComplete = true;
             return;
@@ -42,15 +42,6 @@ public class DashSliceState : State
         audioSource.pitch = 1f;
         if (!audioSource.isPlaying)
             audioSource.Play();
-        if (stats.isOrbStaff)
-        {
-            OrbSummoner orbSummoner = swordObject.GetComponent<OrbSummoner>();
-            if (orbSummoner != null)
-                orbSummoner.SummonOrb();
-
-            isComplete = true;
-            return;
-        }
         swordDashSliceAnim = stats.dashSliceAnimation;
 
         Vector2 attackDir = Vector2.zero;

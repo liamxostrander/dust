@@ -37,6 +37,7 @@ public class WeaponStats : MonoBehaviour
     public float orbSpeed = 12f;
     public float orbExplosionRadius = 2f;
     public float orbExplosionDamage = 30f;
+    public float orbManaCost = 20f;
     public GameObject orbExplosionFX;
     public AudioClip orbExplosionSFX;
 
@@ -44,6 +45,7 @@ public class WeaponStats : MonoBehaviour
     public GameObject fireballPrefab;
     public float fireballSpeed = 12f;
     public float fireballCooldown = 0.25f;
+    public float fireballManaCost = 20f;
 
     [Header ("Ice Staff Stats")]
     public AnimationClip iceSpellAnimation;
@@ -53,5 +55,6 @@ public class WeaponStats : MonoBehaviour
     public float iceRadius = 1.2f;
     public float iceSlowAmount = 0.4f;
     public float iceSlowDuration = 5f;
+    public float iceSpellManaCost = 20f;
 }
 

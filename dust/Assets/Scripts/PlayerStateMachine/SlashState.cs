@@ -25,6 +25,7 @@ public class SlashState : State
     public override void Enter()
     {
         isComplete = false;
+        PlayerMana mana = input.GetComponent<PlayerMana>();
         GameObject swordObject = input.playerWeaponController.currentWeapon;
         SwordDamage swordDamage = swordObject.GetComponentInChildren<SwordDamage>();
         if (swordDamage != null)
@@ -49,6 +50,11 @@ public class SlashState : State
 
         if (stats.isOrbStaff)
         {
+            if (mana != null && !mana.TrySpendMana(stats.orbManaCost))
+            {
+                isComplete = true;
+                return;
+            }
             OrbSummoner orbSummoner = swordObject.GetComponent<OrbSummoner>();
             if (orbSummoner != null)
                 orbSummoner.SummonOrb();
@@ -77,6 +83,11 @@ public class SlashState : State
         input.spriteRenderer.flipX = attackDir.x < 0;
         if (stats.isFireballStaff)
         {
+            if (mana != null && !mana.TrySpendMana(stats.fireballManaCost))
+            {
+                isComplete = true;
+                return;
+            }
             FireballLauncher launcher = swordObject.GetComponent<FireballLauncher>();
             if (launcher != null)
                 launcher.TryLaunchFireball(attackDir);
@@ -87,13 +98,19 @@ public class SlashState : State
 
         if (stats.isIceStaff)
         {
-            timer = slashAnim.length - animStartTime;
+            if (mana != null && !mana.TrySpendMana(stats.iceSpellManaCost))
+            {
+                isComplete = true;
+                return;
+            }
             IceSpellCaster caster = swordObject.GetComponent<IceSpellCaster>();
             if (caster != null)
             {
                 caster.spawnPoint = input.iceSpellSpawner;  // ← FIX
                 caster.CastIceSpell(attackDir);
             }
+            isComplete = true;
+            return;
         }
 
         if (!stats.isIceStaff)
