@@ -75,6 +75,14 @@ public class WaveSpawner : MonoBehaviour
 
     private bool _hasShownShopFocus = false;
 
+    [Header("Music")]
+    [Tooltip("AudioSource that currently plays overworld music; will be overridden for boss.")]
+    public AudioSource musicSource;
+
+    [Tooltip("Music that should play during the final wave / boss.")]
+    public AudioClip bossMusic;
+
+
 
     [Serializable]
     public class Wave
@@ -132,6 +140,12 @@ public class WaveSpawner : MonoBehaviour
         hud?.HideIntermission();
 
         CurrentWaveIndex++;
+
+        // If we just moved onto the LAST wave, override music with boss track
+        if (CurrentWaveIndex == TotalWaves - 1)
+        {
+            SwitchToBossMusic();
+        }
 
         if (CurrentWaveIndex >= TotalWaves)
         {
@@ -385,5 +399,16 @@ public class WaveSpawner : MonoBehaviour
         intermissionCamera.target = originalTarget;
         intermissionCamera.smooth = originalSmooth;
     }
+
+    private void SwitchToBossMusic()
+    {
+        if (!musicSource || !bossMusic) return;
+
+        musicSource.Stop();          // stop whatever overworld track is currently playing
+        musicSource.clip = bossMusic;
+        musicSource.loop = true;     // optional, but usually what you want for boss fights
+        musicSource.Play();
+    }
+
 
 }
