@@ -24,6 +24,7 @@ public class WeaponStats : MonoBehaviour
     [Header("Weapon Type")]
     public bool isOrbStaff = false;
     public bool isRanged = false;
+    public bool isFireballStaff = false;
     public GameObject projectilePrefab;
     public float projectileSpeed = 12f;
     public Transform projectileSpawnPoint;
@@ -37,5 +38,11 @@ public class WeaponStats : MonoBehaviour
     public float orbExplosionDamage = 30f;
     public GameObject orbExplosionFX;
     public AudioClip orbExplosionSFX;
+
+    [Header ("Fireball Staff Stats")]
+    
+    public GameObject fireballPrefab;
+    public float fireballSpeed = 12f;
+    public float fireballCooldown = 0.25f;
 }
 

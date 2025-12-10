@@ -166,6 +166,7 @@ public class PlayerMovementSM : MonoBehaviour
     {
         if (state == deathState)
         {
+            moveX = 0;
             state.Do();
             return;
         }
