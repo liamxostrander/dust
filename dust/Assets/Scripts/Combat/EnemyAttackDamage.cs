@@ -31,6 +31,18 @@ public class EnemyAttackDamage : MonoBehaviour
             hitboxCollider.enabled = false;
     }
 
+    public void EnableHitbox()
+    {
+        if (hitboxCollider)
+            hitboxCollider.enabled = true;
+    }
+
+    public void DisableHitbox()
+    {
+        if (hitboxCollider)
+            hitboxCollider.enabled = false;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other + " " + other.tag);
@@ -66,9 +78,5 @@ public class EnemyAttackDamage : MonoBehaviour
         Vector2 knockback = new Vector2(kbX, kbY);
 
         dmg.TakeDamage(damage, knockback);
-
-        // Optional: disable after one hit
-        if (hitboxCollider != null)
-            hitboxCollider.enabled = false;
     }
 }

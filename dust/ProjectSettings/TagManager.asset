@@ -9,6 +9,7 @@ TagManager:
   - ResumeButton
   - MainMenuButton
   - Ground
+  - WorldBounds
   layers:
   - Default
   - TransparentFX
